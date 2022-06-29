@@ -2,7 +2,7 @@ import LOINC, { LOINCSystemURI } from './constants/LOINC';
 import TypeIdentifier, {
   HKSystemURI,
   QuantityTypeIdentifier,
-} from './constants/TypeIdentifier';
+} from './constants/DataTypeIdentifier';
 import UCOM, { UCOMSystemURI } from './constants/UCOM';
 import type { Code, CodeWithSystem, TimeInterval } from './types';
 
@@ -70,8 +70,8 @@ function ignite(
         system: UCOMSystemURI,
       },
       effectivePeriod: {
-        start: new Date(startAt).toISOString(),
-        end: new Date(endAt).toISOString(),
+        start: new Date(startAt * 1000).toISOString(),
+        end: new Date(endAt * 1000).toISOString(),
       },
     };
   }

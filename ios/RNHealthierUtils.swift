@@ -802,7 +802,7 @@ class RNHealthierUtils {
     case TypeIdentifier.HeartRateVariabilitySDNN:
       return "ms"
     case TypeIdentifier.ElectrodermalActivity:
-      return "mc"
+      return "mcS"
     case TypeIdentifier.Vo2Max:
       return "mL/(kg.min)"
     case TypeIdentifier.BloodGlucose:
@@ -1298,98 +1298,7 @@ class RNHealthierUtils {
         
         return HKQuery.predicateForObjects(withMetadataKey: metadataKey);
       }
-      // if (queryType == "FromSource") {
-        // TODO: Implement HKSourceQuery
-        // let query = HKSourceQuery()
-      // }
-      // TODO: Implement me!
-      // We've covered all possibilities for this predicate type.
-      // If we still haven't returned, it means there is a configuration
-      // problem with the predicate descriptor.
-      return invalidPredicate
     }
-
-    // Build an HKQuery.predicateForSamples predicate
-    if (predicateType == "ForSamples") {
-      // TODO: Implement me!
-      // We've covered all possibilities for this predicate type.
-      // If we still haven't returned, it means there is a configuration
-      // problem with the predicate descriptor.
-      return invalidPredicate
-    }
-    
-    // Build an HKQuery.predicateForQuantitySamples predicate.
-    if (predicateType == "ForQuantitySamples") {
-      // TODO: Implement me!
-      // We've covered all possibilities for this predicate type.
-      // If we still haven't returned, it means there is a configuration
-      // problem with the predicate descriptor.
-      return invalidPredicate
-    }
-    
-    // Build an HKQuery.predicateForCategorySamples predicate.
-    if (predicateType == "ForCategorySamples") {
-      // TODO: Implement me!
-      // We've covered all possibilities for this predicate type.
-      // If we still haven't returned, it means there is a configuration
-      // problem with the predicate descriptor.
-      return invalidPredicate
-    }
-    
-    // Build an HKQuery.predicateForClinicalRecords predicate.
-    if (predicateType == "ForClinicalRecords") {
-      // TODO: Implement me!
-      // We've covered all possibilities for this predicate type.
-      // If we still haven't returned, it means there is a configuration
-      // problem with the predicate descriptor.
-      return invalidPredicate
-    }
-    
-    // Build an HKQuery.predicateForVerifiableClinicalRecords predicate.
-    if (predicateType == "ForVerifiableClinicalRecords") {
-      // TODO: Implement me!
-      // We've covered all possibilities for this predicate type.
-      // If we still haven't returned, it means there is a configuration
-      // problem with the predicate descriptor.
-      return invalidPredicate
-    }
-    
-    // Build an HKQuery.predicateForWorkouts predicate.
-    if (predicateType == "ForWorkouts") {
-      // TODO: Implement me!
-      // We've covered all possibilities for this predicate type.
-      // If we still haven't returned, it means there is a configuration
-      // problem with the predicate descriptor.
-      return invalidPredicate
-    }
-    
-    // Build an HKQuery.predicateForActivitySummary predicate.
-    if (predicateType == "ForActivitySummary") {
-      // TODO: Implement me!
-      // We've covered all possibilities for this predicate type.
-      // If we still haven't returned, it means there is a configuration
-      // problem with the predicate descriptor.
-      return invalidPredicate
-    }
-    
-    // Build an HKQuery.predicateForElectrocardiograms predicate.
-    if (predicateType == "ForElectrocardiograms") {
-      // TODO: Implement me!
-      // We've covered all possibilities for this predicate type.
-      // If we still haven't returned, it means there is a configuration
-      // problem with the predicate descriptor.
-      return invalidPredicate
-    }
-    
-    // Build an HKQuery.predicateForObjectsAssociated predicate.
-    if (predicateType == "ForObjectsAssociated") {
-      // TODO: Implement me!
-      // We've covered all possibilities for this predicate type.
-      // If we still haven't returned, it means there is a configuration
-      // problem with the predicate descriptor.
-      return invalidPredicate
-    }
-    
     // If we get here it means that we don't have the logic to build
     // the requested predicate. This likely means that either the descriptor
     // is invalid, or new features were added to HealthKit that we haven't

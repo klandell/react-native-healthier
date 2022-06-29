@@ -1,5 +1,5 @@
 import type { Code } from '../types';
-import type { QuantityTypeIdentifier } from './TypeIdentifier';
+import type { QuantityTypeIdentifier } from './DataTypeIdentifier';
 
 export const LOINCSystemURI = 'http://loinc.org';
 

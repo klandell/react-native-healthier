@@ -5,9 +5,12 @@ import type SampleType from './constants/SampleType';
 import type SortIdentifier from './constants/SortIdentifier';
 import type { ValueOf } from './types';
 
-export type Query = SampleQuery | AnchoredObjectQuery | ObserverQuery;
+export type QueryDescriptor =
+  | SampleQueryDescriptor
+  | AnchoredObjectQueryDescriptor
+  | ObserverQueryDescriptor;
 
-type SampleQuery = {
+type SampleQueryDescriptor = {
   type: 'SampleQuery';
   sampleType: string;
   predicate: Predicate | CompoundPredicate;
@@ -16,7 +19,7 @@ type SampleQuery = {
   resultOptions: ResultOptions;
 };
 
-type AnchoredObjectQuery = {
+type AnchoredObjectQueryDescriptor = {
   type: 'AnchoredObjectQuery';
   sampleType: string;
   anchor?: string;
@@ -25,7 +28,7 @@ type AnchoredObjectQuery = {
   resultOptions: ResultOptions;
 };
 
-type ObserverQuery = {
+type ObserverQueryDescriptor = {
   type: 'ObserverQuery';
   sampleType: string;
   predicate: Predicate | CompoundPredicate;
@@ -62,7 +65,9 @@ type SampleQueryOptions = {
  * You can provide a sort order for the returned samples, or limit the number of samples returned.
  * @param options
  */
-export function sampleQuery(options: SampleQueryOptions): SampleQuery {
+export function sampleQuery(
+  options: SampleQueryOptions
+): SampleQueryDescriptor {
   const {
     sampleType,
     predicate = { type: 'Nil' },
@@ -101,7 +106,7 @@ type AnchoredObjectQueryOptions = {
  */
 export function anchoredObjectQuery(
   options: AnchoredObjectQueryOptions
-): AnchoredObjectQuery {
+): AnchoredObjectQueryDescriptor {
   const {
     sampleType,
     anchor,
@@ -141,7 +146,9 @@ type ObserverQueryOptions = {
  * Your app uses observer queries to respond to changes made by other apps and devices. Observer queries
  * are immutable: You set their properties when you first create them, and you can’t change them.
  */
-export function observerQuery(options: ObserverQueryOptions): ObserverQuery {
+export function observerQuery(
+  options: ObserverQueryOptions
+): ObserverQueryDescriptor {
   const { sampleType, predicate = { type: 'Nil' } } = options;
   return {
     type: 'ObserverQuery',

@@ -15,7 +15,7 @@ type BackgroundObserverDataEvent = { data: any };
 type DataHandler = (data: any) => Promise<void> | void;
 
 const ObservationEmitter =
-  NativeModules.RNHeathierObservationEmitter as ObservationEmitter;
+  NativeModules.RNHealthierObservationEmitter as ObservationEmitter;
 const eventEmitter = new NativeEventEmitter(ObservationEmitter);
 
 class BackgroundObserver {

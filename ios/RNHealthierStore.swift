@@ -31,16 +31,18 @@ class RNHealthierStore {
     s.requestAuthorization(toShare: toShare, read: read, completion: completion)
   }
   
-  func sampleQuery(sampleType: HKObjectType, predicate: NSPredicate?, limit: Int?, sortDescriptors: [NSSortDescriptor]?, completion: @escaping ([Any]?, Error?) -> Void) -> Void {
+  func sampleQuery(sampleTypeString: String, predicate: NSPredicate?, limit: Int?, sortDescriptors: [NSSortDescriptor]?, completion: @escaping ([Any]?, Error?) -> Void) -> Void {
     guard let s = store else {
       completion(nil, RNHealthierError.HealthStoreNotAvailable)
       return;
     }
-    
-    guard let sampleType = sampleType as? HKSampleType else {
+      
+  guard let sampleTypeEnum = RNHealthierObjectTypeIdentifier.init(rawValue: sampleTypeString),
+        let sampleType = RNHealthierUtils.getObjectType(forIdentifier: sampleTypeEnum) as? HKSampleType else {
       completion(nil, RNHealthierError.InvalidSampleType)
-      return;
-    }
+    return;
+  }
+
 
     // A limit of 0 or nil indicate NO LIMIT.
     var lim = limit ?? Int(HKObjectQueryNoLimit)
@@ -48,12 +50,25 @@ class RNHealthierStore {
       lim = Int(HKObjectQueryNoLimit)
     }
     
-    let query = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: lim, sortDescriptors: sortDescriptors) { q, res, err in
+    // TODO: RESULT OPTIONS
+    let query = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: lim, sortDescriptors: sortDescriptors) { query, results, error in
       // The JS can't handle the data in its raw form, so we are going to do some conversion
       // to get it into a format the react native can deal with.
-      let data: [Any] = []
-      
-      // TODO: IMPLEMENT ME!
+        var data: [[String: Any]] = []
+        
+        if let samples = results as? [HKQuantitySample] {
+            for sample in samples {
+                if let unit = RNHealthierUtils.getDefaultUnit(forIdentifier: sampleTypeEnum) {
+                    data.append([
+                        "uuid": sample.uuid.uuidString,
+                        "startAt": sample.startDate.timeIntervalSince1970,
+                        "endAt": sample.endDate.timeIntervalSince1970,
+                        "value": sample.quantity.doubleValue(for: HKUnit.init(from: unit)),
+                        "unit": unit
+                    ])
+                }
+            }
+        }
       
       completion(data, nil)
     }
@@ -64,7 +79,7 @@ class RNHealthierStore {
     // TODO: IMPLEMENT ME!
   }
 
-  func observe(sampleType: HKObjectType, predicate: NSPredicate?) -> Void {
+  func observe2(sampleType: HKObjectType, predicate: NSPredicate?) -> Void {
     guard let s = store else {
       // TODO: HANDLE ERROR!
       // throw RNHealthierError.HealthStoreNotAvailable
@@ -99,4 +114,85 @@ class RNHealthierStore {
       // TODO: IMPLEMENT ME!
     }
   }
+    
+    /*
+     let query = HKObserverQuery(sampleType: type, predicate: nil) { query, @escaping completionHandler, error in
+         //
+     }
+    
+     */
+    
+    func observe (sampleType: HKObjectType, emitter: RNHealthierObservationEmitter) {
+        guard let s = store else {
+          // TODO: HANDLE ERROR!
+          // throw RNHealthierError.HealthStoreNotAvailable
+          return
+        }
+        
+        guard let sampleType = sampleType as? HKSampleType else {
+          // TODO: HANDLE ERROR!
+          // reject("", "Invalid Sample Type.", nil)
+          return
+        }
+        
+        
+        let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { q, completionHandler, err in
+          // TODO: IMPLEMENT ME!
+            emitter.completionHandler = completionHandler;
+            emitter.notifyDataAvailable("HeartRate");
+        }
+        s.execute(query)
+        s.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { success, error in
+            if success{
+                NSLog("BACKGROUND DELIVERY ENABLED!")
+            } else {
+                NSLog("BACKGROUND DELIVERY FAILED")
+            }
+        }
+    }
 }
+
+/*
+ healthKitStore.executeQuery(query)
+ healthKitStore.enableBackgroundDeliveryForType(sampleType, frequency: .Immediate, withCompletion: {(succeeded: Bool, error: NSError!) in
+
+     if succeeded{
+         println("Enabled background delivery of weight changes")
+     } else {
+         if let theError = error{
+             print("Failed to enable background delivery of weight changes. ")
+             println("Error = \(theError)")
+         }
+     }
+ })
+ 
+ */
+
+/*
+private func setUpBackgroundDeliveryForDataTypes(types: Set<HKObjectType>) {
+   for type in types {
+     guard let sampleType = type as? HKSampleType else {
+       debugPrint("ERROR: \(type) is not an HKSampleType");
+       continue
+     }
+     var query: HKQuery!
+     query = HKObserverQuery(sampleType: sampleType, predicate: nil) { [weak self] query, completionHandler, error in
+       if error != nil {
+         debugPrint("observer query update handler called for type \(type), error: \(error?.localizedDescription ?? "")")
+         return
+       }
+       guard let strongSelf = self else { return }
+       strongSelf.queryForUpdates(type: type)
+       completionHandler()
+     }
+     healthStore.execute(query)
+     healthStore.enableBackgroundDelivery(for: type, frequency: .immediate) { success, error in
+       if error != nil {
+         debugPrint("enableBackgroundDeliveryForType handler called for \(type) - success: \(success), error: \(error?.localizedDescription ?? "")")
+         return
+       }
+       debugPrint("enableBackgroundDeliveryForType: \(type)")
+     }
+   }
+ }
+*/

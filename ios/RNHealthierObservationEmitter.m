@@ -14,6 +14,11 @@ bool hasListeners = NO;
 
 RCT_EXPORT_MODULE();
 
+// Required React Native Setup.
+- (BOOL) requiresMainQueueSetup {
+    return false;
+}
+
 - (instancetype)init {
   self = [super init];
   if (self) {
@@ -55,7 +60,7 @@ RCT_EXPORT_MODULE();
   if (hasListeners) {
     [self sendEventWithName:@"onData" body:dataTypeIdentifier];
   } else {
-    [self.queuedDataTypeIdentifiers addObject:data];
+    [self.queuedDataTypeIdentifiers addObject:dataTypeIdentifier];
   }
 }
 

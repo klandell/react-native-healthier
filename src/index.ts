@@ -1,15 +1,25 @@
-import { NativeModule, NativeModules, Platform } from 'react-native';
-import type { Query } from './Query';
+import { NativeModules, Platform } from 'react-native';
+import type { QueryDescriptor } from './Query';
 
-interface Healthier extends NativeModule {
+import * as Query from './Query';
+import ignite from './ignite';
+import BackgroundObserver from './BackgroundObserver';
+
+/*
+ WARN  Module RNHealthierObservationEmitter requires main queue setup since it overrides `init` but doesn't implement `requiresMainQueueSetup`. In a future release React Native will default to initializing all native modules on a background thread unless explicitly opted-out of.
+ */
+
+// TODO: RESULT TYPES
+
+interface Healthier {
   isAvailable: () => Promise<boolean>;
   supportsHealthRecords: () => Promise<boolean>;
   requestAuthorization: (permissions: {
     toShare?: string[];
     read?: string[];
   }) => Promise<void>;
-  execute: (query: Query) => Promise<any>;
-  observe: (query: Query) => Promise<string>;
+  execute: (query: QueryDescriptor) => Promise<any>;
+  observe: (query: QueryDescriptor) => Promise<string>;
   unobserve: (queryId: string) => Promise<void>;
   unobserveAll: () => Promise<void>;
 }
@@ -31,7 +41,5 @@ export default (NativeModules.RNHealthierModule
       }
     )) as Healthier;
 
-export * as Query from './Query';
-export * as iqnite from './ignite';
-
-export { default as TypeIdentifier } from './constants/TypeIdentifier';
+export { BackgroundObserver, Query, ignite };
+export { default as DataTypeIdentifier } from './constants/DataTypeIdentifier';

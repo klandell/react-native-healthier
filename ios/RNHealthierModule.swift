@@ -91,9 +91,7 @@ class RNHealthierModule : NSObject {
       return;
     }
     
-    guard let sampleTypeString = queryDescriptor["sampleType"] as? String,
-          let sampleTypeEnum = RNHealthierObjectTypeIdentifier.init(rawValue: sampleTypeString),
-          let sampleType = RNHealthierUtils.getObjectType(forIdentifier: sampleTypeEnum) else {
+    guard let sampleTypeString = queryDescriptor["sampleType"] as? String else {
       // TODO: error!
       return;
     }
@@ -106,7 +104,7 @@ class RNHealthierModule : NSObject {
         return;
       }
       // Run the sample query.
-      RNHealthierStore.shared.sampleQuery(sampleType: sampleType, predicate: RNHealthierUtils.buildPredicate(descriptor: predicate), limit: limit, sortDescriptors: RNHealthierUtils.buildSortDescriptors(descriptors: sortDescriptors)) {
+      RNHealthierStore.shared.sampleQuery(sampleTypeString: sampleTypeString, predicate: RNHealthierUtils.buildPredicate(descriptor: predicate), limit: limit, sortDescriptors: RNHealthierUtils.buildSortDescriptors(descriptors: sortDescriptors)) {
         data, err in
         
         if err != nil {

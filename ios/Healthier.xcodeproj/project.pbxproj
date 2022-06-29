@@ -12,6 +12,7 @@
 		8CF7C312285CC0B6008E0801 /* RNHealthierStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF7C311285CC0B6008E0801 /* RNHealthierStore.swift */; };
 		8CF7C314285CC0D4008E0801 /* RNHealthierUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF7C313285CC0D4008E0801 /* RNHealthierUtils.swift */; };
 		8CF7C316285CC11B008E0801 /* RNHealthierObjectTypeIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF7C315285CC11B008E0801 /* RNHealthierObjectTypeIdentifier.swift */; };
+		8CF7C318285CEC6F008E0801 /* RNHealthierObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF7C317285CEC6F008E0801 /* RNHealthierObserver.swift */; };
 		F4FF95D7245B92E800C19C63 /* RNHealthierModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /* RNHealthierModule.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		8CF7C311285CC0B6008E0801 /* RNHealthierStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNHealthierStore.swift; sourceTree = "<group>"; };
 		8CF7C313285CC0D4008E0801 /* RNHealthierUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNHealthierUtils.swift; sourceTree = "<group>"; };
 		8CF7C315285CC11B008E0801 /* RNHealthierObjectTypeIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNHealthierObjectTypeIdentifier.swift; sourceTree = "<group>"; };
+		8CF7C317285CEC6F008E0801 /* RNHealthierObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNHealthierObserver.swift; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNHealthierModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNHealthierModule.m; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* RNHealthierModule-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNHealthierModule-Bridging-Header.h"; sourceTree = "<group>"; };
 		F4FF95D6245B92E800C19C63 /* RNHealthierModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNHealthierModule.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				8CF7C317285CEC6F008E0801 /* RNHealthierObserver.swift */,
 				B3E7B5891CC2AC0600A0062D /* RNHealthierModule.m */,
 				F4FF95D6245B92E800C19C63 /* RNHealthierModule.swift */,
 				8CF7C311285CC0B6008E0801 /* RNHealthierStore.swift */,
@@ -136,6 +139,7 @@
 				8CF7C312285CC0B6008E0801 /* RNHealthierStore.swift in Sources */,
 				8CF7C316285CC11B008E0801 /* RNHealthierObjectTypeIdentifier.swift in Sources */,
 				F4FF95D7245B92E800C19C63 /* RNHealthierModule.swift in Sources */,
+				8CF7C318285CEC6F008E0801 /* RNHealthierObserver.swift in Sources */,
 				8CF7C30D285CBD80008E0801 /* RNHealthierError.swift in Sources */,
 				8CF7C30F285CBDD2008E0801 /* RNHealthierObservationEmitter.m in Sources */,
 			);
