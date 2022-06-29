@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
-		5E555C0D2413F4C50049A1A2 /* Healthier.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* Healthier.m */; };
-		F4FF95D7245B92E800C19C63 /*  Healthier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /*  Healthier.swift */; };
-
+		8CF7C30D285CBD80008E0801 /* RNHealthierError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF7C30C285CBD80008E0801 /* RNHealthierError.swift */; };
+		8CF7C30F285CBDD2008E0801 /* RNHealthierObservationEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF7C30E285CBDD2008E0801 /* RNHealthierObservationEmitter.m */; };
+		8CF7C312285CC0B6008E0801 /* RNHealthierStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF7C311285CC0B6008E0801 /* RNHealthierStore.swift */; };
+		8CF7C314285CC0D4008E0801 /* RNHealthierUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF7C313285CC0D4008E0801 /* RNHealthierUtils.swift */; };
+		8CF7C316285CC11B008E0801 /* RNHealthierObjectTypeIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF7C315285CC11B008E0801 /* RNHealthierObjectTypeIdentifier.swift */; };
+		F4FF95D7245B92E800C19C63 /* RNHealthierModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /* RNHealthierModule.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,12 +28,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		134814201AA4EA6300B7C361 /* libHealthier.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHealthier.a; sourceTree = BUILT_PRODUCTS_DIR; };
-
-		B3E7B5891CC2AC0600A0062D /* Healthier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Healthier.m; sourceTree = "<group>"; };
-		F4FF95D5245B92E700C19C63 /* Healthier-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Healthier-Bridging-Header.h"; sourceTree = "<group>"; };
-		F4FF95D6245B92E800C19C63 /* Healthier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Healthier.swift; sourceTree = "<group>"; };
-
+		134814201AA4EA6300B7C361 /* libRNHealthierModule.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNHealthierModule.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CF7C30C285CBD80008E0801 /* RNHealthierError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNHealthierError.swift; sourceTree = "<group>"; };
+		8CF7C30E285CBDD2008E0801 /* RNHealthierObservationEmitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNHealthierObservationEmitter.m; sourceTree = "<group>"; };
+		8CF7C310285CBDEB008E0801 /* RNHealthierObservationEmitter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNHealthierObservationEmitter.h; sourceTree = "<group>"; };
+		8CF7C311285CC0B6008E0801 /* RNHealthierStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNHealthierStore.swift; sourceTree = "<group>"; };
+		8CF7C313285CC0D4008E0801 /* RNHealthierUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNHealthierUtils.swift; sourceTree = "<group>"; };
+		8CF7C315285CC11B008E0801 /* RNHealthierObjectTypeIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNHealthierObjectTypeIdentifier.swift; sourceTree = "<group>"; };
+		B3E7B5891CC2AC0600A0062D /* RNHealthierModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNHealthierModule.m; sourceTree = "<group>"; };
+		F4FF95D5245B92E700C19C63 /* RNHealthierModule-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNHealthierModule-Bridging-Header.h"; sourceTree = "<group>"; };
+		F4FF95D6245B92E800C19C63 /* RNHealthierModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNHealthierModule.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +54,7 @@
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				134814201AA4EA6300B7C361 /* libHealthier.a */,
+				134814201AA4EA6300B7C361 /* libRNHealthierModule.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,11 +62,15 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-
-				F4FF95D6245B92E800C19C63 /* Healthier.swift */,
-				B3E7B5891CC2AC0600A0062D /* Healthier.m */,
-				F4FF95D5245B92E700C19C63 /* Healthier-Bridging-Header.h */,
-
+				B3E7B5891CC2AC0600A0062D /* RNHealthierModule.m */,
+				F4FF95D6245B92E800C19C63 /* RNHealthierModule.swift */,
+				8CF7C311285CC0B6008E0801 /* RNHealthierStore.swift */,
+				8CF7C313285CC0D4008E0801 /* RNHealthierUtils.swift */,
+				8CF7C30C285CBD80008E0801 /* RNHealthierError.swift */,
+				8CF7C310285CBDEB008E0801 /* RNHealthierObservationEmitter.h */,
+				8CF7C30E285CBDD2008E0801 /* RNHealthierObservationEmitter.m */,
+				8CF7C315285CC11B008E0801 /* RNHealthierObjectTypeIdentifier.swift */,
+				F4FF95D5245B92E700C19C63 /* RNHealthierModule-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,9 +78,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58B511DA1A9E6C8500147676 /* Healthier */ = {
+		58B511DA1A9E6C8500147676 /* RNHealthierModule */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "Healthier" */;
+			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "RNHealthierModule" */;
 			buildPhases = (
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
@@ -80,9 +90,9 @@
 			);
 			dependencies = (
 			);
-			name = Healthier;
+			name = RNHealthierModule;
 			productName = RCTDataManager;
-			productReference = 134814201AA4EA6300B7C361 /* libHealthier.a */;
+			productReference = 134814201AA4EA6300B7C361 /* libRNHealthierModule.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -112,7 +122,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58B511DA1A9E6C8500147676 /* Healthier */,
+				58B511DA1A9E6C8500147676 /* RNHealthierModule */,
 			);
 		};
 /* End PBXProject section */
@@ -122,10 +132,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
-				F4FF95D7245B92E800C19C63 /* Healthier.swift in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* Healthier.m in Sources */,
-
+				8CF7C314285CC0D4008E0801 /* RNHealthierUtils.swift in Sources */,
+				8CF7C312285CC0B6008E0801 /* RNHealthierStore.swift in Sources */,
+				8CF7C316285CC11B008E0801 /* RNHealthierObjectTypeIdentifier.swift in Sources */,
+				F4FF95D7245B92E800C19C63 /* RNHealthierModule.swift in Sources */,
+				8CF7C30D285CBD80008E0801 /* RNHealthierError.swift in Sources */,
+				8CF7C30F285CBDD2008E0801 /* RNHealthierObservationEmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,7 +187,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -218,7 +230,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -236,13 +248,11 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Healthier;
+				PRODUCT_NAME = RNHealthierModule;
 				SKIP_INSTALL = YES;
-
-				SWIFT_OBJC_BRIDGING_HEADER = "Healthier-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "RNHealthierModule-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-
 			};
 			name = Debug;
 		};
@@ -257,12 +267,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Healthier;
+				PRODUCT_NAME = RNHealthierModule;
 				SKIP_INSTALL = YES;
-
-				SWIFT_OBJC_BRIDGING_HEADER = "Healthier-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "RNHealthierModule-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-
 			};
 			name = Release;
 		};
@@ -278,7 +286,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "Healthier" */ = {
+		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "RNHealthierModule" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511F01A9E6C8500147676 /* Debug */,

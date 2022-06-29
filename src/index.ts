@@ -1,7 +1,7 @@
-import { NativeModules, Platform } from 'react-native';
+import { NativeModule, NativeModules, Platform } from 'react-native';
 import type { Query } from './Query';
 
-interface HealthierStore extends NativeModule {
+interface Healthier extends NativeModule {
   isAvailable: () => Promise<boolean>;
   supportsHealthRecords: () => Promise<boolean>;
   requestAuthorization: (permissions: {
@@ -20,8 +20,8 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
 
-export default (NativeModules.Healthier
-  ? NativeModules.Healthier
+export default (NativeModules.RNHealthierModule
+  ? NativeModules.RNHealthierModule
   : new Proxy(
       {},
       {
@@ -29,7 +29,7 @@ export default (NativeModules.Healthier
           throw new Error(LINKING_ERROR);
         },
       }
-    )) as HealthierStore;
+    )) as Healthier;
 
 export * as Query from './Query';
 export * as iqnite from './ignite';

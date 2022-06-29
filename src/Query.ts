@@ -8,7 +8,7 @@ import type { ValueOf } from './types';
 export type Query = SampleQuery | AnchoredObjectQuery | ObserverQuery;
 
 type SampleQuery = {
-  id: 'SampleQuery';
+  type: 'SampleQuery';
   sampleType: string;
   predicate: Predicate | CompoundPredicate;
   limit: number;
@@ -17,7 +17,7 @@ type SampleQuery = {
 };
 
 type AnchoredObjectQuery = {
-  id: 'AnchoredObjectQuery';
+  type: 'AnchoredObjectQuery';
   sampleType: string;
   anchor?: string;
   predicate: Predicate | CompoundPredicate;
@@ -26,13 +26,13 @@ type AnchoredObjectQuery = {
 };
 
 type ObserverQuery = {
-  id: 'ObserverQuery';
+  type: 'ObserverQuery';
   sampleType: string;
   predicate: Predicate | CompoundPredicate;
 };
 
 type SortDescriptor = {
-  id: ValueOf<typeof SortIdentifier>;
+  type: ValueOf<typeof SortIdentifier>;
   data: { ascending: boolean };
 };
 
@@ -65,7 +65,7 @@ type SampleQueryOptions = {
 export function sampleQuery(options: SampleQueryOptions): SampleQuery {
   const {
     sampleType,
-    predicate = { id: 'Nil' },
+    predicate = { type: 'Nil' },
     limit = 0,
     sortDescriptors = [],
     resultOptions: resOpts = {},
@@ -79,7 +79,7 @@ export function sampleQuery(options: SampleQueryOptions): SampleQuery {
   }
 
   return {
-    id: 'SampleQuery',
+    type: 'SampleQuery',
     sampleType,
     predicate,
     limit,
@@ -105,7 +105,7 @@ export function anchoredObjectQuery(
   const {
     sampleType,
     anchor,
-    predicate = { id: 'Nil' },
+    predicate = { type: 'Nil' },
     limit = 0,
     resultOptions: resOpts = {},
   } = options;
@@ -118,7 +118,7 @@ export function anchoredObjectQuery(
   }
 
   return {
-    id: 'AnchoredObjectQuery',
+    type: 'AnchoredObjectQuery',
     sampleType,
     anchor,
     predicate,
@@ -142,9 +142,9 @@ type ObserverQueryOptions = {
  * are immutable: You set their properties when you first create them, and you can’t change them.
  */
 export function observerQuery(options: ObserverQueryOptions): ObserverQuery {
-  const { sampleType, predicate = { id: 'Nil' } } = options;
+  const { sampleType, predicate = { type: 'Nil' } } = options;
   return {
-    id: 'ObserverQuery',
+    type: 'ObserverQuery',
     sampleType,
     predicate,
   };
@@ -160,7 +160,7 @@ export function createSortDescriptor(
   key: keyof typeof SortIdentifier,
   ascending: boolean = true
 ): SortDescriptor {
-  return { id: key, data: { ascending } };
+  return { type: key, data: { ascending } };
 }
 
 /**
@@ -173,7 +173,7 @@ export function createSortDescriptor(
  * @returns A predicate that matches a specific object based on its UUID.
  */
 export function predicateForObjectWithUUID(uuid: UUID): Predicate {
-  return { id: 'ForObject', query: { id: 'UUID', data: { uuid } } };
+  return { type: 'ForObject', query: { type: 'UUID', data: { uuid } } };
 }
 
 /**
@@ -189,8 +189,8 @@ export function predicateForObjectsWithDeviceProperty(options: {
   const { key, value } = options;
   const valueArray = Array.isArray(value) ? value : [value];
   return {
-    id: 'ForObjects',
-    query: { id: 'DeviceProperty', data: { key, value: valueArray } },
+    type: 'ForObjects',
+    query: { type: 'DeviceProperty', data: { key, value: valueArray } },
   };
 }
 
@@ -208,8 +208,8 @@ export function predicateForObjectsWithMetadataKey(options: {
 }): Predicate {
   const { key, value, operator } = options;
   return {
-    id: 'ForObjects',
-    query: { id: 'MetadataKey', data: { key, value, operator } },
+    type: 'ForObjects',
+    query: { type: 'MetadataKey', data: { key, value, operator } },
   };
 }
 
@@ -223,7 +223,7 @@ export function predicateForObjectsWithMetadataKey(options: {
  * @returns A predicate that matches a specific object based on its UUID.
  */
 export function predicateForObjectsWithUUID(uuid: UUID[]): Predicate {
-  return { id: 'ForObjects', query: { id: 'UUID', data: { uuid } } };
+  return { type: 'ForObjects', query: { type: 'UUID', data: { uuid } } };
 }
 
 /**
@@ -244,8 +244,8 @@ export function predicateForSamples(opts: {
   const end = endDate && endDate.toISOString();
 
   return {
-    id: 'ForSamples',
-    query: { id: 'DateRange', data: { start, end, options } },
+    type: 'ForSamples',
+    query: { type: 'DateRange', data: { start, end, options } },
   };
 }
 
@@ -260,12 +260,12 @@ export function compoundPredicate(options: CompoundOptions): CompoundPredicate {
   // And / Or have multiple subpredicates. Handle them in the same way
   if (compoundType === 'And' || compoundType === 'Or') {
     const { subpredicates } = options;
-    return { id: compoundType, subpredicates };
+    return { type: compoundType, subpredicates };
   }
   // Otherwise, we have the Not type, which has only one subpredicate
   if (compoundType === 'Not') {
     const { subpredicate } = options;
-    if (compoundType === 'Not') return { id: 'Not', subpredicate };
+    if (compoundType === 'Not') return { type: 'Not', subpredicate };
   }
   // Throw an error if misconfigured, just in case.
   throw new Error('Invalid Compound Predicate type');
@@ -278,7 +278,7 @@ export function compoundPredicate(options: CompoundOptions): CompoundPredicate {
 type UUID = string;
 
 type PredicateWithUUID = {
-  id: 'UUID';
+  type: 'UUID';
   data: {
     uuid: UUID | UUID[];
   };
@@ -287,7 +287,7 @@ type PredicateWithUUID = {
 type MetadataValue = boolean | string | number | Date;
 
 type PredicateWithMetadataKey = {
-  id: 'MetadataKey';
+  type: 'MetadataKey';
   data: {
     key: ValueOf<typeof MetadataKey>;
     value?: MetadataValue | MetadataValue[];
@@ -298,44 +298,44 @@ type PredicateWithMetadataKey = {
 type DateRangeOptions = 'StrictStartDate' | 'StrictEndDate';
 
 type PredicateWithDateRange = {
-  id: 'DateRange';
+  type: 'DateRange';
   data: { start?: string; end?: string; options?: DateRangeOptions[] };
 };
 
 type PredicateWithDeviceProperty = {
-  id: 'DeviceProperty';
+  type: 'DeviceProperty';
   data: { key: ValueOf<typeof DeviceProperty>; value: string[] };
 };
 
 type Predicate =
-  | { id: 'Nil' }
+  | { type: 'Nil' }
   | {
-      id: 'ForObject';
+      type: 'ForObject';
       query: PredicateWithUUID;
     }
   | {
-      id: 'ForObjects';
+      type: 'ForObjects';
       query:
         | PredicateWithDeviceProperty
         | PredicateWithMetadataKey
         | PredicateWithUUID;
     }
   | {
-      id: 'ForSamples';
+      type: 'ForSamples';
       query: PredicateWithDateRange;
     };
 
 type CompoundPredicate =
   | {
-      id: 'And';
+      type: 'And';
       subpredicates: (CompoundPredicate | Predicate)[];
     }
   | {
-      id: 'Not';
+      type: 'Not';
       subpredicate: CompoundPredicate | Predicate;
     }
   | {
-      id: 'Or';
+      type: 'Or';
       subpredicates: (CompoundPredicate | Predicate)[];
     };
 
