@@ -11,10 +11,4 @@ RCT_EXTERN_METHOD(requestAuthorization:(NSDictionary *)permissions resolver:(RCT
 
 RCT_EXTERN_METHOD(execute:(NSDictionary *)queryDescriptor resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(observe:(NSString *)typeIdentifier resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
-
-RCT_EXTERN_METHOD(unobserve:(NSString *)queryId resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
-
-RCT_EXTERN_METHOD(unobserveAll:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
-
 @end

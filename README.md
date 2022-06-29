@@ -1,22 +1,8 @@
 # react-native-healthier
 
-A React Native package to interact with HealthKit
+The healthiest way to interact with HealthKit in React Native
 
-## Installation
-
-```sh
-npm install react-native-healthier
-```
-
-## Usage
-
-```js
-import { multiply } from "react-native-healthier";
-
-// ...
-
-const result = await multiply(3, 7);
-```
+## Don't use this yet, it's still a dumpster fire
 
 ## Contributing
 

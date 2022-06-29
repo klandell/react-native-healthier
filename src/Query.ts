@@ -5,10 +5,7 @@ import type SampleType from './constants/SampleType';
 import type SortIdentifier from './constants/SortIdentifier';
 import type { ValueOf } from './types';
 
-export type QueryDescriptor =
-  | SampleQueryDescriptor
-  | AnchoredObjectQueryDescriptor
-  | ObserverQueryDescriptor;
+export type QueryDescriptor = SampleQueryDescriptor;
 
 type SampleQueryDescriptor = {
   type: 'SampleQuery';
@@ -17,21 +14,6 @@ type SampleQueryDescriptor = {
   limit: number;
   sortDescriptors: SortDescriptor[];
   resultOptions: ResultOptions;
-};
-
-type AnchoredObjectQueryDescriptor = {
-  type: 'AnchoredObjectQuery';
-  sampleType: string;
-  anchor?: string;
-  predicate: Predicate | CompoundPredicate;
-  limit: number;
-  resultOptions: ResultOptions;
-};
-
-type ObserverQueryDescriptor = {
-  type: 'ObserverQuery';
-  sampleType: string;
-  predicate: Predicate | CompoundPredicate;
 };
 
 type SortDescriptor = {
@@ -90,70 +72,6 @@ export function sampleQuery(
     limit,
     sortDescriptors,
     resultOptions,
-  };
-}
-
-type AnchoredObjectQueryOptions = {
-  sampleType: keyof typeof SampleType;
-  anchor?: string;
-  predicate?: Predicate | CompoundPredicate;
-  limit?: number;
-  resultOptions?: ResultOptions;
-};
-
-/**
- * A query that returns changes to the HealthKit store, including a snapshot of new changes.
- */
-export function anchoredObjectQuery(
-  options: AnchoredObjectQueryOptions
-): AnchoredObjectQueryDescriptor {
-  const {
-    sampleType,
-    anchor,
-    predicate = { type: 'Nil' },
-    limit = 0,
-    resultOptions: resOpts = {},
-  } = options;
-  const resultOptions = { ...defaultResultOptions, ...resOpts };
-
-  if (!Number.isInteger(limit) || limit < 0) {
-    throw new Error(
-      'The "limit" option must be a whole number. O indicates no limit.'
-    );
-  }
-
-  return {
-    type: 'AnchoredObjectQuery',
-    sampleType,
-    anchor,
-    predicate,
-    limit,
-    resultOptions,
-  };
-}
-
-type ObserverQueryOptions = {
-  sampleType: ValueOf<typeof SampleType>;
-  predicate?: Predicate | CompoundPredicate;
-};
-
-/**
- * A long-running query that monitors the HealthKit store and updates your app when
- * the HealthKit store saves or deletes a matching sample.
- *
- * Observer queries set up a long-running task on a background queue.
- * This task watches the HealthKit store, and alerts you when the store saves or removes matching data.
- * Your app uses observer queries to respond to changes made by other apps and devices. Observer queries
- * are immutable: You set their properties when you first create them, and you can’t change them.
- */
-export function observerQuery(
-  options: ObserverQueryOptions
-): ObserverQueryDescriptor {
-  const { sampleType, predicate = { type: 'Nil' } } = options;
-  return {
-    type: 'ObserverQuery',
-    sampleType,
-    predicate,
   };
 }
 

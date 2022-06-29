@@ -3,11 +3,6 @@ import type { QueryDescriptor } from './Query';
 
 import * as Query from './Query';
 import ignite from './ignite';
-import BackgroundObserver from './BackgroundObserver';
-
-/*
- WARN  Module RNHealthierObservationEmitter requires main queue setup since it overrides `init` but doesn't implement `requiresMainQueueSetup`. In a future release React Native will default to initializing all native modules on a background thread unless explicitly opted-out of.
- */
 
 // TODO: RESULT TYPES
 
@@ -19,9 +14,6 @@ interface Healthier {
     read?: string[];
   }) => Promise<void>;
   execute: (query: QueryDescriptor) => Promise<any>;
-  observe: (query: QueryDescriptor) => Promise<string>;
-  unobserve: (queryId: string) => Promise<void>;
-  unobserveAll: () => Promise<void>;
 }
 
 const LINKING_ERROR =
@@ -41,5 +33,5 @@ export default (NativeModules.RNHealthierModule
       }
     )) as Healthier;
 
-export { BackgroundObserver, Query, ignite };
+export { Query, ignite };
 export { default as DataTypeIdentifier } from './constants/DataTypeIdentifier';

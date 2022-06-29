@@ -117,22 +117,4 @@ class RNHealthierModule : NSObject {
       }
     }
   }
-  
-  // Setup a background observer for a query descriptor.
-  @objc(observe:resolver:rejecter:)
-  func observe(_ queryDescriptor: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    // TODO: CREATE AN OBSERVER!
-  }
-  
-  // Remove a background observer for a query identifier.
-  @objc(unobserve:resolver:rejecter:)
-  func unobserve(_ queryId: NSString, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    // TODO: REMOVE AN OBSERVER
-  }
-  
-  // Remove all background observers.
-  @objc(unobserveAll:rejecter:)
-  func unobserveAll(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping  RCTPromiseRejectBlock) -> Void {
-    // TODO: REMOVE ALL OBSERVERS
-  }
 }
