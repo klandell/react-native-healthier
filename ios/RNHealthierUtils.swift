@@ -1299,6 +1299,48 @@ class RNHealthierUtils {
         return HKQuery.predicateForObjects(withMetadataKey: metadataKey);
       }
     }
+      
+    // Build an HKQuery.predicateForSamples predicate.
+      if (predicateType == "ForSamples") {
+          if (queryType == "DateRange") {
+              let dateFormatter = DateFormatter()
+              dateFormatter.calendar = Calendar(identifier: .iso8601)
+              dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+              dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+              dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+              
+              let start = queryData["start"] as? String;
+              let startDate = (start != nil) ? dateFormatter.date(from: start!) : nil;
+              
+              if let blahDate = dateFormatter.date(from: start!) {
+                  NSLog(dateFormatter.string(from: blahDate))
+              }
+              
+              let end = queryData["end"] as? String;
+              let endDate = (end != nil) ? dateFormatter.date(from: end!) : nil;
+              
+              let options = queryData["options"] as? [String];
+              
+              if (options != nil) {
+                  var opt: HKQueryOptions? = nil
+                  
+                  if options!.contains("StrictStartDate") {
+                      opt = HKQueryOptions.strictStartDate
+                  }
+                  
+                  if options!.contains("StrictEndDate") {
+                      if (opt != nil) {
+                          opt = opt?.union(HKQueryOptions.strictEndDate)
+                      } else {
+                          opt = HKQueryOptions.strictEndDate;
+                      }
+                  }
+                  return HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: opt ?? [])
+              } else {
+                  return HKQuery.predicateForSamples(withStart: startDate, end: endDate)
+              }
+          }
+      }
     // If we get here it means that we don't have the logic to build
     // the requested predicate. This likely means that either the descriptor
     // is invalid, or new features were added to HealthKit that we haven't
