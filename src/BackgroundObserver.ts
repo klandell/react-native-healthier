@@ -22,9 +22,9 @@ class BackgroundObserver {
   ready: boolean = false;
   subscription: EmitterSubscription | undefined;
 
-  subscribe(handler: DataHandler) {
+  subscribe(dataTypeIdentifier: string, handler: DataHandler) {
     this.subscription = eventEmitter.addListener(
-      'onData',
+      `rnhealthier_${dataTypeIdentifier}`,
       async (event: BackgroundObserverDataEvent) => {
         await handler(event);
         ObservationEmitter.finish();
