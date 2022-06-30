@@ -1,10 +1,9 @@
 import type { Code, ValueOf } from '../types';
-import type QuantityTypeIdentifier from './QuantityTypeIdentifier';
+import type QuantityTypeIdentifier from '../constants/QuantityTypeIdentifier';
 
 export const LOINCSystemURI = 'http://loinc.org';
 
 type LoincMap = {
-  // TODO: Is this key of or value of?
   [K in ValueOf<typeof QuantityTypeIdentifier>]?:
     | Readonly<Code>
     | ReadonlyArray<Code>;

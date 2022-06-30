@@ -1,9 +1,7 @@
-import LOINC, { LOINCSystemURI } from './constants/LOINC';
-import TypeIdentifier, {
-  HKSystemURI,
-  QuantityTypeIdentifier,
-} from './constants/DataTypeIdentifier';
-import UCOM, { UCOMSystemURI } from './constants/UCOM';
+import HK, { HKSystemURI } from './systems/HK';
+import LOINC, { LOINCSystemURI } from './systems/LOINC';
+import type QuantityTypeIdentifier from './constants/QuantityTypeIdentifier';
+import UCOM, { UCOMSystemURI } from './systems/UCOM';
 import type { Code, CodeWithSystem, TimeInterval, ValueOf } from './types';
 
 type Subject = {
@@ -37,25 +35,23 @@ type Result = {
 };
 
 function ignite(
-  typeIdentifier: ValueOf<typeof TypeIdentifier>,
+  // TODO: This can only handle Quanity types right now
+  typeIdentifier: ValueOf<typeof QuantityTypeIdentifier>,
   result: Result,
   subject: Subject
 ): Observation | undefined {
   const { uuid, startAt, endAt, value, unit: unitString } = result;
 
-  // TODO: REWRITE THIS!
-  const indentityAsQuantity =
-    typeIdentifier as keyof typeof QuantityTypeIdentifier;
-  // Right now we are only handling HKQuantityTypeIdentifiers
-  if (QuantityTypeIdentifier[indentityAsQuantity]) {
-    // TODO: END TODO
-    //
-    //
-    const coding: CodeWithSystem[] = [
-      { ...TypeIdentifier[typeIdentifier], system: HKSystemURI },
-    ];
+  if (HK.HKQuantity[typeIdentifier]) {
+    const coding: CodeWithSystem[] = [];
 
-    const lc = LOINC[indentityAsQuantity];
+    const hkc = HK.HKQuantity[typeIdentifier];
+    if (hkc) {
+      const hkcArray = (Array.isArray(hkc) ? hkc : [hkc]) as Code[];
+      hkcArray.forEach((o) => coding.push({ ...o, system: HKSystemURI }));
+    }
+
+    const lc = LOINC[typeIdentifier];
     if (lc) {
       const lcArray = (Array.isArray(lc) ? lc : [lc]) as Code[];
       lcArray.forEach((o) => coding.push({ ...o, system: LOINCSystemURI }));

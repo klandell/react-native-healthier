@@ -15,8 +15,6 @@ type SampleType =
   | ValueOf<typeof QuantityTypeIdentifier>
   | ValueOf<typeof WorkoutTypeIdentifer>;
 
-export type QueryDescriptor = SampleQueryDescriptor;
-
 type SampleQueryDescriptor = {
   type: 'SampleQuery';
   sampleType: string;
@@ -26,10 +24,24 @@ type SampleQueryDescriptor = {
   resultOptions: ResultOptions;
 };
 
-type SortDescriptor = {
-  type: ValueOf<typeof SortIdentifier>;
-  data: { ascending: boolean };
-};
+export type QueryDescriptor = SampleQueryDescriptor;
+
+type Predicate =
+  | { type: 'Nil' }
+  | { type: 'ForObject'; query: PredicateWithUUID }
+  | {
+      type: 'ForObjects';
+      query:
+        | PredicateWithDeviceProperty
+        | PredicateWithMetadataKey
+        | PredicateWithUUID;
+    }
+  | { type: 'ForSamples'; query: PredicateWithDateRange };
+
+type CompoundPredicate =
+  | { type: 'And'; subpredicates: (CompoundPredicate | Predicate)[] }
+  | { type: 'Not'; subpredicate: CompoundPredicate | Predicate }
+  | { type: 'Or'; subpredicates: (CompoundPredicate | Predicate)[] };
 
 type ResultOptions = {
   includeDevice?: boolean;
@@ -86,18 +98,33 @@ export function sampleQuery(
   };
 }
 
+type SortDescriptor = {
+  type: ValueOf<typeof SortIdentifier>;
+  data: { ascending: boolean };
+};
+
 /**
  * Creates a sort descriptor for a given sort identifier.
- * @param key - The key to a pre-defined sort identifier.
- * @param ascending - Sort ascending or descending.
+ * @param options.key - The key to a pre-defined sort identifier.
+ * @param options.ascending - Sort ascending or descending.
  * @returns A sort descriptor for the samples.
  */
-export function createSortDescriptor(
-  key: ValueOf<typeof SortIdentifier>,
-  ascending: boolean = true
-): SortDescriptor {
+export function createSortDescriptor(options: {
+  key: ValueOf<typeof SortIdentifier>;
+  ascending?: boolean;
+}): SortDescriptor {
+  const { key, ascending = true } = options;
   return { type: key, data: { ascending } };
 }
+
+type PredicateWithUUID = {
+  type: 'UUID';
+  data: {
+    uuid: UUID | UUID[];
+  };
+};
+
+type UUID = string;
 
 /**
  * Returns a predicate that matches an object with the specified universally
@@ -111,6 +138,11 @@ export function createSortDescriptor(
 export function predicateForObjectWithUUID(uuid: UUID): Predicate {
   return { type: 'ForObject', query: { type: 'UUID', data: { uuid } } };
 }
+
+type PredicateWithDeviceProperty = {
+  type: 'DeviceProperty';
+  data: { key: ValueOf<typeof DeviceProperty>; value: string[] };
+};
 
 /**
  * Returns a predicate that matches all objects created by devices with the specified properties.
@@ -129,6 +161,17 @@ export function predicateForObjectsWithDeviceProperty(options: {
     query: { type: 'DeviceProperty', data: { key, value: valueArray } },
   };
 }
+
+type PredicateWithMetadataKey = {
+  type: 'MetadataKey';
+  data: {
+    key: ValueOf<typeof MetadataKey>;
+    value?: MetadataValue | MetadataValue[];
+    operator?: ValueOf<typeof ComparisonOperator>;
+  };
+};
+
+type MetadataValue = boolean | string | number | Date;
 
 /**
  * Returns a predicate that matches objects based on the provided metadata key, value, and operator.
@@ -162,6 +205,13 @@ export function predicateForObjectsWithUUID(uuid: UUID[]): Predicate {
   return { type: 'ForObjects', query: { type: 'UUID', data: { uuid } } };
 }
 
+type PredicateWithDateRange = {
+  type: 'DateRange';
+  data: { start?: string; end?: string; options?: DateRangeOptions[] };
+};
+
+type DateRangeOptions = 'StrictStartDate' | 'StrictEndDate';
+
 /**
  * Returns a predicate for samples whose start and end dates fall within the specified time interval.
  * @param opts.start - The start date for the target time interval.
@@ -185,6 +235,10 @@ export function predicateForSamples(opts: {
   };
 }
 
+type CompoundOptions =
+  | { type: 'And' | 'Or'; subpredicates: (CompoundPredicate | Predicate)[] }
+  | { type: 'Not'; subpredicate: CompoundPredicate | Predicate };
+
 /**
  * Evaluates the logical combination of other predicates
  * @param options.type - The logical operator to apply
@@ -206,81 +260,3 @@ export function compoundPredicate(options: CompoundOptions): CompoundPredicate {
   // Throw an error if misconfigured, just in case.
   throw new Error('Invalid Compound Predicate type');
 }
-
-/*
- * TODO: CLEAN THESE UP!
- */
-
-type UUID = string;
-
-type PredicateWithUUID = {
-  type: 'UUID';
-  data: {
-    uuid: UUID | UUID[];
-  };
-};
-
-type MetadataValue = boolean | string | number | Date;
-
-type PredicateWithMetadataKey = {
-  type: 'MetadataKey';
-  data: {
-    key: ValueOf<typeof MetadataKey>;
-    value?: MetadataValue | MetadataValue[];
-    operator?: ValueOf<typeof ComparisonOperator>;
-  };
-};
-
-type DateRangeOptions = 'StrictStartDate' | 'StrictEndDate';
-
-type PredicateWithDateRange = {
-  type: 'DateRange';
-  data: { start?: string; end?: string; options?: DateRangeOptions[] };
-};
-
-type PredicateWithDeviceProperty = {
-  type: 'DeviceProperty';
-  data: { key: ValueOf<typeof DeviceProperty>; value: string[] };
-};
-
-type Predicate =
-  | { type: 'Nil' }
-  | {
-      type: 'ForObject';
-      query: PredicateWithUUID;
-    }
-  | {
-      type: 'ForObjects';
-      query:
-        | PredicateWithDeviceProperty
-        | PredicateWithMetadataKey
-        | PredicateWithUUID;
-    }
-  | {
-      type: 'ForSamples';
-      query: PredicateWithDateRange;
-    };
-
-type CompoundPredicate =
-  | {
-      type: 'And';
-      subpredicates: (CompoundPredicate | Predicate)[];
-    }
-  | {
-      type: 'Not';
-      subpredicate: CompoundPredicate | Predicate;
-    }
-  | {
-      type: 'Or';
-      subpredicates: (CompoundPredicate | Predicate)[];
-    };
-
-type CompoundOptions =
-  | {
-      type: 'And' | 'Or';
-      subpredicates: (CompoundPredicate | Predicate)[];
-    }
-  | {
-      type: 'Not';
-      subpredicate: CompoundPredicate | Predicate;
-    };

@@ -1,657 +1,692 @@
+import type { Code, ValueOf } from '../types';
+import type CategoryTypeIdentifier from '../constants/CategoryTypeIdentifier';
+import type QuantityTypeIdentifier from '../constants/QuantityTypeIdentifier';
+import type CorrelationTypeIdentifier from '../constants/CorrelationTypeIdentifier';
+import type CharacteristicTypeIdentifier from '../constants/CharacteristicTypeIdentifier';
+
 export const HKSystemURI = 'com.apple.health';
 
-// TODO: COME BACK TO AND GET RID OF WHAT I CAN!
+type HKCategoryMap = {
+  [K in ValueOf<typeof CategoryTypeIdentifier>]?:
+    | Readonly<Code>
+    | ReadonlyArray<Code>;
+};
 
-export const CategoryTypeIdentifier = {
+const HKCategory: HKCategoryMap = {
   AbdominalCramps: {
-    code: 'AbdominalCramps',
+    code: 'HKCategoryTypeIdentifierAbdominalCramps',
     display: 'Abdominal Cramps',
   },
   Acne: {
-    code: 'Acne',
+    code: 'HKCategoryTypeIdentifierAcne',
     display: 'Acne',
   },
   AppetiteChanges: {
-    code: 'AppetiteChanges',
+    code: 'HKCategoryTypeIdentifierAppetiteChanges',
     display: 'Appetite Changes',
   },
   AppleStandHour: {
-    code: 'AppleStandHour',
+    code: 'HKCategoryTypeIdentifierAppleStandHour',
     display: 'Apple Stand Hour',
   },
   AppleWalkingSteadinessEvent: {
-    code: 'AppleWalkingSteadinessEvent',
+    code: 'HKCategoryTypeIdentifierAppleWalkingSteadinessEvent',
     display: 'Apple Walking Steadiness Event',
   },
   BladderIncontinence: {
-    code: 'BladderIncontinence',
+    code: 'HKCategoryTypeIdentifierBladderIncontinence',
     display: 'Bladder Incontinence',
   },
   Bloating: {
-    code: 'Bloating',
+    code: 'HKCategoryTypeIdentifierBloating',
     display: 'Bloating',
   },
   BreastPain: {
-    code: 'BreastPain',
+    code: 'HKCategoryTypeIdentifierBreastPain',
     display: 'Breast Pain',
   },
   CervicalMucusQuality: {
-    code: 'CervicalMucusQuality',
+    code: 'HKCategoryTypeIdentifierCervicalMucusQuality',
     display: 'Cervical Mucus Quality',
   },
   ChestTightnessOrPain: {
-    code: 'ChestTightnessOrPain',
+    code: 'HKCategoryTypeIdentifierChestTightnessOrPain',
     display: 'Chest Tightness Or Pain',
   },
   Chills: {
-    code: 'Chills',
+    code: 'HKCategoryTypeIdentifierChills',
     display: 'Chills',
   },
   Constipation: {
-    code: 'Constipation',
+    code: 'HKCategoryTypeIdentifierConstipation',
     display: 'Constipation',
   },
   Contraceptive: {
-    code: 'Contraceptive',
+    code: 'HKCategoryTypeIdentifierContraceptive',
     display: 'Contraceptive',
   },
   Coughing: {
-    code: 'Coughing',
+    code: 'HKCategoryTypeIdentifierCoughing',
     display: 'Coughing',
   },
   Diarrhea: {
-    code: 'Diarrhea',
+    code: 'HKCategoryTypeIdentifierDiarrhea',
     display: 'Diarrhea',
   },
   Dizziness: {
-    code: 'Dizziness',
+    code: 'HKCategoryTypeIdentifierDizziness',
     display: 'Dizziness',
   },
   DrySkin: {
-    code: 'DrySkin',
+    code: 'HKCategoryTypeIdentifierDrySkin',
     display: 'Dry Skin',
   },
   EnvironmentalAudioExposureEvent: {
-    code: 'EnvironmentalAudioExposureEvent',
+    code: 'HKCategoryTypeIdentifierEnvironmentalAudioExposureEvent',
     display: 'Environmental Audio Exposure Event',
   },
   Fainting: {
-    code: 'Fainting',
+    code: 'HKCategoryTypeIdentifierFainting',
     display: 'Fainting',
   },
   Fatigue: {
-    code: 'Fatigue',
+    code: 'HKCategoryTypeIdentifierFatigue',
     display: 'Fatigue',
   },
   Fever: {
-    code: 'Fever',
+    code: 'HKCategoryTypeIdentifierFever',
     display: 'Fever',
   },
   GeneralizedBodyAche: {
-    code: 'GeneralizedBodyAche',
+    code: 'HKCategoryTypeIdentifierGeneralizedBodyAche',
     display: 'Generalized Body Ache',
   },
   HairLoss: {
-    code: 'HairLoss',
+    code: 'HKCategoryTypeIdentifierHairLoss',
     display: 'Hair Loss',
   },
   HandwashingEvent: {
-    code: 'HandwashingEvent',
+    code: 'HKCategoryTypeIdentifierHandwashingEvent',
     display: 'Handwashing Event',
   },
   Headache: {
-    code: 'Headache',
+    code: 'HKCategoryTypeIdentifierHeadache',
     display: 'Headache',
   },
   HeadphoneAudioExposureEvent: {
-    code: 'HeadphoneAudioExposureEvent',
+    code: 'HKCategoryTypeIdentifierHeadphoneAudioExposureEvent',
     display: 'Headphone Audio Exposure Event',
   },
   Heartburn: {
-    code: 'Heartburn',
+    code: 'HKCategoryTypeIdentifierHeartburn',
     display: 'Heartburn',
   },
   HighHeartRateEvent: {
-    code: 'HighHeartRateEvent',
+    code: 'HKCategoryTypeIdentifierHighHeartRateEvent',
     display: 'High Heart Rate Event',
   },
   IntermenstrualBleeding: {
-    code: 'IntermenstrualBleeding',
+    code: 'HKCategoryTypeIdentifierIntermenstrualBleeding',
     display: 'Intermenstrual Bleeding',
   },
   IrregularHeartRhythmEvent: {
-    code: 'IrregularHeartRhythmEvent',
+    code: 'HKCategoryTypeIdentifierIrregularHeartRhythmEvent',
     display: 'Irregular Heart Rhythm Event',
   },
   Lactation: {
-    code: 'Lactation',
+    code: 'HKCategoryTypeIdentifierLactation',
     display: 'Lactation',
   },
   LossOfSmell: {
-    code: 'LossOfSmell',
+    code: 'HKCategoryTypeIdentifierLossOfSmell',
     display: 'Los sOf Smell',
   },
   LossOfTaste: {
-    code: 'LossOfTaste',
+    code: 'HKCategoryTypeIdentifierLossOfTaste',
     display: 'Loss Of Taste',
   },
   LowCardioFitnessEvent: {
-    code: 'LowCardioFitnessEvent',
+    code: 'HKCategoryTypeIdentifierLowCardioFitnessEvent',
     display: 'Low Cardio Fitness Event',
   },
   LowerBackPain: {
-    code: 'LowerBackPain',
+    code: 'HKCategoryTypeIdentifierLowerBackPain',
     display: 'Lower Back Pain',
   },
   LowHeartRateEvent: {
-    code: 'LowHeartRateEvent',
+    code: 'HKCategoryTypeIdentifierLowHeartRateEvent',
     display: 'Low Heart Rate Event',
   },
   MemoryLapse: {
-    code: 'MemoryLapse',
+    code: 'HKCategoryTypeIdentifierMemoryLapse',
     display: 'Memory Lapse',
   },
   MenstrualFlow: {
-    code: 'MenstrualFlow',
+    code: 'HKCategoryTypeIdentifierMenstrualFlow',
     display: 'Menstrual Flow',
   },
   MindfulSession: {
-    code: 'MindfulSession',
+    code: 'HKCategoryTypeIdentifierMindfulSession',
     display: 'Mindful Session',
   },
   MoodChanges: {
-    code: 'MoodChanges',
+    code: 'HKCategoryTypeIdentifierMoodChanges',
     display: 'Mood Changes',
   },
-  Nausea: { code: 'Nausea', display: 'Nausea' },
+  Nausea: {
+    code: 'HKCategoryTypeIdentifierNausea',
+    display: 'Nausea',
+  },
   NightSweats: {
-    code: 'NightSweats',
+    code: 'HKCategoryTypeIdentifierNightSweats',
     display: 'Night Sweats',
   },
   OvulationTestResult: {
-    code: 'OvulationTestResult',
+    code: 'HKCategoryTypeIdentifierOvulationTestResult',
     display: 'Ovulation Test Result',
   },
   PelvicPain: {
-    code: 'PelvicPain',
+    code: 'HKCategoryTypeIdentifierPelvicPain',
     display: 'Pelvic Pain',
   },
   Pregnancy: {
-    code: 'Pregnancy',
+    code: 'HKCategoryTypeIdentifierPregnancy',
     display: 'Pregnancy',
   },
   PregnancyTestResult: {
-    code: 'PregnancyTestResult',
+    code: 'HKCategoryTypeIdentifierPregnancyTestResult',
     display: 'Pregnancy Test Result',
   },
   ProgesteroneTestResult: {
-    code: 'ProgesteroneTestResult',
+    code: 'HKCategoryTypeIdentifierProgesteroneTestResult',
     display: 'Progesterone Test Result',
   },
   RapidPoundingOrFlutteringHeartbeat: {
-    code: 'RapidPoundingOrFlutteringHeartbeat',
+    code: 'HKCategoryTypeIdentifierRapidPoundingOrFlutteringHeartbeat',
     display: 'Rapid Pounding Or Fluttering Heartbeat',
   },
   RunnyNose: {
-    code: 'RunnyNose',
+    code: 'HKCategoryTypeIdentifierRunnyNose',
     display: 'Runny Nose',
   },
   SexualActivity: {
-    code: 'SexualActivity',
+    code: 'HKCategoryTypeIdentifierSexualActivity',
     display: 'Sexual Activity',
   },
   ShortnessOfBreath: {
-    code: 'ShortnessOfBreath',
+    code: 'HKCategoryTypeIdentifierShortnessOfBreath',
     display: 'Shortness Of Breath',
   },
   SinusCongestion: {
-    code: 'SinusCongestion',
+    code: 'HKCategoryTypeIdentifierSinusCongestion',
     display: 'Sinus Congestion',
   },
   SkippedHeartbeat: {
-    code: 'SkippedHeartbeat',
+    code: 'HKCategoryTypeIdentifierSkippedHeartbeat',
     display: 'Skipped Heartbeat',
   },
   SleepAnalysis: {
-    code: 'SleepAnalysis',
+    code: 'HKCategoryTypeIdentifierSleepAnalysis',
     display: 'Sleep Analysis',
   },
   SleepChanges: {
-    code: 'SleepChanges',
+    code: 'HKCategoryTypeIdentifierSleepChanges',
     display: 'Sleep Changes',
   },
   SoreThroat: {
-    code: 'SoreThroat',
+    code: 'HKCategoryTypeIdentifierSoreThroat',
     display: 'Sore Throat',
   },
   ToothbrushingEvent: {
-    code: 'ToothbrushingEvent',
+    code: 'HKCategoryTypeIdentifierToothbrushingEvent',
     display: 'Toothbrushing Event',
   },
   VaginalDryness: {
-    code: 'VaginalDryness',
+    code: 'HKCategoryTypeIdentifierVaginalDryness',
     display: 'Vaginal Dryness',
   },
   Vomiting: {
-    code: 'Vomiting',
+    code: 'HKCategoryTypeIdentifierVomiting',
     display: 'Vomiting',
   },
   Wheezing: {
-    code: 'Wheezing',
+    code: 'HKCategoryTypeIdentifierWheezing',
     display: 'Wheezing',
   },
 } as const;
 
-export const CharacteristicTypeIdentifier = {
+type HKCharacteristicMap = {
+  [K in ValueOf<typeof CharacteristicTypeIdentifier>]?:
+    | Readonly<Code>
+    | ReadonlyArray<Code>;
+};
+
+const HKCharacteristic: HKCharacteristicMap = {
   ActivityMoveMode: {
-    code: 'ActivityMoveMode',
+    code: 'HKCharacteristicTypeIdentifierActivityMoveMode',
     display: 'Activity Move Mode',
   },
   BiologicalSex: {
-    code: 'BiologicalSex',
+    code: 'HKCharacteristicTypeIdentifierBiologicalSex',
     display: 'Biological Sex',
   },
   BloodType: {
-    code: 'BloodType',
+    code: 'HKCharacteristicTypeIdentifierBloodType',
     display: 'Blood Type',
   },
   DateOfBirth: {
-    code: 'DateOfBirth',
+    code: 'HKCharacteristicTypeIdentifierDateOfBirth',
     display: 'Date Of Birth',
   },
   FitzpatrickSkinType: {
-    code: 'FitzpatrickSkinType',
+    code: 'HKCharacteristicTypeIdentifierFitzpatrickSkinType',
     display: 'Fitzpatrick Skin Type',
   },
   WheelchairUse: {
-    code: 'WheelchairUse',
+    code: 'HKCharacteristicTypeIdentifierWheelchairUse',
     display: 'Wheelchair Use',
   },
 } as const;
 
-export const CorrelationTypeIdentifier = {
+type HKCorrelationMap = {
+  [K in ValueOf<typeof CorrelationTypeIdentifier>]?:
+    | Readonly<Code>
+    | ReadonlyArray<Code>;
+};
+
+const HKCorrelation: HKCorrelationMap = {
   BloodPressure: {
-    code: 'BloodPressure',
+    code: 'HKCorrelationTypeIdentifierBloodPressure',
     display: 'Blood Pressure',
   },
   Food: {
-    code: 'Food',
+    code: 'HKCorrelationTypeIdentifierFood',
     display: 'Food',
   },
 } as const;
 
-export const QuantityTypeIdentifier = {
+type HKQuantityMap = {
+  [K in ValueOf<typeof QuantityTypeIdentifier>]?:
+    | Readonly<Code>
+    | ReadonlyArray<Code>;
+};
+
+const HKQuantity: HKQuantityMap = {
   ActiveEnergyBurned: {
-    code: 'ActiveEnergyBurned',
+    code: 'HKQuantityTypeIdentifierActiveEnergyBurned',
     display: 'Active Energy Burned',
   },
   AppleExerciseTime: {
-    code: 'AppleExerciseTime',
+    code: 'HKQuantityTypeIdentifierAppleExerciseTime',
     display: 'Apple Exercise Time',
   },
   AppleMoveTime: {
-    code: 'AppleMoveTime',
+    code: 'HKQuantityTypeIdentifierAppleMoveTime',
     display: 'Apple Move Time',
   },
   AppleStandTime: {
-    code: 'AppleStandTime',
+    code: 'HKQuantityTypeIdentifierAppleStandTime',
     display: 'Apple Stand Time',
   },
   AppleWalkingSteadiness: {
-    code: 'AppleWalkingSteadiness',
+    code: 'HKQuantityTypeIdentifierAppleWalkingSteadiness',
     display: 'Apple Walking Steadiness',
   },
   BasalBodyTemperature: {
-    code: 'BasalBodyTemperature',
+    code: 'HKQuantityTypeIdentifierBasalBodyTemperature',
     display: 'Basal Body Temperature',
   },
   BasalEnergyBurned: {
-    code: 'BasalEnergyBurned',
+    code: 'HKQuantityTypeIdentifierBasalEnergyBurned',
     display: 'Basal Energy Burned',
   },
   BloodAlcoholContent: {
-    code: 'BloodAlcoholContent',
+    code: 'HKQuantityTypeIdentifierBloodAlcoholContent',
     display: 'Blood Alcohol Content',
   },
   BloodGlucose: {
-    code: 'BloodGlucose',
+    code: 'HKQuantityTypeIdentifierBloodGlucose',
     display: 'Blood Glucose',
   },
   BloodPressureDiastolic: {
-    code: 'BloodPressureDiastolic',
+    code: 'HKQuantityTypeIdentifierBloodPressureDiastolic',
     display: 'Blood Pressure Diastolic',
   },
   BloodPressureSystolic: {
-    code: 'BloodPressureSystolic',
+    code: 'HKQuantityTypeIdentifierBloodPressureSystolic',
     display: 'Blood Pressure Systolic',
   },
   BodyFatPercentage: {
-    code: 'BodyFatPercentage',
+    code: 'HKQuantityTypeIdentifierBodyFatPercentage',
     display: 'Body Fat Percentage',
   },
   BodyMass: {
-    code: 'BodyMass',
+    code: 'HKQuantityTypeIdentifierBodyMass',
     display: 'Body Mass',
   },
   BodyMassIndex: {
-    code: 'BodyMassIndex',
+    code: 'HKQuantityTypeIdentifierBodyMassIndex',
     display: 'Body Mass Index',
   },
   BodyTemperature: {
-    code: 'BodyTemperature',
+    code: 'HKQuantityTypeIdentifierBodyTemperature',
     display: 'Body Temperature',
   },
   DietaryBiotin: {
-    code: 'DietaryBiotin',
+    code: 'HKQuantityTypeIdentifierDietaryBiotin',
     display: 'Dietary Biotin',
   },
   DietaryCaffeine: {
-    code: 'DietaryCaffeine',
+    code: 'HKQuantityTypeIdentifierDietaryCaffeine',
     display: 'Dietary Caffeine',
   },
   DietaryCalcium: {
-    code: 'DietaryCalcium',
+    code: 'HKQuantityTypeIdentifierDietaryCalcium',
     display: 'Dietary Calcium',
   },
   DietaryCarbohydrates: {
-    code: 'DietaryCarbohydrates',
+    code: 'HKQuantityTypeIdentifierDietaryCarbohydrates',
     display: 'Dietary Carbohydrates',
   },
   DietaryChloride: {
-    code: 'DietaryChloride',
+    code: 'HKQuantityTypeIdentifierDietaryChloride',
     display: 'Dietary Chloride',
   },
   DietaryCholesterol: {
-    code: 'DietaryCholesterol',
+    code: 'HKQuantityTypeIdentifierDietaryCholesterol',
     display: 'Dietary Cholesterol',
   },
   DietaryChromium: {
-    code: 'DietaryChromium',
+    code: 'HKQuantityTypeIdentifierDietaryChromium',
     display: 'Dietary Chromium',
   },
   DietaryCopper: {
-    code: 'DietaryCopper',
+    code: 'HKQuantityTypeIdentifierDietaryCopper',
     display: 'Dietary Copper',
   },
   DietaryEnergyConsumed: {
-    code: 'DietaryEnergyConsumed',
+    code: 'HKQuantityTypeIdentifierDietaryEnergyConsumed',
     display: 'Dietary Energy Consumed',
   },
   DietaryFatMonounsaturated: {
-    code: 'DietaryFatMonounsaturated',
+    code: 'HKQuantityTypeIdentifierDietaryFatMonounsaturated',
     display: 'Dietary Fat Monounsaturated',
   },
   DietaryFatPolyunsaturated: {
-    code: 'DietaryFatPolyunsaturated',
+    code: 'HKQuantityTypeIdentifierDietaryFatPolyunsaturated',
     display: 'Dietary Fat Polyunsaturated',
   },
   DietaryFatSaturated: {
-    code: 'DietaryFatSaturated',
+    code: 'HKQuantityTypeIdentifierDietaryFatSaturated',
     display: 'Dietary Fat Saturated',
   },
   DietaryFatTotal: {
-    code: 'DietaryFatTotal',
+    code: 'HKQuantityTypeIdentifierDietaryFatTotal',
     display: 'Dietary Fat Total',
   },
   DietaryFiber: {
-    code: 'DietaryFiber',
+    code: 'HKQuantityTypeIdentifierDietaryFiber',
     display: 'Dietary Fiber',
   },
   DietaryFolate: {
-    code: 'DietaryFolate',
+    code: 'HKQuantityTypeIdentifierDietaryFolate',
     display: 'Dietary Folate',
   },
   DietaryIodine: {
-    code: 'DietaryIodine',
+    code: 'HKQuantityTypeIdentifierDietaryIodine',
     display: 'Dietary Iodine',
   },
   DietaryIron: {
-    code: 'DietaryIron',
+    code: 'HKQuantityTypeIdentifierDietaryIron',
     display: 'Dietary Iron',
   },
   DietaryMagnesium: {
-    code: 'DietaryMagnesium',
+    code: 'HKQuantityTypeIdentifierDietaryMagnesium',
     display: 'Dietary Magnesium',
   },
   DietaryManganese: {
-    code: 'DietaryManganese',
+    code: 'HKQuantityTypeIdentifierDietaryManganese',
     display: 'Dietary Manganese',
   },
   DietaryMolybdenum: {
-    code: 'DietaryMolybdenum',
+    code: 'HKQuantityTypeIdentifierDietaryMolybdenum',
     display: 'Dietary Molybdenum',
   },
   DietaryNiacin: {
-    code: 'DietaryNiacin',
+    code: 'HKQuantityTypeIdentifierDietaryNiacin',
     display: 'Dietary Niacin',
   },
   DietaryPantothenicAcid: {
-    code: 'DietaryPantothenicAcid',
+    code: 'HKQuantityTypeIdentifierDietaryPantothenicAcid',
     display: 'Dietary Pantothenic Acid',
   },
   DietaryPhosphorus: {
-    code: 'DietaryPhosphorus',
+    code: 'HKQuantityTypeIdentifierDietaryPhosphorus',
     display: 'Dietary Phosphorus',
   },
   DietaryPotassium: {
-    code: 'DietaryPotassium',
+    code: 'HKQuantityTypeIdentifierDietaryPotassium',
     display: 'Dietary Potassium',
   },
   DietaryProtein: {
-    code: 'DietaryProtein',
+    code: 'HKQuantityTypeIdentifierDietaryProtein',
     display: 'Dietary Protein',
   },
   DietaryRiboflavin: {
-    code: 'DietaryRiboflavin',
+    code: 'HKQuantityTypeIdentifierDietaryRiboflavin',
     display: 'Dietary Riboflavin',
   },
   DietarySelenium: {
-    code: 'DietarySelenium',
+    code: 'HKQuantityTypeIdentifierDietarySelenium',
     display: 'Dietary Selenium',
   },
   DietarySodium: {
-    code: 'DietarySodium',
+    code: 'HKQuantityTypeIdentifierDietarySodium',
     display: 'Dietary Sodium',
   },
   DietarySugar: {
-    code: 'DietarySugar',
+    code: 'HKQuantityTypeIdentifierDietarySugar',
     display: 'Dietary Sugar',
   },
   DietaryThiamin: {
-    code: 'DietaryThiamin',
+    code: 'HKQuantityTypeIdentifierDietaryThiamin',
     display: 'Dietary Thiamin',
   },
   DietaryVitaminA: {
-    code: 'DietaryVitaminA',
+    code: 'HKQuantityTypeIdentifierDietaryVitaminA',
     display: 'Dietary Vitamin A',
   },
   DietaryVitaminB12: {
-    code: 'DietaryVitaminB12',
+    code: 'HKQuantityTypeIdentifierDietaryVitaminB12',
     display: 'Dietary Vitamin B12',
   },
   DietaryVitaminB6: {
-    code: 'DietaryVitaminB6',
+    code: 'HKQuantityTypeIdentifierDietaryVitaminB6',
     display: 'Dietary Vitamin B6',
   },
   DietaryVitaminC: {
-    code: 'DietaryVitaminC',
+    code: 'HKQuantityTypeIdentifierDietaryVitaminC',
     display: 'Dietary Vitamin C',
   },
   DietaryVitaminD: {
-    code: 'DietaryVitaminD',
+    code: 'HKQuantityTypeIdentifierDietaryVitaminD',
     display: 'Dietary Vitamin D',
   },
   DietaryVitaminE: {
-    code: 'DietaryVitaminE',
+    code: 'HKQuantityTypeIdentifierDietaryVitaminE',
     display: 'Dietary Vitamin E',
   },
   DietaryVitaminK: {
-    code: 'DietaryVitaminK',
+    code: 'HKQuantityTypeIdentifierDietaryVitaminK',
     display: 'Dietary Vitamin K',
   },
   DietaryWater: {
-    code: 'DietaryWater',
+    code: 'HKQuantityTypeIdentifierDietaryWater',
     display: 'Dietary Water',
   },
   DietaryZinc: {
-    code: 'DietaryZinc',
+    code: 'HKQuantityTypeIdentifierDietaryZinc',
     display: 'Dietary Zinc',
   },
   DistanceCycling: {
-    code: 'DistanceCycling',
+    code: 'HKQuantityTypeIdentifierDistanceCycling',
     display: 'Distance Cycling',
   },
   DistanceDownhillSnowSports: {
-    code: 'DistanceDownhillSnowSports',
+    code: 'HKQuantityTypeIdentifierDistanceDownhillSnowSports',
     display: 'Distance Downhill SnowSports',
   },
   DistanceSwimming: {
-    code: 'DistanceSwimming',
+    code: 'HKQuantityTypeIdentifierDistanceSwimming',
     display: 'Distance Swimming',
   },
   DistanceWalkingRunning: {
-    code: 'DistanceWalkingRunning',
+    code: 'HKQuantityTypeIdentifierDistanceWalkingRunning',
     display: 'Distance Walking Running',
   },
   DistanceWheelchair: {
-    code: 'DistanceWheelchair',
+    code: 'HKQuantityTypeIdentifierDistanceWheelchair',
     display: 'Distance Wheelchair',
   },
   ElectrodermalActivity: {
-    code: 'ElectrodermalActivity',
+    code: 'HKQuantityTypeIdentifierElectrodermalActivity',
     display: 'Electrodermal Activity',
   },
   EnvironmentalAudioExposure: {
-    code: 'EnvironmentalAudioExposure',
+    code: 'HKQuantityTypeIdentifierEnvironmentalAudioExposure',
     display: 'Environmental Audio Exposure',
   },
   FlightsClimbed: {
-    code: 'FlightsClimbed',
+    code: 'HKQuantityTypeIdentifierFlightsClimbed',
     display: 'Flights Climbed',
   },
   ForcedExpiratoryVolume1: {
-    code: 'ForcedExpiratoryVolume1',
+    code: 'HKQuantityTypeIdentifierForcedExpiratoryVolume1',
     display: 'Forced Expiratory Volume in 1s',
   },
   ForcedVitalCapacity: {
-    code: 'ForcedVitalCapacity',
+    code: 'HKQuantityTypeIdentifierForcedVitalCapacity',
     display: 'Forced Vital Capacity',
   },
   HeadphoneAudioExposure: {
-    code: 'HeadphoneAudioExposure',
+    code: 'HKQuantityTypeIdentifierHeadphoneAudioExposure',
     display: 'Headphone Audio Exposure',
   },
   HeartRate: {
-    code: 'HeartRate',
+    code: 'HKQuantityTypeIdentifierHeartRate',
     display: 'Heart Rate',
   },
   HeartRateVariabilitySDNN: {
-    code: 'HeartRateVariabilitySDNN',
+    code: 'HKQuantityTypeIdentifierHeartRateVariabilitySDNN',
     display: 'Heart Rate Variability SDNN',
   },
   Height: {
-    code: 'Height',
+    code: 'HKQuantityTypeIdentifierHeight',
     display: 'Height',
   },
   InhalerUsage: {
-    code: 'InhalerUsage',
+    code: 'HKQuantityTypeIdentifierInhalerUsage',
     display: 'Inhaler Usage',
   },
   InsulinDelivery: {
-    code: 'InsulinDelivery',
+    code: 'HKQuantityTypeIdentifierInsulinDelivery',
     display: 'Insulin Delivery',
   },
   LeanBodyMass: {
-    code: 'LeanBodyMass',
+    code: 'HKQuantityTypeIdentifierLeanBodyMass',
     display: 'Lean Body Mass',
   },
   NikeFuel: {
-    code: 'NikeFuel',
+    code: 'HKQuantityTypeIdentifierNikeFuel',
     display: 'Nike Fuel',
   },
   NumberOfAlcoholicBeverages: {
-    code: 'NumberOfAlcoholicBeverages',
+    code: 'HKQuantityTypeIdentifierNumberOfAlcoholicBeverages',
     display: 'Number Of Alcoholic Beverages',
   },
   NumberOfTimesFallen: {
-    code: 'NumberOfTimesFallen',
+    code: 'HKQuantityTypeIdentifierNumberOfTimesFallen',
     display: 'Number Of Times Fallen',
   },
   OxygenSaturation: {
-    code: 'OxygenSaturation',
+    code: 'HKQuantityTypeIdentifierOxygenSaturation',
     display: 'Oxygen Saturation',
   },
   PeakExpiratoryFlowRate: {
-    code: 'PeakExpiratoryFlowRate',
+    code: 'HKQuantityTypeIdentifierPeakExpiratoryFlowRate',
     display: 'Peak Expiratory Flow Rate',
   },
   PeripheralPerfusionIndex: {
-    code: 'PeripheralPerfusionIndex',
+    code: 'HKQuantityTypeIdentifierPeripheralPerfusionIndex',
     display: 'Peripheral Perfusion Index',
   },
   PushCount: {
-    code: 'PushCount',
+    code: 'HKQuantityTypeIdentifierPushCount',
     display: 'Push Count',
   },
   RespiratoryRate: {
-    code: 'RespiratoryRate',
+    code: 'HKQuantityTypeIdentifierRespiratoryRate',
     display: 'Respiratory Rate',
   },
   RestingHeartRate: {
-    code: 'RestingHeartRate',
+    code: 'HKQuantityTypeIdentifierRestingHeartRate',
     display: 'Resting Heart Rate',
   },
   SixMinuteWalkTestDistance: {
-    code: 'SixMinuteWalkTestDistance',
+    code: 'HKQuantityTypeIdentifierSixMinuteWalkTestDistance',
     display: 'Six Minute Walk Test Distance',
   },
   StairAscentSpeed: {
-    code: 'StairAscentSpeed',
+    code: 'HKQuantityTypeIdentifierStairAscentSpeed',
     display: 'Stair Ascent Speed',
   },
   StairDescentSpeed: {
-    code: 'StairDescentSpeed',
+    code: 'HKQuantityTypeIdentifierStairDescentSpeed',
     display: 'Stair Descent Speed',
   },
-  StepCount: { code: 'StepCount', display: 'Step Count' },
+  StepCount: {
+    code: 'HKQuantityTypeIdentifierStepCount',
+    display: 'Step Count',
+  },
   SwimmingStrokeCount: {
-    code: 'SwimmingStrokeCount',
+    code: 'HKQuantityTypeIdentifierSwimmingStrokeCount',
     display: 'Swimming Stroke Count',
   },
   UvExposure: {
-    code: 'UvExposure',
+    code: 'HKQuantityTypeIdentifierUvExposure',
     display: 'UV Exposure',
   },
   Vo2Max: {
-    code: 'Vo2Max',
+    code: 'HKQuantityTypeIdentifierVo2Max',
     display: 'Vo2 Max',
   },
   WaistCircumference: {
-    code: 'WaistCircumference',
+    code: 'HKQuantityTypeIdentifierWaistCircumference',
     display: 'Waist Circumference',
   },
   WalkingAsymmetryPercentage: {
-    code: 'WalkingAsymmetryPercentage',
+    code: 'HKQuantityTypeIdentifierWalkingAsymmetryPercentage',
     display: 'Walking Asymmetry Percentage',
   },
   WalkingDoubleSupportPercentage: {
-    code: 'WalkingDoubleSupportPercentage',
+    code: 'HKQuantityTypeIdentifierWalkingDoubleSupportPercentage',
     display: 'Walking Double Support Percentage',
   },
   WalkingHeartRateAverage: {
-    code: 'WalkingHeartRateAverage',
+    code: 'HKQuantityTypeIdentifierWalkingHeartRateAverage',
     display: 'Walking Heart Rate Average',
   },
   WalkingSpeed: {
-    code: 'WalkingSpeed',
+    code: 'HKQuantityTypeIdentifierWalkingSpeed',
     display: 'Walking Speed',
   },
   WalkingStepLength: {
-    code: 'WalkingStepLength',
+    code: 'HKQuantityTypeIdentifierWalkingStepLength',
     display: 'WalkingStepLength',
   },
 } as const;
 
+/*
 export const SeriesTypeIdentifier = {
   Audiogram: {
     code: 'Audiogram',
@@ -670,21 +705,15 @@ export const SeriesTypeIdentifier = {
     display: 'Workout Route',
   },
 } as const;
+*/
 
+/*
 export const WorkoutTypeIdentifier = {
   Workout: {
     code: 'Workout',
     display: 'Workout',
   },
 } as const;
+*/
 
-const TypeIdentifier = {
-  ...CategoryTypeIdentifier,
-  ...CharacteristicTypeIdentifier,
-  ...CorrelationTypeIdentifier,
-  ...QuantityTypeIdentifier,
-  ...SeriesTypeIdentifier,
-  ...WorkoutTypeIdentifier,
-} as const;
-
-export default TypeIdentifier;
+export default { HKCategory, HKCorrelation, HKCharacteristic, HKQuantity };

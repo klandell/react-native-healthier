@@ -37,6 +37,7 @@ export { Query };
 export { default as ignite } from './ignite';
 
 // Data Type Identifiers
+export { default as CategoryTypeIdentifier } from './constants/CategoryTypeIdentifier';
 export { default as CharacteristicTypeIdentifier } from './constants/CharacteristicTypeIdentifier';
 export { default as CorrelationTypeIdentifier } from './constants/CorrelationTypeIdentifier';
 export { default as QuantityTypeIdentifier } from './constants/QuantityTypeIdentifier';
@@ -50,5 +51,6 @@ export { default as MetadataKey } from './constants/MetadataKey';
 export { default as SortIdentifier } from './constants/SortIdentifier';
 
 // Ignite Constants
-export { default as LOINC } from './constants/LOINC';
-export { default as UCOM } from './constants/UCOM';
+export { default as HKSystem } from './systems/HK';
+export { default as LOINCSystem } from './systems/LOINC';
+export { default as UCOMSystem } from './systems/UCOM';
