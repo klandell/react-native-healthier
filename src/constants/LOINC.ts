@@ -1,13 +1,16 @@
-import type { Code } from '../types';
-import type { QuantityTypeIdentifier } from './DataTypeIdentifier';
+import type { Code, ValueOf } from '../types';
+import type QuantityTypeIdentifier from './QuantityTypeIdentifier';
 
 export const LOINCSystemURI = 'http://loinc.org';
 
-const LOINC: {
-  [K in keyof typeof QuantityTypeIdentifier]?:
+type LoincMap = {
+  // TODO: Is this key of or value of?
+  [K in ValueOf<typeof QuantityTypeIdentifier>]?:
     | Readonly<Code>
     | ReadonlyArray<Code>;
-} = {
+};
+
+const LOINC: LoincMap = {
   ActiveEnergyBurned: {
     code: '41981-2',
     display: 'Calories burned',

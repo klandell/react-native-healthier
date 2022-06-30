@@ -1,8 +1,8 @@
 import { NativeModules, Platform } from 'react-native';
+import QuantityTypeIdentifier from './constants/QuantityTypeIdentifier';
 import type { QueryDescriptor } from './Query';
 
 import * as Query from './Query';
-import ignite from './ignite';
 
 // TODO: RESULT TYPES
 
@@ -33,5 +33,23 @@ export default (NativeModules.RNHealthierModule
       }
     )) as Healthier;
 
-export { Query, ignite };
-export { default as DataTypeIdentifier } from './constants/DataTypeIdentifier';
+// Healthier functions and function groups.
+export { Query };
+export { default as ignite } from './ignite';
+
+// Data Type Identifiers
+export { default as CharacteristicTypeIdentifier } from './constants/CharacteristicTypeIdentifier';
+export { default as CorrelationTypeIdentifier } from './constants/CorrelationTypeIdentifier';
+export { default as QuantityTypeIdentifier } from './constants/QuantityTypeIdentifier';
+export { default as SeriesSampleIdentifier } from './constants/SeriesSampleIdentifier';
+export { default as WorkoutTypeIdentifer } from './constants/WorkoutTypeIdentifer';
+
+// Other HealthKit Constants
+export { default as ComparisonOperator } from './constants/ComparisonOperator';
+export { default as DeviceProperty } from './constants/DeviceProperty';
+export { default as MetadataKey } from './constants/MetadataKey';
+export { default as SortIdentifier } from './constants/SortIdentifier';
+
+// Ignite Constants
+export { default as LOINC } from './constants/LOINC';
+export { default as UCOM } from './constants/UCOM';

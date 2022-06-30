@@ -1,5 +1,7 @@
 export const HKSystemURI = 'com.apple.health';
 
+// TODO: COME BACK TO AND GET RID OF WHAT I CAN!
+
 export const CategoryTypeIdentifier = {
   AbdominalCramps: {
     code: 'AbdominalCramps',

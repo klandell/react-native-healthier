@@ -42,11 +42,15 @@ function ignite(
   subject: Subject
 ): Observation | undefined {
   const { uuid, startAt, endAt, value, unit: unitString } = result;
+
+  // TODO: REWRITE THIS!
   const indentityAsQuantity =
     typeIdentifier as keyof typeof QuantityTypeIdentifier;
-
   // Right now we are only handling HKQuantityTypeIdentifiers
   if (QuantityTypeIdentifier[indentityAsQuantity]) {
+    // TODO: END TODO
+    //
+    //
     const coding: CodeWithSystem[] = [
       { ...TypeIdentifier[typeIdentifier], system: HKSystemURI },
     ];

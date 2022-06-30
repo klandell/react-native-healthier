@@ -1,9 +1,19 @@
 import type ComparisonOperator from './constants/ComparisonOperator';
 import type DeviceProperty from './constants/DeviceProperty';
 import type MetadataKey from './constants/MetadataKey';
-import type SampleType from './constants/SampleType';
 import type SortIdentifier from './constants/SortIdentifier';
 import type { ValueOf } from './types';
+
+import type CharacteristicTypeIdentifier from './constants/CharacteristicTypeIdentifier';
+import type CorrelationTypeIdentifier from './constants/CorrelationTypeIdentifier';
+import type QuantityTypeIdentifier from './constants/QuantityTypeIdentifier';
+import type WorkoutTypeIdentifer from './constants/WorkoutTypeIdentifer';
+
+type SampleType =
+  | ValueOf<typeof CharacteristicTypeIdentifier>
+  | ValueOf<typeof CorrelationTypeIdentifier>
+  | ValueOf<typeof QuantityTypeIdentifier>
+  | ValueOf<typeof WorkoutTypeIdentifer>;
 
 export type QueryDescriptor = SampleQueryDescriptor;
 
@@ -32,7 +42,7 @@ const defaultResultOptions: ResultOptions = {
 };
 
 type SampleQueryOptions = {
-  sampleType: keyof typeof SampleType;
+  sampleType: SampleType;
   predicate?: Predicate | CompoundPredicate;
   limit?: number;
   sortDescriptors?: SortDescriptor[];
@@ -82,7 +92,7 @@ export function sampleQuery(
  * @returns A sort descriptor for the samples.
  */
 export function createSortDescriptor(
-  key: keyof typeof SortIdentifier,
+  key: ValueOf<typeof SortIdentifier>,
   ascending: boolean = true
 ): SortDescriptor {
   return { type: key, data: { ascending } };
@@ -108,7 +118,7 @@ export function predicateForObjectWithUUID(uuid: UUID): Predicate {
  * @returns A predicate that matches all objects created by a device whose specified property matches one of the allowed values.
  */
 export function predicateForObjectsWithDeviceProperty(options: {
-  key: keyof typeof DeviceProperty;
+  key: ValueOf<typeof DeviceProperty>;
   value: string | string[];
 }): Predicate {
   const { key, value } = options;
@@ -127,9 +137,9 @@ export function predicateForObjectsWithDeviceProperty(options: {
  * @returns A predicate that matches objects based on the specified metadata key, operator, and value.
  */
 export function predicateForObjectsWithMetadataKey(options: {
-  key: keyof typeof MetadataKey;
+  key: ValueOf<typeof MetadataKey>;
   value?: MetadataValue | MetadataValue[];
-  operator?: keyof typeof ComparisonOperator;
+  operator?: ValueOf<typeof ComparisonOperator>;
 }): Predicate {
   const { key, value, operator } = options;
   return {

@@ -1,7 +1,4 @@
-const SampleType = {
-  /*--------------------------------*/
-  /*   HKQuantityType Identifiers   */
-  /*--------------------------------*/
+const QuantityTypeIdentifier = {
   BodyMassIndex: 'BodyMassIndex',
   BodyFatPercentage: 'BodyFatPercentage',
   Height: 'Height',
@@ -95,100 +92,6 @@ const SampleType = {
   DietaryCaffeine: 'DietaryCaffeine',
   DietaryWater: 'DietaryWater',
   UvExposure: 'UvExposure',
-  /*--------------------------------*/
-  /*   HKCategoryType Identifiers   */
-  /*--------------------------------*/
-  SleepAnalysis: 'SleepAnalysis',
-  AppleStandHour: 'AppleStandHour',
-  CervicalMucusQuality: 'CervicalMucusQuality',
-  OvulationTestResult: 'OvulationTestResult',
-  PregnancyTestResult: 'PregnancyTestResult',
-  ProgesteroneTestResult: 'ProgesteroneTestResult',
-  MenstrualFlow: 'MenstrualFlow',
-  IntermenstrualBleeding: 'IntermenstrualBleeding',
-  SexualActivity: 'SexualActivity',
-  MindfulSession: 'MindfulSession',
-  HighHeartRateEvent: 'HighHeartRateEvent',
-  LowHeartRateEvent: 'LowHeartRateEvent',
-  IrregularHeartRhythmEvent: 'IrregularHeartRhythmEvent',
-  ToothbrushingEvent: 'ToothbrushingEvent',
-  Pregnancy: 'Pregnancy',
-  Lactation: 'Lactation',
-  Contraceptive: 'Contraceptive',
-  EnvironmentalAudioExposureEvent: 'EnvironmentalAudioExposureEvent',
-  HeadphoneAudioExposureEvent: 'HeadphoneAudioExposureEvent',
-  HandwashingEvent: 'HandwashingEvent',
-  LowCardioFitnessEvent: 'LowCardioFitnessEvent',
-  AppleWalkingSteadinessEvent: 'AppleWalkingSteadinessEvent',
-  AbdominalCramps: 'AbdominalCramps',
-  Acne: 'Acne',
-  AppetiteChanges: 'AppetiteChanges',
-  BladderIncontinence: 'BladderIncontinence',
-  Bloating: 'Bloating',
-  BreastPain: 'BreastPain',
-  ChestTightnessOrPain: 'ChestTightnessOrPain',
-  Chills: 'Chills',
-  Constipation: 'Constipation',
-  Coughing: 'Coughing',
-  Diarrhea: 'Diarrhea',
-  Dizziness: 'Dizziness',
-  DrySkin: 'DrySkin',
-  Fainting: 'Fainting',
-  Fatigue: 'Fatigue',
-  Fever: 'Fever',
-  GeneralizedBodyAche: 'GeneralizedBodyAche',
-  HairLoss: 'HairLoss',
-  Headache: 'Headache',
-  Heartburn: 'Heartburn',
-  LossOfSmell: 'LossOfSmell',
-  LossOfTaste: 'LossOfTaste',
-  LowerBackPain: 'LowerBackPain',
-  MemoryLapse: 'MemoryLapse',
-  MoodChanges: 'MoodChanges',
-  Nausea: 'Nausea',
-  NightSweats: 'NightSweats',
-  PelvicPain: 'PelvicPain',
-  RapidPoundingOrFlutteringHeartbeat: 'RapidPoundingOrFlutteringHeartbeat',
-  RunnyNose: 'RunnyNose',
-  ShortnessOfBreath: 'ShortnessOfBreath',
-  SinusCongestion: 'SinusCongestion',
-  SkippedHeartbeat: 'SkippedHeartbeat',
-  SleepChanges: 'SleepChanges',
-  SoreThroat: 'SoreThroat',
-  VaginalDryness: 'VaginalDryness',
-  Vomiting: 'Vomiting',
-  Wheezing: 'Wheezing',
-  /*--------------------------------------*/
-  /*   HKCharacteristicType Identifiers   */
-  /*--------------------------------------*/
-  BiologicalSex: 'BiologicalSex',
-  BloodType: 'BloodType',
-  DateOfBirth: 'DateOfBirth',
-  FitzpatrickSkinType: 'FitzpatrickSkinType',
-  WheelchairUse: 'WheelchairUse',
-  ActivityMoveMode: 'ActivityMoveMode',
-  /*-----------------------------------*/
-  /*   HKCorrelationType Identifiers   */
-  /*-----------------------------------*/
-  BloodPressure: 'BloodPressure',
-  Food: 'Food',
-  /*------------------------------*/
-  /*   HKWorkoutType Identifier   */
-  /*------------------------------*/
-  Workout: 'Workout',
-  /*--------------------------------*/
-  /*   HKSeriesSample Identifiers   */
-  /*--------------------------------*/
-  WorkoutRoute: 'WorkoutRoute',
-  HeartbeatSeries: 'HeartbeatSeries',
-  /*--------------------------------*/
-  /*   HKAudiogramSampleType        */
-  /*--------------------------------*/
-  Audiogram: 'Audiogram',
-  /*--------------------------------*/
-  /*   HKElectrocardiogramType      */
-  /*--------------------------------*/
-  Electrocardiogram: 'Electrocardiogram',
 } as const;
 
-export default SampleType;
+export default QuantityTypeIdentifier;

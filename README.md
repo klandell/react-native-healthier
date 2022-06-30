@@ -7,14 +7,14 @@ The healthiest way to interact with HealthKit in React Native.
 Healthier is different than other React Native libraries for Apple Health because Healthier provides an API that closely resembles the native HealthKit API. Ultimately Healthier allows you (when it's finished) to query any HealthKit data without the need to define new data accessor methods.
 
 ```TypeScript
-import Healthier, {DataTypeIdentifier, Query, ignite} from 'react-native-healthier';
+import Healthier, {QuantityTypeIdentifier, Query, ignite} from 'react-native-healthier';
 
 // Example: read HRV data from HealthKit
 async function readHRVData(startDate: Date, limit?: number) {
   const isAvailable = await Healthier.isAvailable();
   if (!isAvailable) return;
 
-  const sampleType = DataTypeIdentifier.HeartRateVariabilitySDNN.code;
+  const sampleType = QuantityTypeIdentifier.HeartRateVariabilitySDNN;
 
   await Healthier.requestAuthorization({
     read: [sampleType],
