@@ -4,7 +4,7 @@ import TypeIdentifier, {
   QuantityTypeIdentifier,
 } from './constants/DataTypeIdentifier';
 import UCOM, { UCOMSystemURI } from './constants/UCOM';
-import type { Code, CodeWithSystem, TimeInterval } from './types';
+import type { Code, CodeWithSystem, TimeInterval, ValueOf } from './types';
 
 type Subject = {
   reference: string; // Literal reference, Relative, internal or absolute URL
@@ -37,7 +37,7 @@ type Result = {
 };
 
 function ignite(
-  typeIdentifier: keyof typeof TypeIdentifier,
+  typeIdentifier: ValueOf<typeof TypeIdentifier>,
   result: Result,
   subject: Subject
 ): Observation | undefined {

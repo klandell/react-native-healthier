@@ -1,5 +1,4 @@
 import { NativeModules, Platform } from 'react-native';
-import QuantityTypeIdentifier from './constants/QuantityTypeIdentifier';
 import type { QueryDescriptor } from './Query';
 
 import * as Query from './Query';

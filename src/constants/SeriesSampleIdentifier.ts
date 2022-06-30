@@ -1,6 +1,6 @@
 const SeriesSampleIdentifier = {
-  WorkoutRoute: 'WorkoutRoute',
   HeartbeatSeries: 'HeartbeatSeries',
+  WorkoutRoute: 'WorkoutRoute',
 } as const;
 
 export default SeriesSampleIdentifier;

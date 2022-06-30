@@ -36,6 +36,7 @@ type ResultOptions = {
   includeSource?: boolean;
 };
 
+// TODO: Implement result options!
 const defaultResultOptions: ResultOptions = {
   includeDevice: false,
   includeSource: false,

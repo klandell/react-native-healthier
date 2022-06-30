@@ -1,17 +1,17 @@
 const ComparisonOperator = {
-  LessThan: 'LessThan',
-  LessThanOrEqualTo: 'LessThanOrEqualTo',
+  BeginsWith: 'BeginsWith',
+  Between: 'Between',
+  Contains: 'Contains',
+  EndsWith: 'EndsWith',
+  EqualTo: 'EqualTo',
   GreaterThan: 'GreaterThan',
   GreaterThanOrEqualTo: 'GreaterThanOrEqualTo',
-  EqualTo: 'EqualTo',
-  NotEqualTo: 'NotEqualTo',
-  Matches: 'Matches',
-  Like: 'Like',
-  BeginsWith: 'BeginsWith',
-  EndsWith: 'EndsWith',
   In: 'In',
-  Contains: 'Contains',
-  Between: 'Between',
+  LessThan: 'LessThan',
+  LessThanOrEqualTo: 'LessThanOrEqualTo',
+  Like: 'Like',
+  Matches: 'Matches',
+  NotEqualTo: 'NotEqualTo',
 } as const;
 
 export default ComparisonOperator;
