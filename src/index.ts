@@ -1,4 +1,4 @@
-import { NativeModules, Platform } from 'react-native';
+import { NativeModules, Platform, Settings } from 'react-native';
 import ObservationEmitter from './ObservationEmitter';
 import type { QueryDescriptor } from './Query';
 
@@ -16,8 +16,6 @@ interface Healthier {
   execute: (query: QueryDescriptor) => Promise<any>;
   enableBackgroundDelivery: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
   disableBackgroundDelivery: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
-  observe: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
-  unobserve: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
 }
 
 const LINKING_ERROR =
@@ -61,8 +59,13 @@ export { default as LOINCSystem } from './systems/LOINC';
 export { default as UCOMSystem } from './systems/UCOM';
 
 // TODO: type
-export function setObservationHandler(
-  handler: (dataTypeIdentifier: string) => Promise<void>
+export function observe(
+  dataTypeIdentifier: string,
+  handler: () => Promise<void>
 ) {
-  ObservationEmitter.subscribe(handler);
+  ObservationEmitter.observe(dataTypeIdentifier, handler);
+}
+
+export function getBackgroundDeliverableTypes() {
+  return Settings.get('RNHealthier_BackgroundDelivery');
 }
