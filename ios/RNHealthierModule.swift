@@ -121,14 +121,40 @@ class RNHealthierModule : NSObject {
 
   @objc(enableBackgroundDelivery:resolver:rejecter:)
   func enableBackgroundDelivery(_ dataTypeIdentifier: NSString, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    // TODO: IMPLEMENT ME!
-    resolve(nil)
+      let dataTypeIdentifierString = dataTypeIdentifier as String;
+      // If the data type identifier is valid, continue with enabling for background delivery
+      if RNHealthierObjectTypeIdentifier.init(rawValue: dataTypeIdentifierString) != nil{
+          let defaults = UserDefaults.standard
+          var backgroundTypes = defaults.stringArray(forKey: "RNHealthier_BackgroundDelivery") ?? [String]()
+          
+          if !backgroundTypes.contains(dataTypeIdentifierString) {
+              // TODO: CALL STORE ENABLE FUNCTION!
+              backgroundTypes.append(dataTypeIdentifierString)
+              defaults.set(backgroundTypes, forKey: "RNHealthier_BackgroundDelivery")
+          }
+          resolve(nil)
+      }
+      // TODO: REJECT BAD KEY
+      resolve(nil)
   }
 
   @objc(disableBackgroundDelivery:resolver:rejecter:)
   func disableBackgroundDelivery(_ dataTypeIdentifier: NSString, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    // TODO: IMPLEMENT ME!
-    resolve(nil)
+          let dataTypeIdentifierString = dataTypeIdentifier as String;
+          // If the data type identifier is valid, continue with disabling for background delivery
+          if RNHealthierObjectTypeIdentifier.init(rawValue: dataTypeIdentifierString) != nil{
+              let defaults = UserDefaults.standard
+              var backgroundTypes = defaults.stringArray(forKey: "RNHealthier_BackgroundDelivery") ?? [String]()
+              
+              if backgroundTypes.contains(dataTypeIdentifierString) {
+                  // TODO: CALL STORE DISABLE FUNCTION!
+                  backgroundTypes = backgroundTypes.filter { $0 != dataTypeIdentifierString }
+                  defaults.set(backgroundTypes, forKey: "RNHealthier_BackgroundDelivery")
+              }
+              resolve(nil)
+          }
+          // TODO: REJECT BAD KEY
+          resolve(nil)
   }
 
   @objc(observe:resolver:rejecter:)
