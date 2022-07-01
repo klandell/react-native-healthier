@@ -1,4 +1,5 @@
 import { NativeModules, Platform } from 'react-native';
+import ObservationEmitter from './ObservationEmitter';
 import type { QueryDescriptor } from './Query';
 
 import * as Query from './Query';
@@ -9,10 +10,14 @@ interface Healthier {
   isAvailable: () => Promise<boolean>;
   supportsHealthRecords: () => Promise<boolean>;
   requestAuthorization: (permissions: {
-    toShare?: string[];
-    read?: string[];
+    toShare?: string[]; // TODO: Type
+    read?: string[]; // TODO: Type
   }) => Promise<void>;
   execute: (query: QueryDescriptor) => Promise<any>;
+  enableBackgroundDelivery: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
+  disableBackgroundDelivery: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
+  observe: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
+  unobserve: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
 }
 
 const LINKING_ERROR =
@@ -54,3 +59,10 @@ export { default as SortIdentifier } from './constants/SortIdentifier';
 export { default as HKSystem } from './systems/HK';
 export { default as LOINCSystem } from './systems/LOINC';
 export { default as UCOMSystem } from './systems/UCOM';
+
+// TODO: type
+export function setObservationHandler(
+  handler: (dataTypeIdentifier: string) => Promise<void>
+) {
+  ObservationEmitter.subscribe(handler);
+}

@@ -117,4 +117,29 @@ class RNHealthierModule : NSObject {
       }
     }
   }
+
+
+  @objc(enableBackgroundDelivery:resolver:rejecter:)
+  func enableBackgroundDelivery(_ dataTypeIdentifier: NSString, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    // TODO: IMPLEMENT ME!
+    resolve(nil)
+  }
+
+  @objc(disableBackgroundDelivery:resolver:rejecter:)
+  func disableBackgroundDelivery(_ dataTypeIdentifier: NSString, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    // TODO: IMPLEMENT ME!
+    resolve(nil)
+  }
+
+  @objc(observe:resolver:rejecter:)
+  func observe(_ dataTypeIdentifier: NSString, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    // TODO: IMPLEMENT ME!
+    resolve(nil)
+  }
+
+  @objc(unobserve:resolver:rejecter:)
+  func unobserve(_ dataTypeIdentifier: NSString, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    // TODO: IMPLEMENT ME!
+    resolve(nil)
+  }
 }
