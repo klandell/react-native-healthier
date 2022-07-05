@@ -6,11 +6,11 @@ import type { ValueOf } from './types';
 
 // import type CharacteristicTypeIdentifier from './constants/CharacteristicTypeIdentifier';
 // import type CorrelationTypeIdentifier from './constants/CorrelationTypeIdentifier';
+import type ClinicalTypeIdentifier from './constants/ClinicalTypeIdentifier';
 import type QuantityTypeIdentifier from './constants/QuantityTypeIdentifier';
 // import type WorkoutTypeIdentifer from './constants/WorkoutTypeIdentifer';
-import type { ClinicalTypeIdentifier } from 'lib/typescript';
 
-// TODO: Implement the rest of the sample types
+// TODO: Implement the rest of the
 type SampleType =
   // | ValueOf<typeof CharacteristicTypeIdentifier>
   | ValueOf<typeof ClinicalTypeIdentifier>
