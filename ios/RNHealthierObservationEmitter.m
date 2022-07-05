@@ -8,6 +8,10 @@ bool hasListeners = NO;
 @property(nonatomic, strong) NSMutableDictionary *completerMap;
 @end
 
+/*
+module RNHealthierEmitter requires main queue setup since it overrides `init` but doesn't implement `requiresMainQueueSetup`. In a future release React Native will default to initializing all native modules on a background thread unless explicitly opted-out of.
+*/
+
 @implementation RNHealthierObservationEmitter
 
 RCT_EXPORT_MODULE();
