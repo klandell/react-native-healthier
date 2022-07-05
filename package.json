@@ -1,6 +1,6 @@
 {
   "name": "react-native-healthier",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "The healthiest way to interact with HealthKit in React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -25,9 +25,7 @@
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "bob build",
-    "release": "release-it",
-    "example": "yarn --cwd example",
-    "pods": "cd example && pod-install --quiet"
+    "release": "yarn prepare && release-it"
   },
   "keywords": [
     "react-native",
