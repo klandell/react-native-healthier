@@ -39,6 +39,7 @@ export { default as ignite } from './ignite';
 // Data Type Identifiers
 export { default as CategoryTypeIdentifier } from './constants/CategoryTypeIdentifier';
 export { default as CharacteristicTypeIdentifier } from './constants/CharacteristicTypeIdentifier';
+export { default as ClinicalTypeIdentifier } from './constants/ClinicalTypeIdentifier';
 export { default as CorrelationTypeIdentifier } from './constants/CorrelationTypeIdentifier';
 export { default as QuantityTypeIdentifier } from './constants/QuantityTypeIdentifier';
 export { default as SeriesSampleIdentifier } from './constants/SeriesSampleIdentifier';
