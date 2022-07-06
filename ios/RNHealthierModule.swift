@@ -140,13 +140,16 @@ class RNHealthierModule : NSObject {
                     backgroundTypes.append(dataTypeIdentifierString)
                     defaults.set(backgroundTypes, forKey: "RNHealthier_BackgroundDelivery")
                     resolve(nil)
+                    return;
                 }
             }
             // We already have this as a background delivery type, just resolve.
             resolve(nil)
+            return
         }
         // TODO: REJECT BAD KEY
         resolve(nil)
+        return
     }
     
     @objc(disableBackgroundDelivery:resolver:rejecter:)
@@ -166,13 +169,16 @@ class RNHealthierModule : NSObject {
                     backgroundTypes = backgroundTypes.filter { $0 != dataTypeIdentifierString }
                     defaults.set(backgroundTypes, forKey: "RNHealthier_BackgroundDelivery")
                     resolve(nil)
+                    return
                 }
             }
             // We don't have this as a background delivery type, just resolve.
             resolve(nil)
+            return
         }
         // TODO: REJECT BAD KEY
         resolve(nil)
+        return
     }
     
     @objc(disableAllBackgroundDelivery:rejecter:)
