@@ -4,16 +4,19 @@ import type MetadataKey from './constants/MetadataKey';
 import type SortIdentifier from './constants/SortIdentifier';
 import type { ValueOf } from './types';
 
-import type CharacteristicTypeIdentifier from './constants/CharacteristicTypeIdentifier';
-import type CorrelationTypeIdentifier from './constants/CorrelationTypeIdentifier';
+// import type CharacteristicTypeIdentifier from './constants/CharacteristicTypeIdentifier';
+// import type CorrelationTypeIdentifier from './constants/CorrelationTypeIdentifier';
+import type ClinicalTypeIdentifier from './constants/ClinicalTypeIdentifier';
 import type QuantityTypeIdentifier from './constants/QuantityTypeIdentifier';
-import type WorkoutTypeIdentifer from './constants/WorkoutTypeIdentifer';
+// import type WorkoutTypeIdentifer from './constants/WorkoutTypeIdentifer';
 
+// TODO: Implement the rest of the
 type SampleType =
-  | ValueOf<typeof CharacteristicTypeIdentifier>
-  | ValueOf<typeof CorrelationTypeIdentifier>
-  | ValueOf<typeof QuantityTypeIdentifier>
-  | ValueOf<typeof WorkoutTypeIdentifer>;
+  // | ValueOf<typeof CharacteristicTypeIdentifier>
+  | ValueOf<typeof ClinicalTypeIdentifier>
+  // | ValueOf<typeof CorrelationTypeIdentifier>
+  | ValueOf<typeof QuantityTypeIdentifier>;
+// | ValueOf<typeof WorkoutTypeIdentifer>;
 
 type SampleQueryDescriptor = {
   type: 'SampleQuery';
