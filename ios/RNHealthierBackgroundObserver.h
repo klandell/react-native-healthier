@@ -1,5 +1,5 @@
-#import <React/RCTBridgeModule.h>
-#import <React/RCTEventEmitter.h>
+#import <Foundation/Foundation.h>
+#import <HealthKit/HealthKit.h>
 
 @interface RNHealthierBackgroundObserver : NSObject
 

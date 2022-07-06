@@ -1,16 +1,14 @@
 import Foundation
 import HealthKit
 
-@objc(RNHealthierStore)
 class RNHealthierStore : NSObject {
     private var store: HKHealthStore?
     
-    @objc
     static let shared: RNHealthierStore = RNHealthierStore()
     
     override private init() {
         if (RNHealthierStore.isAvailable()) {
-            store = HKHealthStore()
+            store = RNHKHealthStore.sharedInstance().store;
         }
     }
     
@@ -117,7 +115,6 @@ class RNHealthierStore : NSObject {
         s.execute(query)
     }
     
-    @objc(observe:completion:)
     func observe(sampleTypeString: String, completion: @escaping (@escaping HKObserverQueryCompletionHandler, Error?) -> Void) {
         
         guard let s = store else {
@@ -139,7 +136,6 @@ class RNHealthierStore : NSObject {
         s.execute(query);
     }
     
-    @objc(enableBackgroundDelivery:updateFrequencyString:completion:)
     func enableBackgroundDelivery(sampleTypeString: String, updateFrequencyString: String, completion: @escaping (Bool, Error?) -> Void) -> Void {
         guard let s = store else {
             return completion(false, RNHealthierError.HealthStoreNotAvailable);
