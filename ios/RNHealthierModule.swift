@@ -179,7 +179,7 @@ class RNHealthierModule : NSObject {
     func disableAllBackgroundDelivery(resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
         let defaults = UserDefaults.standard
         defaults.set([], forKey: "RNHealthier_BackgroundDelivery");
-        RNHealthierStore.shared.disableBackgroundDelivery(sampleTypeString: dataTypeIdentifierString) { success, error in
+        RNHealthierStore.shared.disableAllBackgroundDelivery() { success, error in
             if !success {
                 reject("", "\(String(describing: error))", nil)
                 return;

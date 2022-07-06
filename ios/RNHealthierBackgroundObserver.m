@@ -6,7 +6,7 @@
 
 @implementation RNHealthierBackgroundObserver
 
-- (void)intObservers {
+- (void)initObservers {
     RNHealthierObservationEmitter *emitter = [RNHealthierObservationEmitter allocWithZone: nil];
     
     NSArray* backgroundDelivery = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"RNHealthier_BackgroundDelivery"]];
@@ -26,3 +26,4 @@
 }
 
 @end
+

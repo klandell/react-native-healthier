@@ -168,7 +168,7 @@ class RNHealthierStore : NSObject {
         s.disableBackgroundDelivery(for: sampleType, withCompletion: completion)
     }
     
-    func enableAllBackgroundDelivery(completion: @escaping (Bool, Error?) -> Void) -> Void {
+    func disableAllBackgroundDelivery(completion: @escaping (Bool, Error?) -> Void) -> Void {
         guard let s = store else {
             return completion(false, RNHealthierError.HealthStoreNotAvailable);
         }

@@ -1,8 +1,8 @@
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventEmitter.h>
 
-@interface RNHealthierBackgroundObserver
+@interface RNHealthierBackgroundObserver : NSObject
 
-- (void)intObservers:(void)
+- (void)initObservers;
 
 @end

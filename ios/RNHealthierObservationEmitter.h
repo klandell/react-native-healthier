@@ -3,6 +3,6 @@
 
 @interface RNHealthierObservationEmitter: RCTEventEmitter <RCTBridgeModule>
 
-- (void)notifyOfHKObservation:(NSString *)dataTypeIdentifier completionHandler:(void(^)(void))completionHandler
+- (void)notifyOfHKObservation:(NSString *)dataTypeIdentifier completionHandler:(void(^)(void))completionHandler;
 
 @end
