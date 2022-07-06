@@ -17,5 +17,5 @@ Pod::Spec.new do |s|
 
   s.dependency "React-Core"
 
-  s.pod_target_xcconfig = { "DEFINES_MODULE" => "YES", "SWIFT_OBJC_INTERFACE_HEADER_NAME": "RNHealthierModule-Swift.h" }
+  s.pod_target_xcconfig = { "DEFINES_MODULE" => "YES" }
 end
