@@ -1,6 +1,6 @@
 {
   "name": "react-native-healthier",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "The healthiest way to interact with HealthKit in React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
