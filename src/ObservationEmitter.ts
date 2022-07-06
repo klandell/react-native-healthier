@@ -1,9 +1,4 @@
-import {
-  EmitterSubscription,
-  NativeEventEmitter,
-  NativeModule,
-  NativeModules,
-} from 'react-native';
+import { NativeEventEmitter, NativeModule, NativeModules } from 'react-native';
 
 interface NativeObservationEmitter extends NativeModule {
   finish: (dataTypeIdentifier: DataTypeIdentifier) => void;
@@ -17,28 +12,31 @@ const NativeObservationEmitter = NativeModules.RNHealthierObservationEmitter;
 const emitter = new NativeEventEmitter(NativeObservationEmitter);
 
 class ObservationEmitter {
-  nativeSubscription: EmitterSubscription | undefined;
   listeners: { [key: DataTypeIdentifier]: ObservationHandler } = {};
 
-  constructor() {
-    this.nativeSubscription = emitter.addListener(
+  setObserver(
+    dataTypeIdentifier: DataTypeIdentifier,
+    handler: ObservationHandler
+  ) {
+    this.listeners[dataTypeIdentifier] = handler;
+    return () => {
+      delete this.listeners[dataTypeIdentifier];
+    };
+  }
+
+  observe() {
+    const nativeSubscription = emitter.addListener(
       'RNHealthier_onObservation',
       async (event: ObservationEvent) => {
         const handler = this.listeners[event];
         if (handler) {
           await handler(event);
         }
-        NativeObservationEmitter.finish();
+        NativeObservationEmitter.finish(event);
       },
       this
     );
-  }
-
-  observe(dataTypeIdentifier: DataTypeIdentifier, handler: ObservationHandler) {
-    this.listeners[dataTypeIdentifier] = handler;
-    return () => {
-      delete this.listeners[dataTypeIdentifier];
-    };
+    return () => nativeSubscription.remove();
   }
 }
 

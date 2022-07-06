@@ -765,6 +765,21 @@ class RNHealthierUtils {
             return nil;
         }
     }
+
+    static func getUpdateFrequency(forString: String) -> HKUpdateFrequency {
+        switch forString {
+        case "Immediate":
+            return HKUpdateFrequency.immediate
+        case "Hourly":
+            return HKUpdateFrequency.hourly
+        case "Daily":
+            return HKUpdateFrequency.daily
+        case "Weekly":
+            return HKUpdateFrequency.weekly
+        default:
+            return HKUpdateFrequency.immediate // Immediate if no match
+        }
+    }
     
     static func getDefaultUnit(forIdentifier: RNHealthierObjectTypeIdentifier) -> String? {
         typealias TypeIdentifier = RNHealthierObjectTypeIdentifier;

@@ -3,4 +3,6 @@
 
 @interface RNHealthierBackgroundObserver
 
+- (void)intObservers:(void)
+
 @end

@@ -1,12 +1,14 @@
 import Foundation
 import HealthKit
 
-class RNHealthierStore {
+@objc(RNHealthierStore)
+class RNHealthierStore : NSObject {
     private var store: HKHealthStore?
     
+    @objc
     static let shared: RNHealthierStore = RNHealthierStore()
     
-    private init() {
+    override private init() {
         if (RNHealthierStore.isAvailable()) {
             store = HKHealthStore()
         }
@@ -113,6 +115,64 @@ class RNHealthierStore {
             completion(data, nil)
         }
         s.execute(query)
+    }
+    
+    @objc(observe:completion:)
+    func observe(sampleTypeString: String, completion: @escaping (@escaping HKObserverQueryCompletionHandler, Error?) -> Void) {
+        
+        guard let s = store else {
+            // TODO: ERROR return completion(false, RNHealthierError.HealthStoreNotAvailable);
+            return;
+        }
+        
+        guard let sampleTypeEnum = RNHealthierObjectTypeIdentifier.init(rawValue: sampleTypeString),
+              let sampleType = RNHealthierUtils.getObjectType(forIdentifier: sampleTypeEnum) as? HKSampleType else {
+            // TODO: ERROR return completion(false, RNHealthierError.InvalidSampleType)
+            return;
+        }
+        
+        let query = HKObserverQuery(sampleType: sampleType, predicate: nil) {
+            query, completionHandler, error in
+            completion(completionHandler, error)
+        }
+        
+        s.execute(query);
+    }
+    
+    @objc(enableBackgroundDelivery:updateFrequencyString:completion:)
+    func enableBackgroundDelivery(sampleTypeString: String, updateFrequencyString: String, completion: @escaping (Bool, Error?) -> Void) -> Void {
+        guard let s = store else {
+            return completion(false, RNHealthierError.HealthStoreNotAvailable);
+        }
+        
+        guard let sampleTypeEnum = RNHealthierObjectTypeIdentifier.init(rawValue: sampleTypeString),
+              let sampleType = RNHealthierUtils.getObjectType(forIdentifier: sampleTypeEnum) as? HKSampleType else {
+            return completion(false, RNHealthierError.InvalidSampleType)
+        }
+        
+        let updateFrequency = RNHealthierUtils.getUpdateFrequency(forString: updateFrequencyString)
+        
+        s.enableBackgroundDelivery(for: sampleType, frequency: updateFrequency, withCompletion: completion)
+    }
+    
+    func disableBackgroundDelivery(sampleTypeString: String, completion: @escaping (Bool, Error?) -> Void) -> Void {
+        guard let s = store else {
+            return completion(false, RNHealthierError.HealthStoreNotAvailable);
+        }
+        
+        guard let sampleTypeEnum = RNHealthierObjectTypeIdentifier.init(rawValue: sampleTypeString),
+              let sampleType = RNHealthierUtils.getObjectType(forIdentifier: sampleTypeEnum) as? HKSampleType else {
+            return completion(false, RNHealthierError.InvalidSampleType)
+        }
+        
+        s.disableBackgroundDelivery(for: sampleType, withCompletion: completion)
+    }
+    
+    func enableAllBackgroundDelivery(completion: @escaping (Bool, Error?) -> Void) -> Void {
+        guard let s = store else {
+            return completion(false, RNHealthierError.HealthStoreNotAvailable);
+        }
+        s.disableAllBackgroundDelivery(completion: completion)
     }
 }
 

@@ -24,16 +24,21 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
 
-export default (NativeModules.RNHealthierModule
-  ? NativeModules.RNHealthierModule
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    )) as Healthier;
+const NativeHealthier = (
+  NativeModules.RNHealthierModule
+    ? NativeModules.RNHealthierModule
+    : new Proxy(
+        {},
+        {
+          get() {
+            throw new Error(LINKING_ERROR);
+          },
+        }
+      )
+) as Healthier;
+
+// TODO: clean up exports.
+export default NativeHealthier;
 
 // Healthier functions and function groups.
 export { Query };
@@ -59,13 +64,9 @@ export { default as HKSystem } from './systems/HK';
 export { default as LOINCSystem } from './systems/LOINC';
 export { default as UCOMSystem } from './systems/UCOM';
 
-// TODO: type
-export function observe(
-  dataTypeIdentifier: string,
-  handler: () => Promise<void>
-) {
-  ObservationEmitter.observe(dataTypeIdentifier, handler);
-}
+// Background Observers
+export const setObserver = ObservationEmitter.setObserver;
+export const observe = ObservationEmitter.observe;
 
 export function getBackgroundDeliverableTypes() {
   return Settings.get('RNHealthier_BackgroundDelivery');
