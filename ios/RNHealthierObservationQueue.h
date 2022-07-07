@@ -4,7 +4,7 @@
 
 + (RNHealthierObservationQueue *)sharedInstance;
 
-- (void)enqueue:(NSString *)dataTypeIdentifier completionHandler:(void(^)(void))completionHandler;
+- (void)enqueue:(NSString *)dataTypeIdentifier observationUUID:(NSUUID *)observationUUID completionHandler:(void(^)(void))completionHandler;
 
 - (id)dequeue;
 

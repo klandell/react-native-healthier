@@ -7,8 +7,15 @@ interface NativeObservationEmitter extends NativeModule {
 }
 
 type DataTypeIdentifier = string; // TODO: real type
-type ObservationEvent = DataTypeIdentifier; // TODO: real type
-type ObservationHandler = (event: ObservationEvent) => Promise<void> | void;
+
+type ObservationEvent = {
+  dataTypeIdentifier: DataTypeIdentifier;
+  observationUUID: string;
+};
+
+type ObservationHandler = (
+  dataTypeIdentifier: DataTypeIdentifier
+) => Promise<void> | void;
 
 const NativeObservationEmitter = NativeModules.RNHealthierObservationEmitter;
 const emitter = new NativeEventEmitter(NativeObservationEmitter);
@@ -30,14 +37,12 @@ class ObservationEmitter {
     const nativeSubscription = emitter.addListener(
       'RNHealthier_onObservation',
       async (event: ObservationEvent) => {
-        const handler = listeners[event];
-        console.log('LISTENER CALLED');
+        const { dataTypeIdentifier, observationUUID } = event;
+        const handler = listeners[dataTypeIdentifier];
         if (handler) {
-          await handler(event);
+          await handler(dataTypeIdentifier);
         }
-        console.log('FINISH CALLING');
-        NativeObservationEmitter.finish(event);
-        console.log('FINISH CALLED');
+        NativeObservationEmitter.finish(observationUUID);
       },
       this
     );

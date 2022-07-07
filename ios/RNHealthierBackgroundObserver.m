@@ -15,11 +15,11 @@
     
     for (NSString *dataTypeIdentifierString in backgroundDelivery) {
         [store observe:dataTypeIdentifierString completion:^(HKObserverQueryCompletionHandler _Nonnull completionHandler, NSError * _Nullable error) {
-            NSLog(@"======= EMIT");
-            [emitter notifyOfHKObservation:dataTypeIdentifierString completionHandler:completionHandler];
+            NSUUID *uuid = [NSUUID UUID];
+            [emitter notifyOfHKObservation:dataTypeIdentifierString observationUUID:uuid completionHandler:completionHandler];
         }];
   
-        // TODO: DON'T USE IMMEDIATE!, GET IT FROM USER DEFAULTS!
+        // TODO: DON'T USE IMMEDIATE!, GET IT FROM USER DEFAULTS!!
         [store enableBackgroundDelivery:dataTypeIdentifierString updateFrequencyString:@"IMMEDIATE" completion:^(BOOL success, NSError * _Nullable error) {
             // TODO: IMPLEMENT ME!
             NSLog(@"======= enable backgroungDelivery");

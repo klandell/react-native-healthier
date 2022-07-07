@@ -13,7 +13,7 @@ bool hasListeners = NO;
 RCT_EXPORT_MODULE();
 
 + (BOOL)requiresMainQueueSetup {
-  return NO;
+    return NO;
 }
 
 + (id)allocWithZone:(NSZone *)zone {
@@ -37,10 +37,11 @@ RCT_EXPORT_MODULE();
     hasListeners = YES;
     // Send any pending events
     RNHealthierObservationQueue *queue = [RNHealthierObservationQueue sharedInstance];
-    
     NSDictionary *observation = [queue dequeue];
     while (observation) {
-        [self notifyOfHKObservation:observation[@"dataTypeIdentifier"] completionHandler:observation[@"completionHandler"]];
+        [self notifyOfHKObservation:observation[@"dataTypeIdentifier"]
+                    observationUUID:observation[@"observationUUID"]
+                  completionHandler:observation[@"completionHandler"]];
         observation = [queue dequeue];
     }
 }
@@ -53,25 +54,33 @@ RCT_EXPORT_MODULE();
     return @[HKObservationEvent];
 }
 
-- (void)notifyOfHKObservation:(NSString *)dataTypeIdentifier completionHandler:(void(^)(void))completionHandler {
+- (void)notifyOfHKObservation:(NSString *)dataTypeIdentifier
+              observationUUID:(NSUUID *)observationUUID
+            completionHandler:(void(^)(void))completionHandler {
     if (hasListeners) {
+        NSString *observationUUIDString = [observationUUID UUIDString];
+        
         @synchronized(self.completerMap) {
-            self.completerMap[dataTypeIdentifier] = completionHandler;
+            self.completerMap[observationUUIDString] = completionHandler;
         }
-        [self sendEventWithName:HKObservationEvent body:dataTypeIdentifier];
+        
+        [self sendEventWithName:HKObservationEvent body:@{
+            @"dataTypeIdentifier": dataTypeIdentifier,
+            @"observationUUID" : observationUUIDString,
+        }];
     } else {
         RNHealthierObservationQueue *queue = [RNHealthierObservationQueue sharedInstance];
-        [queue enqueue:dataTypeIdentifier completionHandler:completionHandler];
+        [queue enqueue:dataTypeIdentifier observationUUID:observationUUID completionHandler:completionHandler];
     }
 }
 
-RCT_EXPORT_METHOD(finish:(NSString *)dataTypeIdentifier) {
+RCT_EXPORT_METHOD(finish:(NSString *)observationUUIDString) {
     @synchronized(self.completerMap) {
         NSLog( @"COMPLETER MAP %@", self.completerMap);
-        void(^completionHandler)(void) = self.completerMap[dataTypeIdentifier];
+        void(^completionHandler)(void) = self.completerMap[observationUUIDString];
         if (completionHandler != nil) {
             completionHandler();
-            [self.completerMap removeObjectForKey:dataTypeIdentifier];
+            [self.completerMap removeObjectForKey:observationUUIDString];
         }
     }
 }

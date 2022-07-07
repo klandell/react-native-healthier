@@ -23,10 +23,11 @@
     return self;
 }
 
-- (void)enqueue:(NSString *)dataTypeIdentifier completionHandler:(void(^)(void))completionHandler {
+- (void)enqueue:(NSString *)dataTypeIdentifier observationUUID:(NSUUID *)observationUUID completionHandler:(void(^)(void))completionHandler {
     @synchronized(self.queue) {
         [self.queue addObject:@{
             @"dataTypeIdentifier": dataTypeIdentifier,
+            @"observationUUID": observationUUID,
             @"completionHandler" : completionHandler
         }];
     }
