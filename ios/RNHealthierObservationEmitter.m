@@ -1,10 +1,10 @@
 #import "RNHealthierObservationEmitter.h"
+#import "RNHealthierObservationQueue.h"
 
 NSString *const HKObservationEvent = @"RNHealthier_onObservation";
 bool hasListeners = NO;
 
 @interface RNHealthierObservationEmitter()
-@property(nonatomic, strong) NSMutableArray *hkObservationQueue;
 @property(nonatomic, strong) NSMutableDictionary *completerMap;
 @end
 
@@ -12,23 +12,22 @@ bool hasListeners = NO;
 
 RCT_EXPORT_MODULE();
 
++ (BOOL)requiresMainQueueSetup {
+  return NO;
+}
+
 + (id)allocWithZone:(NSZone *)zone {
     static RNHealthierObservationEmitter *sharedInstance = nil;
-    static dispatch_once_t once;
-    dispatch_once(&once, ^{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         sharedInstance = [super allocWithZone:zone];
     });
     return sharedInstance;
 }
 
-+ (BOOL)requiresMainQueueSetup {
-  return NO;
-}
-
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.hkObservationQueue = [NSMutableArray array];
         self.completerMap = [NSMutableDictionary dictionary];
     }
     return self;
@@ -36,14 +35,13 @@ RCT_EXPORT_MODULE();
 
 - (void)startObserving {
     hasListeners = YES;
+    // Send any pending events
+    RNHealthierObservationQueue *queue = [RNHealthierObservationQueue sharedInstance];
     
-    @synchronized(self.hkObservationQueue) {
-        for (id observation in [self.hkObservationQueue copy]) {
-            [self notifyOfHKObservation:observation[@"dataTypeIdentifier"] completionHandler:observation[@"completionHandler"]];
-            @synchronized(self.hkObservationQueue) {
-                [self.hkObservationQueue removeObject:observation];
-            }
-        }
+    NSDictionary *observation = [queue dequeue];
+    while (observation) {
+        [self notifyOfHKObservation:observation[@"dataTypeIdentifier"] completionHandler:observation[@"completionHandler"]];
+        observation = [queue dequeue];
     }
 }
 
@@ -62,17 +60,14 @@ RCT_EXPORT_MODULE();
         }
         [self sendEventWithName:HKObservationEvent body:dataTypeIdentifier];
     } else {
-        @synchronized(self.hkObservationQueue) {
-            [self.hkObservationQueue addObject:@{
-                @"dataTypeIdentifier": dataTypeIdentifier,
-                @"completionHandler" : completionHandler
-            }];
-        }
+        RNHealthierObservationQueue *queue = [RNHealthierObservationQueue sharedInstance];
+        [queue enqueue:dataTypeIdentifier completionHandler:completionHandler];
     }
 }
 
 RCT_EXPORT_METHOD(finish:(NSString *)dataTypeIdentifier) {
     @synchronized(self.completerMap) {
+        NSLog( @"COMPLETER MAP %@", self.completerMap);
         void(^completionHandler)(void) = self.completerMap[dataTypeIdentifier];
         if (completionHandler != nil) {
             completionHandler();

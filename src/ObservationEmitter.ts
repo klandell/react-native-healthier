@@ -1,5 +1,7 @@
 import { NativeEventEmitter, NativeModule, NativeModules } from 'react-native';
 
+// TODO: LISTENERS ON THIS NOT WORKING
+
 interface NativeObservationEmitter extends NativeModule {
   finish: (dataTypeIdentifier: DataTypeIdentifier) => void;
 }
@@ -29,10 +31,13 @@ class ObservationEmitter {
       'RNHealthier_onObservation',
       async (event: ObservationEvent) => {
         const handler = this.listeners[event];
+        console.log('LISTENER CALLED');
         if (handler) {
           await handler(event);
         }
+        console.log('FINISH CALLING');
         NativeObservationEmitter.finish(event);
+        console.log('FINISH CALLED');
       },
       this
     );

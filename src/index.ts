@@ -71,3 +71,5 @@ export const observe = ObservationEmitter.observe;
 export function getBackgroundDeliverableTypes() {
   return Settings.get('RNHealthier_BackgroundDelivery');
 }
+
+// EXPORT FREQUENCY
