@@ -1,3 +1,5 @@
+#import "RNHealthierObservationQueue.h"
+
 @interface RNHealthierObservationQueue()
 @property(nonatomic, strong) NSMutableArray *queue;
 @end
@@ -32,8 +34,10 @@
 
 - (id)dequeue {
     @synchronized(self.queue) {
-        id obj = [[[self.queue lastObject] retain] autorelease];
+        id obj = [self.queue lastObject];
         [self.queue removeLastObject];
         return obj;
     }
 }
+
+@end

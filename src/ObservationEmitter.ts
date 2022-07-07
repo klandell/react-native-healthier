@@ -1,6 +1,6 @@
 import { NativeEventEmitter, NativeModule, NativeModules } from 'react-native';
 
-// TODO: LISTENERS ON THIS NOT WORKING
+// TODO: Fix this.listeners so it works as a class?
 
 interface NativeObservationEmitter extends NativeModule {
   finish: (dataTypeIdentifier: DataTypeIdentifier) => void;
@@ -13,16 +13,16 @@ type ObservationHandler = (event: ObservationEvent) => Promise<void> | void;
 const NativeObservationEmitter = NativeModules.RNHealthierObservationEmitter;
 const emitter = new NativeEventEmitter(NativeObservationEmitter);
 
-class ObservationEmitter {
-  listeners: { [key: DataTypeIdentifier]: ObservationHandler } = {};
+const listeners: { [key: DataTypeIdentifier]: ObservationHandler } = {};
 
+class ObservationEmitter {
   setObserver(
     dataTypeIdentifier: DataTypeIdentifier,
     handler: ObservationHandler
   ) {
-    this.listeners[dataTypeIdentifier] = handler;
+    listeners[dataTypeIdentifier] = handler;
     return () => {
-      delete this.listeners[dataTypeIdentifier];
+      delete listeners[dataTypeIdentifier];
     };
   }
 
@@ -30,7 +30,7 @@ class ObservationEmitter {
     const nativeSubscription = emitter.addListener(
       'RNHealthier_onObservation',
       async (event: ObservationEvent) => {
-        const handler = this.listeners[event];
+        const handler = listeners[event];
         console.log('LISTENER CALLED');
         if (handler) {
           await handler(event);
