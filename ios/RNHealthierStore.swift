@@ -153,7 +153,6 @@ import HealthKit
         }
         
         let updateFrequency = RNHealthierUtils.getUpdateFrequency(forString: updateFrequencyString)
-        
         s.enableBackgroundDelivery(for: sampleType, frequency: updateFrequency, withCompletion: completion)
     }
     

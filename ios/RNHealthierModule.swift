@@ -142,10 +142,11 @@ class RNHealthierModule : NSObject {
                     resolve(nil)
                     return;
                 }
+            } else {
+                // We already have this as a background delivery type, just resolve.
+                resolve(nil)
+                return
             }
-            // We already have this as a background delivery type, just resolve.
-            resolve(nil)
-            return
         }
         // TODO: REJECT BAD KEY
         resolve(nil)
@@ -171,10 +172,11 @@ class RNHealthierModule : NSObject {
                     resolve(nil)
                     return
                 }
+            } else {
+                // We don't have this as a background delivery type, just resolve.
+                resolve(nil)
+                return
             }
-            // We don't have this as a background delivery type, just resolve.
-            resolve(nil)
-            return
         }
         // TODO: REJECT BAD KEY
         resolve(nil)
