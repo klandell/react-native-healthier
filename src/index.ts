@@ -1,49 +1,10 @@
-import { NativeModules, Platform, Settings } from 'react-native';
-import type UpdateFrequency from './constants/UpdateFrequency';
+import { Settings } from 'react-native';
 import ObservationEmitter from './ObservationEmitter';
-import type { QueryDescriptor } from './Query';
 
 import * as Query from './Query';
 
-import type { ValueOf } from './types';
+import NativeHealthier from './NativeHealthier';
 
-// TODO: RESULT TYPES
-
-interface Healthier {
-  isAvailable: () => Promise<boolean>;
-  supportsHealthRecords: () => Promise<boolean>;
-  requestAuthorization: (permissions: {
-    toShare?: string[]; // TODO: Type
-    read?: string[]; // TODO: Type
-  }) => Promise<void>;
-  execute: (query: QueryDescriptor) => Promise<any>;
-  enableBackgroundDelivery: (
-    dataTypeIdentifier: string,
-    updateFrequency: ValueOf<typeof UpdateFrequency>
-  ) => Promise<void>; // TODO: Type
-  disableBackgroundDelivery: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
-}
-
-const LINKING_ERROR =
-  `The package 'react-native-healthier' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo managed workflow\n';
-
-const NativeHealthier = (
-  NativeModules.RNHealthierModule
-    ? NativeModules.RNHealthierModule
-    : new Proxy(
-        {},
-        {
-          get() {
-            throw new Error(LINKING_ERROR);
-          },
-        }
-      )
-) as Healthier;
-
-// TODO: clean up exports.
 export default NativeHealthier;
 
 // Healthier functions and function groups.
@@ -78,5 +39,3 @@ export const observe = ObservationEmitter.observe;
 export function getBackgroundDeliverableTypes() {
   return Settings.get('RNHealthier_BackgroundDelivery');
 }
-
-// EXPORT FREQUENCY
