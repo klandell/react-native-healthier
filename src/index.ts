@@ -1,8 +1,11 @@
 import { NativeModules, Platform, Settings } from 'react-native';
+import type UpdateFrequency from './constants/UpdateFrequency';
 import ObservationEmitter from './ObservationEmitter';
 import type { QueryDescriptor } from './Query';
 
 import * as Query from './Query';
+
+import type { ValueOf } from './types';
 
 // TODO: RESULT TYPES
 
@@ -14,7 +17,10 @@ interface Healthier {
     read?: string[]; // TODO: Type
   }) => Promise<void>;
   execute: (query: QueryDescriptor) => Promise<any>;
-  enableBackgroundDelivery: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
+  enableBackgroundDelivery: (
+    dataTypeIdentifier: string,
+    updateFrequency: ValueOf<typeof UpdateFrequency>
+  ) => Promise<void>; // TODO: Type
   disableBackgroundDelivery: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
 }
 
@@ -58,6 +64,7 @@ export { default as ComparisonOperator } from './constants/ComparisonOperator';
 export { default as DeviceProperty } from './constants/DeviceProperty';
 export { default as MetadataKey } from './constants/MetadataKey';
 export { default as SortIdentifier } from './constants/SortIdentifier';
+export { default as UpdateFrequency } from './constants/UpdateFrequency';
 
 // Ignite Constants
 export { default as HKSystem } from './systems/HK';
