@@ -1,5 +1,5 @@
-import type { QueryDescriptor } from "./Query";
-import type UpdateFrequency from './constants/UpdateFrequency'
+import type { QueryDescriptor } from './Query';
+import type UpdateFrequency from './constants/UpdateFrequency';
 
 export type ValueOf<T> = T[keyof T];
 
@@ -25,5 +25,5 @@ export interface Healthier {
     updateFrequency: ValueOf<typeof UpdateFrequency>
   ) => Promise<void>; // TODO: Type
   disableBackgroundDelivery: (dataTypeIdentifier: string) => Promise<void>; // TODO: Type
-  disableAllBackgroundDelivery: 
+  disableAllBackgroundDelivery: () => Promise<void>;
 }
