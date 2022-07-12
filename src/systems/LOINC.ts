@@ -14,6 +14,22 @@ const LOINC: LoincMap = {
     code: '41981-2',
     display: 'Calories burned',
   },
+  BloodGlucose: {
+    code: '2339-0',
+    display: 'Glucose [Mass/volume] in Blood',
+  },
+  BloodPressureDiastolic: {
+    code: '8462-4',
+    display: 'Diastolic blood pressure',
+  },
+  BloodPressureSystolic: {
+    code: '8480-6',
+    display: 'Systolic blood pressure',
+  },
+  DietaryEnergyConsumed: {
+    code: '9052-2',
+    display: 'Calorie intake total',
+  },
   HeartRate: {
     code: '8867-4',
     display: 'Heart rate',
