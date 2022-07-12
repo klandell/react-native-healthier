@@ -46,6 +46,22 @@ const LOINC: LoincMap = {
     code: '9052-2',
     display: 'Calorie intake total',
   },
+  DistanceCycling: {
+    code: '93818-3',
+    display: 'Cycling distance unspecified time',
+  },
+  DistanceSwimming: {
+    code: '93816-7',
+    display: 'Swimming distance unspecified time',
+  },
+  ForcedExpiratoryVolume1: {
+    code: '20150-9',
+    display: 'FEV1',
+  },
+  ForcedVitalCapacity: {
+    code: '19870-5',
+    display: 'Forced vital capacity [Volume] Respiratory system',
+  },
   HeartRate: {
     code: '8867-4',
     display: 'Heart rate',
@@ -53,6 +69,14 @@ const LOINC: LoincMap = {
   HeartRateVariabilitySDNN: {
     code: '80404-7',
     display: 'R-R interval.standard deviation (Heart rate variability)',
+  },
+  Height: {
+    code: '8302-2',
+    display: 'Body height',
+  },
+  LeanBodyMass: {
+    code: '91557-9',
+    display: 'Lean body weight',
   },
   OxygenSaturation: [
     {
@@ -64,13 +88,38 @@ const LOINC: LoincMap = {
       display: 'Oxygen saturation in Arterial blood by Pulse oximetry',
     },
   ],
+  PeakExpiratoryFlowRate: {
+    code: '33452-4',
+    display: 'Maximum expiratory gas flow Respiratory system airway',
+  },
+  PeripheralPerfusionIndex: {
+    code: '61006-3',
+    display: 'Perfusion index Tissue by Pulse oximetry',
+  },
+  RespiratoryRate: {
+    code: '9279-1',
+    display: 'Respiratory rate',
+  },
   RestingHeartRate: {
     code: '40443-4',
     display: 'Heart rate --resting',
   },
+  SixMinuteWalkTestDistance: {
+    code: '64098-7',
+    display: 'Six minute walk test',
+  },
   StepCount: {
     code: '55423-8',
     display: 'Number of steps',
+  },
+  Vo2Max: {
+    code: '94122-9',
+    display:
+      'Oxygen consumption (VO2)/Body weight [Volume Rate Content] --peak during exercise',
+  },
+  WaistCircumference: {
+    code: '8280-0',
+    display: 'Waist Circumference at umbilicus by Tape measure',
   },
 } as const;
 
