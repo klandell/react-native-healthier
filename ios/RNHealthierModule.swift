@@ -147,10 +147,11 @@ class RNHealthierModule : NSObject {
                 resolve(nil)
                 return
             }
+        } else {
+            // TODO: REJECT BAD KEY
+            resolve(nil)
+            return
         }
-        // TODO: REJECT BAD KEY
-        resolve(nil)
-        return
     }
     
     @objc(disableBackgroundDelivery:resolver:rejecter:)
@@ -177,10 +178,11 @@ class RNHealthierModule : NSObject {
                 resolve(nil)
                 return
             }
+        } else {
+            // TODO: REJECT BAD KEY
+            resolve(nil)
+            return
         }
-        // TODO: REJECT BAD KEY
-        resolve(nil)
-        return
     }
     
     @objc(disableAllBackgroundDelivery:rejecter:)
