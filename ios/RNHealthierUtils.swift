@@ -786,6 +786,7 @@ class RNHealthierUtils {
         
         switch forIdentifier {
         case TypeIdentifier.AppleWalkingSteadiness,
+            TypeIdentifier.BloodAlcoholContent,
             TypeIdentifier.BodyFatPercentage,
             TypeIdentifier.OxygenSaturation,
             TypeIdentifier.PeripheralPerfusionIndex,

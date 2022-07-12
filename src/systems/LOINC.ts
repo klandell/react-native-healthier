@@ -26,6 +26,22 @@ const LOINC: LoincMap = {
     code: '8480-6',
     display: 'Systolic blood pressure',
   },
+  BodyFatPercentage: {
+    code: '41982-0',
+    display: 'Percentage of body fat Measured',
+  },
+  BodyMass: {
+    code: '29463-7',
+    display: 'Body weight',
+  },
+  BodyMassIndex: {
+    code: '39156-5',
+    display: 'Body mass index (BMI) [Ratio]',
+  },
+  BodyTemperature: {
+    code: '8310-5',
+    display: 'Body temperature',
+  },
   DietaryEnergyConsumed: {
     code: '9052-2',
     display: 'Calorie intake total',
