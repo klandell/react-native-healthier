@@ -4,6 +4,9 @@ import ObservationEmitter from './ObservationEmitter';
 import * as Query from './Query';
 
 import NativeHealthier from './NativeHealthier';
+import type { ValueOf } from './types';
+
+import type UpdateFrequency from './constants/UpdateFrequency';
 
 export default NativeHealthier;
 
@@ -36,6 +39,14 @@ export { default as UCOMSystem } from './systems/UCOM';
 export const setObserver = ObservationEmitter.setObserver;
 export const observe = ObservationEmitter.observe;
 
-export function getBackgroundDeliverableTypes() {
-  return Settings.get('RNHealthier_BackgroundDelivery');
+// TODO: TYPE!
+export function getBackgroundDeliverableTypes(): {
+  sampleType: string;
+  updateFrequency: ValueOf<typeof UpdateFrequency>;
+}[] {
+  const deliveryStrings = Settings.get('RNHealthier_BackgroundDelivery') || [];
+  return deliveryStrings.map((descriptor: string) => {
+    const [sampleType, updateFrequency] = descriptor.split('::');
+    return { sampleType, updateFrequency };
+  });
 }
