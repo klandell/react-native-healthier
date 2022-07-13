@@ -9,7 +9,7 @@
     NSArray* backgroundDelivery = [NSArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"RNHealthier_BackgroundDelivery"]];
     RNHealthierStore *store = [RNHealthierStore sharedInstance];
     for (NSString *backgroundDescriptor in backgroundDelivery) {
-        NSArray *backgroundDescriptorParts = [string componentsSeparatedByString: @"::"];
+        NSArray *backgroundDescriptorParts = [backgroundDescriptor componentsSeparatedByString: @"::"];
         NSString *dataTypeIdentifierString = backgroundDescriptorParts[0];
         NSString *updateFrequencyString = backgroundDescriptorParts[1];
         

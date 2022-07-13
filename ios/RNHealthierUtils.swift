@@ -1384,11 +1384,6 @@ class RNHealthierUtils {
                 
                 let start = queryData["start"] as? String;
                 let startDate = (start != nil) ? dateFormatter.date(from: start!) : nil;
-                
-                if let blahDate = dateFormatter.date(from: start!) {
-                    NSLog(dateFormatter.string(from: blahDate))
-                }
-                
                 let end = queryData["end"] as? String;
                 let endDate = (end != nil) ? dateFormatter.date(from: end!) : nil;
                 

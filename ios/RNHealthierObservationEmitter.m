@@ -76,7 +76,6 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(finish:(NSString *)observationUUIDString) {
     @synchronized(self.completerMap) {
-        NSLog( @"COMPLETER MAP %@", self.completerMap);
         void(^completionHandler)(void) = self.completerMap[observationUUIDString];
         if (completionHandler != nil) {
             completionHandler();

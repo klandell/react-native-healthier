@@ -131,13 +131,11 @@ class RNHealthierModule : NSObject {
             let defaults = UserDefaults.standard
             var backgroundTypes = defaults.stringArray(forKey: "RNHealthier_BackgroundDelivery") ?? [String]()
             
-            let itemExists = backgroundTypes.contains(where: { $0.starts(with: dataTypeIdentifierString) })
-            
             if backgroundTypes.contains("\(dataTypeIdentifier)::\(updateFrequency)") {
                 // We already have this as a background delivery type, just resolve.
                 resolve(nil)
                 return;
-            } else if backgroundTypes.contains(where: { $0.range(of: dataTypeIdentifierString) != nil }) {
+            } else if backgroundTypes.contains(where: { $0.hasPrefix("\(dataTypeIdentifierString)::") }) {
                 // We have background delivery for this type, but a different update frequency.
                 // Disable the previous frequency? I don't know if I actually need to do this.
                 RNHealthierStore.shared.disableBackgroundDelivery(sampleTypeString: dataTypeIdentifierString) { success, error in
@@ -145,12 +143,12 @@ class RNHealthierModule : NSObject {
                         reject("", "\(String(describing: error))", nil)
                         return;
                     }
-                    backgroundTypes = backgroundTypes.filter { $0.starts(with: dataTypeIdentifierString) }
-                    defaults.set(backgroundTypes, forKey: "RNHealthier_BackgroundDelivery")
+                    backgroundTypes = backgroundTypes.filter { !$0.hasPrefix("\(dataTypeIdentifierString)::") }
                     
                     // Enable the new background delivery
                     RNHealthierStore.shared.enableBackgroundDelivery(sampleTypeString: dataTypeIdentifierString, updateFrequencyString: updateFrequencyString) { success, error in
                         if !success {
+                            defaults.set(backgroundTypes, forKey: "RNHealthier_BackgroundDelivery")
                             reject("", "\(String(describing: error))", nil)
                             return;
                         }
@@ -188,21 +186,24 @@ class RNHealthierModule : NSObject {
             let defaults = UserDefaults.standard
             var backgroundTypes = defaults.stringArray(forKey: "RNHealthier_BackgroundDelivery") ?? [String]()
             
-            if backgroundTypes.contains(dataTypeIdentifierString) {
+            if backgroundTypes.contains(where: { $0.hasPrefix("\(dataTypeIdentifierString)::") }) {
                 RNHealthierStore.shared.disableBackgroundDelivery(sampleTypeString: dataTypeIdentifierString) { success, error in
                     if !success {
                         reject("", "\(String(describing: error))", nil)
                         return;
                     }
-                    backgroundTypes = backgroundTypes.filter { $0.starts(with: dataTypeIdentifierString) }
+                    
+                    backgroundTypes = backgroundTypes.filter { !$0.hasPrefix("\(dataTypeIdentifierString)::") }
+                    
                     defaults.set(backgroundTypes, forKey: "RNHealthier_BackgroundDelivery")
                     resolve(nil)
+                    return
                 }
             } else {
                 // We don't have this as a background delivery type, just resolve.
                 resolve(nil)
+                return
             }
-            return
         } else {
             // TODO: REJECT BAD KEY
             resolve(nil)
