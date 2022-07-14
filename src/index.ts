@@ -41,7 +41,7 @@ export const setObserver = ObservationEmitter.setObserver;
 export const observe = ObservationEmitter.observe;
 
 // TODO: TYPE!
-export function getBackgroundDeliverableTypes(): {
+export function auditBackgroundDelivery(): {
   sampleType: string;
   updateFrequency: ValueOf<typeof UpdateFrequency>;
 }[] {
