@@ -24,6 +24,31 @@ export { default as QuantityTypeIdentifier } from './constants/QuantityTypeIdent
 export { default as SeriesSampleIdentifier } from './constants/SeriesSampleIdentifier';
 export { default as WorkoutTypeIdentifer } from './constants/WorkoutTypeIdentifer';
 
+// Category Values
+export { default as CategoryValue } from './constants/CategoryValue';
+export { default as CategoryValueAppetiteChanges } from './constants/CategoryValueAppetiteChanges';
+export { default as CategoryValueAppleStandHour } from './constants/CategoryValueAppleStandHour';
+export { default as CategoryValueAppleWalkingSteadinessEvent } from './constants/CategoryValueAppleWalkingSteadinessEvent';
+export { default as CategoryValueCervicalMucusQuality } from './constants/CategoryValueCervicalMucusQuality';
+export { default as CategoryValueContraceptive } from './constants/CategoryValueContraceptive';
+export { default as CategoryValueEnvironmentalAudioExposureEvent } from './constants/CategoryValueEnvironmentalAudioExposureEvent';
+export { default as CategoryValueHeadphoneAudioExposureEvent } from './constants/CategoryValueHeadphoneAudioExposureEvent';
+export { default as CategoryValueLowCardioFitnessEvent } from './constants/CategoryValueLowCardioFitnessEvent';
+export { default as CategoryValueMenstrualFlow } from './constants/CategoryValueMenstrualFlow';
+export { default as CategoryValueOvulationTestResult } from './constants/CategoryValueOvulationTestResult';
+export { default as CategoryValuePregnancyTestResult } from './constants/CategoryValuePregnancyTestResult';
+export { default as CategoryValuePresence } from './constants/CategoryValuePresence';
+export { default as CategoryValueProgesteroneTestResult } from './constants/CategoryValueProgesteroneTestResult';
+export { default as CategoryValueSeverity } from './constants/CategoryValueSeverity';
+export { default as CategoryValueSleepAnalysis } from './constants/CategoryValueSleepAnalysis';
+
+// Characteristic Values
+export { default as ActivityMoveMode } from './constants/ActivityMoveMode';
+export { default as BiologicalSex } from './constants/BiologicalSex';
+export { default as BloodType } from './constants/BloodType';
+export { default as FitzpatrickSkinType } from './constants/FitzpatrickSkinType';
+export { default as WheelchairUse } from './constants/WheelchairUse';
+
 // Other HealthKit Constants
 export { default as ComparisonOperator } from './constants/ComparisonOperator';
 export { default as DeviceProperty } from './constants/DeviceProperty';
