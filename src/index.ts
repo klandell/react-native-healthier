@@ -12,7 +12,8 @@ export default NativeHealthier;
 
 // Healthier functions and function groups.
 export { Query };
-export { default as ignite } from './ignite';
+export { default as ignite } from './lib/ignite';
+export { default as waterfall } from './lib/waterfall';
 
 // Data Type Identifiers
 export { default as CategoryTypeIdentifier } from './constants/CategoryTypeIdentifier';
