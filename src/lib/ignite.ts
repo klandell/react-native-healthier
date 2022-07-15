@@ -1,9 +1,9 @@
 import HK, { HKSystemURI } from '../systems/HK';
 import LOINC, { LOINCSystemURI } from '../systems/LOINC';
 import type QuantityTypeIdentifier from '../constants/QuantityTypeIdentifier';
+import type CategoryTypeIdentifier from '../constants/CategoryTypeIdentifier';
 import UCOM, { UCOMSystemURI } from '../systems/UCOM';
 import type { Code, CodeWithSystem, TimeInterval, ValueOf } from '../types';
-import type { CategoryTypeIdentifier } from 'lib/typescript';
 
 type Subject = {
   reference: string; // Literal reference, Relative, internal or absolute URL
