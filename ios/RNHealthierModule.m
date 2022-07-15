@@ -10,7 +10,7 @@ RCT_EXTERN_METHOD(requestAuthorization:(NSDictionary *)permissions resolver:(RCT
 
 RCT_EXTERN_METHOD(execute:(NSDictionary *)queryDescriptor resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(enableBackgroundDelivery:(NSString *)dataTypeIdentifier updateFrequency:(NSNumber)updateFrequency resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(enableBackgroundDelivery:(NSString *)dataTypeIdentifier updateFrequency:(nonnull NSNumber)updateFrequency resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 
 RCT_EXTERN_METHOD(disableBackgroundDelivery:(NSString *)dataTypeIdentifier resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 
