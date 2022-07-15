@@ -73,6 +73,6 @@ export function auditBackgroundDelivery(): {
   const deliveryStrings = Settings.get('RNHealthier_BackgroundDelivery') || [];
   return deliveryStrings.map((descriptor: string) => {
     const [sampleType, updateFrequency] = descriptor.split('::');
-    return { sampleType, updateFrequency };
+    return { sampleType, updateFrequency: +updateFrequency };
   });
 }
