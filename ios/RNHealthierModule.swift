@@ -132,7 +132,7 @@ class RNHealthierModule : NSObject {
             let defaults = UserDefaults.standard
             var backgroundTypes = defaults.stringArray(forKey: "RNHealthier_BackgroundDelivery") ?? [String]()
             
-            if backgroundTypes.contains("\(dataTypeIdentifier)::\(updateFrequency)") {
+            if backgroundTypes.contains("\(dataTypeIdentifier)::\(updateFrequency.rawValue)") {
                 // We already have this as a background delivery type, just resolve.
                 resolve(nil)
                 return;
@@ -166,7 +166,7 @@ class RNHealthierModule : NSObject {
                         reject("", "\(String(describing: error))", nil)
                         return;
                     }
-                    backgroundTypes.append("\(dataTypeIdentifier)::\(updateFrequency)")
+                    backgroundTypes.append("\(dataTypeIdentifier)::\(updateFrequency.rawValue)")
                     defaults.set(backgroundTypes, forKey: "RNHealthier_BackgroundDelivery")
                     resolve(nil)
                     return
