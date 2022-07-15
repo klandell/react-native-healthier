@@ -75,6 +75,18 @@ import HealthKit
                 //
             }
             
+            // Category Samples
+            if let samples = results as? [HKCategorySample] {
+                for sample in samples {
+                    data.append([
+                        "uuid": sample.uuid.uuidString,
+                        "startAt": sample.startDate.timeIntervalSince1970,
+                        "endAt": sample.endDate.timeIntervalSince1970,
+                        "value": sample.value
+                    ])
+                }
+            }
+            
             // Clinical Records
             if #available(iOS 12.0, *) {
                 if let samples = results as? [HKClinicalRecord] {
