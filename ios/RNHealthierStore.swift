@@ -153,8 +153,8 @@ import HealthKit
         s.execute(query);
     }
     
-    @objc(enableBackgroundDelivery:updateFrequencyString:completion:)
-    public func enableBackgroundDelivery(sampleTypeString: String, updateFrequencyString: String, completion: @escaping (Bool, Error?) -> Void) -> Void {
+    @objc(enableBackgroundDelivery:updateFrequency:completion:)
+    public func enableBackgroundDelivery(sampleTypeString: String, updateFrequency: HKUpdateFrequency, completion: @escaping (Bool, Error?) -> Void) -> Void {
         guard let s = store else {
             return completion(false, RNHealthierError.HealthStoreNotAvailable);
         }
@@ -164,7 +164,6 @@ import HealthKit
             return completion(false, RNHealthierError.InvalidSampleType)
         }
         
-        let updateFrequency = RNHealthierUtils.getUpdateFrequency(forString: updateFrequencyString)
         s.enableBackgroundDelivery(for: sampleType, frequency: updateFrequency, withCompletion: completion)
     }
     

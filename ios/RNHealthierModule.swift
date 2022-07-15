@@ -123,9 +123,10 @@ class RNHealthierModule : NSObject {
     
     
     @objc(enableBackgroundDelivery:updateFrequency:resolver:rejecter:)
-    func enableBackgroundDelivery(_ dataTypeIdentifier: NSString, updateFrequency: NSString, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    func enableBackgroundDelivery(_ dataTypeIdentifier: NSString, updateFrequency: NSNumber, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
         let dataTypeIdentifierString = dataTypeIdentifier as String;
-        let updateFrequencyString = updateFrequency as String;
+        let updateFrequency = HKUpdateFrequency.init(rawValue: updateFrequency.intValue) ?? HKUpdateFrequency.immediate
+        
         // If the data type identifier is valid, continue with enabling for background delivery
         if RNHealthierObjectTypeIdentifier.init(rawValue: dataTypeIdentifierString) != nil{
             let defaults = UserDefaults.standard
@@ -146,13 +147,13 @@ class RNHealthierModule : NSObject {
                     backgroundTypes = backgroundTypes.filter { !$0.hasPrefix("\(dataTypeIdentifierString)::") }
                     
                     // Enable the new background delivery
-                    RNHealthierStore.shared.enableBackgroundDelivery(sampleTypeString: dataTypeIdentifierString, updateFrequencyString: updateFrequencyString) { success, error in
+                    RNHealthierStore.shared.enableBackgroundDelivery(sampleTypeString: dataTypeIdentifierString, updateFrequency: updateFrequency) { success, error in
                         if !success {
                             defaults.set(backgroundTypes, forKey: "RNHealthier_BackgroundDelivery")
                             reject("", "\(String(describing: error))", nil)
                             return;
                         }
-                        backgroundTypes.append("\(dataTypeIdentifier)::\(updateFrequency)")
+                        backgroundTypes.append("\(dataTypeIdentifier)::\(updateFrequency.rawValue)")
                         defaults.set(backgroundTypes, forKey: "RNHealthier_BackgroundDelivery")
                         resolve(nil)
                         return
@@ -160,7 +161,7 @@ class RNHealthierModule : NSObject {
                     
                 }
             } else {
-                RNHealthierStore.shared.enableBackgroundDelivery(sampleTypeString: dataTypeIdentifierString, updateFrequencyString: updateFrequencyString) { success, error in
+                RNHealthierStore.shared.enableBackgroundDelivery(sampleTypeString: dataTypeIdentifierString, updateFrequency: updateFrequency) { success, error in
                     if !success {
                         reject("", "\(String(describing: error))", nil)
                         return;

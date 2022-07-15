@@ -23,7 +23,7 @@
         }];
   
         // TODO: DON'T USE IMMEDIATE!, GET IT FROM USER DEFAULTS!!
-        [store enableBackgroundDelivery:dataTypeIdentifierString updateFrequencyString:updateFrequencyString completion:^(BOOL success, NSError * _Nullable error) {
+        [store enableBackgroundDelivery:dataTypeIdentifierString updateFrequency:[updateFrequencyString integerValue] completion:^(BOOL success, NSError * _Nullable error) {
             // TODO: IMPLEMENT ME!
         }];
     }

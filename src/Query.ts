@@ -4,6 +4,7 @@ import type MetadataKey from './constants/MetadataKey';
 import type SortIdentifier from './constants/SortIdentifier';
 import type { ValueOf } from './types';
 
+import type CategoryTypeIdentifier from './constants/CategoryTypeIdentifier';
 // import type CharacteristicTypeIdentifier from './constants/CharacteristicTypeIdentifier';
 // import type CorrelationTypeIdentifier from './constants/CorrelationTypeIdentifier';
 import type ClinicalTypeIdentifier from './constants/ClinicalTypeIdentifier';
@@ -12,6 +13,7 @@ import type QuantityTypeIdentifier from './constants/QuantityTypeIdentifier';
 
 // TODO: Implement the rest of the
 type SampleType =
+  | ValueOf<typeof CategoryTypeIdentifier>
   // | ValueOf<typeof CharacteristicTypeIdentifier>
   | ValueOf<typeof ClinicalTypeIdentifier>
   // | ValueOf<typeof CorrelationTypeIdentifier>
