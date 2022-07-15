@@ -1,5 +1,5 @@
-const CategoryValueLowCardioFitnessEvent = {
-  LowFitness: 1,
-} as const;
+enum CategoryValueLowCardioFitnessEvent {
+  LowFitness = 1,
+}
 
 export default CategoryValueLowCardioFitnessEvent;

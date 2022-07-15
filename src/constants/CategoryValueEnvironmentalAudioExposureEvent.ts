@@ -1,5 +1,5 @@
-const CategoryValueEnvironmentalAudioExposureEvent = {
-  MomentaryLimit: 1,
-} as const;
+enum CategoryValueEnvironmentalAudioExposureEvent {
+  MomentaryLimit = 1,
+}
 
 export default CategoryValueEnvironmentalAudioExposureEvent;

@@ -1,6 +1,6 @@
-const CategoryValueAppleStandHour = {
-  Stood: 0,
-  Idle: 1,
-} as const;
+enum CategoryValueAppleStandHour {
+  Stood = 0,
+  Idle = 1,
+}
 
 export default CategoryValueAppleStandHour;

@@ -1,5 +1,5 @@
-const CategoryValue = {
-  NotApplicable: 0,
-} as const;
+enum CategoryValue {
+  NotApplicable = 0,
+}
 
 export default CategoryValue;
