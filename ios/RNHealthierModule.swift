@@ -106,6 +106,7 @@ class RNHealthierModule : NSObject {
                 // TODO: error!
                 return;
             }
+
             // Run the sample query.
             RNHealthierStore.shared.sampleQuery(sampleTypeString: sampleTypeString, predicate: RNHealthierUtils.buildPredicate(descriptor: predicate), limit: limit, sortDescriptors: RNHealthierUtils.buildSortDescriptors(descriptors: sortDescriptors)) {
                 data, err in

@@ -2,13 +2,17 @@ import type ComparisonOperator from './constants/ComparisonOperator';
 import type DeviceProperty from './constants/DeviceProperty';
 import type MetadataKey from './constants/MetadataKey';
 import type SortIdentifier from './constants/SortIdentifier';
+import type QueryOptions from './constants/QueryOptions';
 import type { ValueOf } from './types';
+
+import IntervalComponent from './constants/IntervalComponent';
 
 import type CategoryTypeIdentifier from './constants/CategoryTypeIdentifier';
 // import type CharacteristicTypeIdentifier from './constants/CharacteristicTypeIdentifier';
 // import type CorrelationTypeIdentifier from './constants/CorrelationTypeIdentifier';
 import type ClinicalTypeIdentifier from './constants/ClinicalTypeIdentifier';
 import type QuantityTypeIdentifier from './constants/QuantityTypeIdentifier';
+import type StatisticsOptions from './constants/QueryOptions';
 // import type WorkoutTypeIdentifer from './constants/WorkoutTypeIdentifer';
 
 // TODO: Implement the rest of the
@@ -26,7 +30,22 @@ type SampleQueryDescriptor = {
   predicate: Predicate | CompoundPredicate;
   limit: number;
   sortDescriptors: SortDescriptor[];
-  resultOptions: ResultOptions;
+};
+
+type StatisticsQueryDescriptor = {
+  type: 'StatisticsQuery';
+  quantityType: ValueOf<typeof QuantityTypeIdentifier>;
+  quantitySamplePredicate: Predicate | CompoundPredicate;
+  options: ValueOf<typeof StatisticsOptions>[];
+};
+
+type StatisticsCollectionQueryDescriptor = {
+  type: 'StatisticsCollectionQuery';
+  quantityType: ValueOf<typeof QuantityTypeIdentifier>;
+  quantitySamplePredicate: Predicate | CompoundPredicate;
+  options: ValueOf<typeof StatisticsOptions>[];
+  anchorDate: Date;
+  intervalComponents: { [key in ValueOf<typeof IntervalComponent>]: number };
 };
 
 export type QueryDescriptor = SampleQueryDescriptor;
@@ -48,23 +67,11 @@ type CompoundPredicate =
   | { type: 'Not'; subpredicate: CompoundPredicate | Predicate }
   | { type: 'Or'; subpredicates: (CompoundPredicate | Predicate)[] };
 
-type ResultOptions = {
-  includeDevice?: boolean;
-  includeSource?: boolean;
-};
-
-// TODO: Implement result options!
-const defaultResultOptions: ResultOptions = {
-  includeDevice: false,
-  includeSource: false,
-};
-
 type SampleQueryOptions = {
   sampleType: SampleType;
   predicate?: Predicate | CompoundPredicate;
   limit?: number;
   sortDescriptors?: SortDescriptor[];
-  resultOptions?: ResultOptions;
 };
 
 /**
@@ -83,9 +90,7 @@ export function sampleQuery(
     predicate = { type: 'Nil' },
     limit = 0,
     sortDescriptors = [],
-    resultOptions: resOpts = {},
   } = options;
-  const resultOptions = { ...defaultResultOptions, ...resOpts };
 
   if (!Number.isInteger(limit) || limit < 0) {
     throw new Error(
@@ -99,7 +104,81 @@ export function sampleQuery(
     predicate,
     limit,
     sortDescriptors,
-    resultOptions,
+  };
+}
+
+type StatisticsQueryOptions = {
+  quantityType: ValueOf<typeof QuantityTypeIdentifier>;
+  quantitySamplePredicate?: Predicate | CompoundPredicate;
+  options?: ValueOf<typeof StatisticsOptions>[];
+};
+
+export function statisticsQuery(
+  opts: StatisticsQueryOptions
+): StatisticsQueryDescriptor {
+  const {
+    quantityType,
+    quantitySamplePredicate = { type: 'Nil' },
+    options = [],
+  } = opts;
+
+  return {
+    type: 'StatisticsQuery',
+    quantityType,
+    quantitySamplePredicate,
+    options,
+  };
+}
+
+type StatisticsCollectionQueryOptions = {
+  quantityType: ValueOf<typeof QuantityTypeIdentifier>;
+  quantitySamplePredicate?: Predicate | CompoundPredicate;
+  options?: ValueOf<typeof StatisticsOptions>[];
+  anchorDate: Date;
+  intervalComponents: { [key in ValueOf<typeof IntervalComponent>]?: number };
+};
+
+export function statisticsCollectionQuery(
+  opts: StatisticsCollectionQueryOptions
+): StatisticsCollectionQueryDescriptor {
+  const {
+    quantityType,
+    quantitySamplePredicate = { type: 'Nil' },
+    options = [],
+    anchorDate,
+    intervalComponents,
+  } = opts;
+
+  const dateComponentKeys = Object.keys(intervalComponents);
+  if (!dateComponentKeys.length) {
+    throw new Error(
+      '"intervalComponents" are required for a StatisticsCollectionQuery.'
+    );
+  }
+
+  const allowedIntervalComponents = new Set(Object.values(IntervalComponent));
+
+  //const
+  Object.keys(intervalComponents).forEach((key) => {
+    const intervalComponentKey = key as ValueOf<typeof IntervalComponent>;
+    if (!allowedIntervalComponents.has(intervalComponentKey)) {
+      throw new Error(`"${key}" is not a valid intervalComponent.`);
+    }
+    const value = intervalComponents[intervalComponentKey] || 0;
+    if (!Number.isInteger(value)) {
+      throw new Error(
+        `"intervalComponent.${key}" has a value of ${value}. It should be an integer.`
+      );
+    }
+  });
+
+  return {
+    type: 'StatisticsCollectionQuery',
+    quantityType,
+    quantitySamplePredicate,
+    options,
+    anchorDate,
+    intervalComponents,
   };
 }
 
@@ -212,10 +291,12 @@ export function predicateForObjectsWithUUID(uuid: UUID[]): Predicate {
 
 type PredicateWithDateRange = {
   type: 'DateRange';
-  data: { start?: string; end?: string; options?: DateRangeOptions[] };
+  data: {
+    start?: string;
+    end?: string;
+    options?: ValueOf<typeof QueryOptions>[];
+  };
 };
-
-type DateRangeOptions = 'StrictStartDate' | 'StrictEndDate';
 
 /**
  * Returns a predicate for samples whose start and end dates fall within the specified time interval.
@@ -227,7 +308,7 @@ type DateRangeOptions = 'StrictStartDate' | 'StrictEndDate';
 export function predicateForSamples(opts: {
   start?: Date;
   end?: Date;
-  options?: DateRangeOptions[];
+  options?: ValueOf<typeof QueryOptions>[];
 }): Predicate {
   const { start: startDate, end: endDate, options } = opts;
 

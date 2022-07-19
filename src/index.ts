@@ -53,7 +53,9 @@ export { default as WheelchairUse } from './constants/WheelchairUse';
 export { default as ComparisonOperator } from './constants/ComparisonOperator';
 export { default as DeviceProperty } from './constants/DeviceProperty';
 export { default as MetadataKey } from './constants/MetadataKey';
+export { default as QueryOptions } from './constants/QueryOptions';
 export { default as SortIdentifier } from './constants/SortIdentifier';
+export { default as StatisticsOptions } from './constants/StatisticsOptions';
 export { default as UpdateFrequency } from './constants/UpdateFrequency';
 
 // Ignite Constants
