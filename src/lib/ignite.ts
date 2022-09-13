@@ -2,6 +2,7 @@ import HK, { HKSystemURI } from '../systems/HK';
 import LOINC, { LOINCSystemURI } from '../systems/LOINC';
 import type QuantityTypeIdentifier from '../constants/QuantityTypeIdentifier';
 import type CategoryTypeIdentifier from '../constants/CategoryTypeIdentifier';
+import type SeriesSampleIdentifier from '../constants/SeriesSampleIdentifier';
 import UCOM, { UCOMSystemURI } from '../systems/UCOM';
 import type { Code, CodeWithSystem, TimeInterval, ValueOf } from '../types';
 
@@ -24,6 +25,9 @@ type Observation = {
   valueInteger?: {
     value: number;
   };
+  valueString?: {
+    value: string;
+  };
   effectivePeriod: {
     start: string; // ISO-8601
     end: string; // ISO-8601
@@ -36,6 +40,8 @@ type Result = {
   endAt: TimeInterval;
   value: number;
   unit: string;
+  // TODO: CLEAN THIS UP FOR CATEGORY TYPES AND SERIES TYPES
+  heartbeats?: { elapsed: number; precededByGap: boolean }[];
 };
 
 function ignite(
@@ -108,7 +114,37 @@ function ignite(
       },
     };
   }
+  // Heartbeat Series
+  else if (
+    HK.HKSeries[typeIdentifier as ValueOf<typeof SeriesSampleIdentifier>]
+  ) {
+    const { heartbeats } = result;
+    const sampleType = typeIdentifier as ValueOf<typeof SeriesSampleIdentifier>;
+    const coding: CodeWithSystem[] = [];
 
+    const hkc = HK.HKSeries[sampleType];
+    if (hkc) {
+      const hkcArray = (Array.isArray(hkc) ? hkc : [hkc]) as Code[];
+      hkcArray.forEach((o) => coding.push({ ...o, system: HKSystemURI }));
+    }
+
+    const valueString = (heartbeats || [])
+      .map((beat) => `${beat.elapsed}|${+beat.precededByGap}`)
+      .join(' ');
+
+    return {
+      resourceType: 'Observation',
+      status: 'final',
+      identifier: [{ value: uuid, system: 'com.apple.health' }],
+      code: { coding },
+      subject,
+      valueString: { value: valueString },
+      effectivePeriod: {
+        start: new Date(startAt * 1000).toISOString(),
+        end: new Date(endAt * 1000).toISOString(),
+      },
+    };
+  }
   // Unsupported type, return
   return undefined;
 }

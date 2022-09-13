@@ -59,6 +59,10 @@ import HealthKit
             // to get it into a format the react native can deal with.
             var data: [[String: Any]] = []
             
+            // TODO: This is not going to call the completion handler if the
+            // data type  doesn't match the one's we've hardcoded compatibility for
+            // Fix that.
+
             // Quantity Samples
             if let samples = results as? [HKQuantitySample] {
                 for sample in samples {
@@ -71,8 +75,8 @@ import HealthKit
                             "unit": unit
                         ])
                     }
+                    completion(data, nil)
                 }
-                //
             }
             
             // Category Samples
@@ -84,6 +88,7 @@ import HealthKit
                         "endAt": sample.endDate.timeIntervalSince1970,
                         "value": sample.value
                     ])
+                    completion(data, nil)
                 }
             }
             
@@ -122,11 +127,49 @@ import HealthKit
                             "fhirVersion": fhirVersion!,
                             "fhirData": fhirData!,
                         ])
+                        completion(data, nil)
                     }
                 }
+            } else {
+                // Send an empty data array back
+                completion(data, nil)
             }
+
             
-            completion(data, nil)
+
+            var seriesSamplesProcessed = 0;
+
+            if #available(iOS 13.0, *) {
+                if let samples = results as? [HKHeartbeatSeriesSample] {
+                    for sample in samples {
+                        var elem: [String: Any] = [
+                            "uuid": sample.uuid.uuidString,
+                            "startAt": sample.startDate.timeIntervalSince1970,
+                            "endAt": sample.endDate.timeIntervalSince1970
+                        ];
+                        var heartbeats: [[String: Any]] = []
+                        
+                        let subquery = HKHeartbeatSeriesQuery(heartbeatSeries: sample) { subquery, timeSinceSeriesStart, precededByGap, done, error in
+                            if error == nil {
+                                heartbeats.append([
+                                    "elapsed": timeSinceSeriesStart,
+                                    "precededByGap": precededByGap
+                                ])
+                            }
+                            if done {
+                                elem["heartbeats"] = heartbeats
+                                seriesSamplesProcessed += 1
+                                if (seriesSamplesProcessed == samples.count) {
+                                    completion(data, nil)
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                // Send an empty data array back
+                completion(data, nil)
+            }
         }
         s.execute(query)
     }
