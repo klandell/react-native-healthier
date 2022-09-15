@@ -694,27 +694,15 @@ type HKSeriesMap = {
 };
 
 const HKSeries: HKSeriesMap = {
+  Electrocardiogram: {
+    code: 'HKElectrocardiogramType',
+    display: 'Electrocardiogram',
+  },
   HeartbeatSeries: {
     code: 'HKDataTypeIdentifierHeartbeatSeries',
     display: 'Heartbeat Series',
   },
 };
-/*
-export const SeriesTypeIdentifier = {
-  Audiogram: {
-    code: 'Audiogram',
-    display: 'Audiogram',
-  },
-  Electrocardiogram: {
-    code: 'Electrocardiogram',
-    display: 'Electrocardiogram',
-  },
-  WorkoutRoute: {
-    code: 'WorkoutRoute',
-    display: 'Workout Route',
-  },
-} as const;
-*/
 
 /*
 export const WorkoutTypeIdentifier = {

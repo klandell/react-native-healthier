@@ -21,6 +21,7 @@ const UCOM = {
   'm/s': 'm/s',
   'mcg': 'ug',
   'mcS': 'uS',
+  'mcV': 'uV',
   'mg': 'mg',
   'mg/dL': 'mg/dL',
   'min': 'min',

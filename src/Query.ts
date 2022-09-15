@@ -9,6 +9,7 @@ import type CategoryTypeIdentifier from './constants/CategoryTypeIdentifier';
 // import type CorrelationTypeIdentifier from './constants/CorrelationTypeIdentifier';
 import type ClinicalTypeIdentifier from './constants/ClinicalTypeIdentifier';
 import type QuantityTypeIdentifier from './constants/QuantityTypeIdentifier';
+import type SeriesSampleIdentifier from './constants/SeriesSampleIdentifier';
 // import type WorkoutTypeIdentifer from './constants/WorkoutTypeIdentifer';
 
 // TODO: Implement the rest of the
@@ -17,8 +18,9 @@ type SampleType =
   // | ValueOf<typeof CharacteristicTypeIdentifier>
   | ValueOf<typeof ClinicalTypeIdentifier>
   // | ValueOf<typeof CorrelationTypeIdentifier>
-  | ValueOf<typeof QuantityTypeIdentifier>;
-// | ValueOf<typeof WorkoutTypeIdentifer>;
+  | ValueOf<typeof QuantityTypeIdentifier>
+  // | ValueOf<typeof WorkoutTypeIdentifer>;
+  | ValueOf<typeof SeriesSampleIdentifier>;
 
 type SampleQueryDescriptor = {
   type: 'SampleQuery';

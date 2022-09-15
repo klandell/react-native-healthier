@@ -59,9 +59,15 @@ import HealthKit
             // to get it into a format the react native can deal with.
             var data: [[String: Any]] = []
             
+            // A sample processed counter for data types that require a subquery like
+            // HeartbeatSeries and Electrocardiogram
+            var seriesSamplesProcessed = 0;
+            
             // TODO: This is not going to call the completion handler if the
             // data type  doesn't match the one's we've hardcoded compatibility for
             // Fix that.
+            
+            // Also will break with os version checks
 
             // Quantity Samples
             if let samples = results as? [HKQuantitySample] {
@@ -75,8 +81,8 @@ import HealthKit
                             "unit": unit
                         ])
                     }
-                    completion(data, nil)
                 }
+                return completion(data, nil)
             }
             
             // Category Samples
@@ -88,8 +94,8 @@ import HealthKit
                         "endAt": sample.endDate.timeIntervalSince1970,
                         "value": sample.value
                     ])
-                    completion(data, nil)
                 }
+                return completion(data, nil)
             }
             
             // Clinical Records
@@ -127,17 +133,13 @@ import HealthKit
                             "fhirVersion": fhirVersion!,
                             "fhirData": fhirData!,
                         ])
-                        completion(data, nil)
                     }
+                    return completion(data, nil)
                 }
             } else {
                 // Send an empty data array back
-                completion(data, nil)
+                return completion(data, nil)
             }
-
-            
-
-            var seriesSamplesProcessed = 0;
 
             if #available(iOS 13.0, *) {
                 if let samples = results as? [HKHeartbeatSeriesSample] {
@@ -158,17 +160,73 @@ import HealthKit
                             }
                             if done {
                                 elem["heartbeats"] = heartbeats
+                                data.append(elem)
                                 seriesSamplesProcessed += 1
                                 if (seriesSamplesProcessed == samples.count) {
-                                    completion(data, nil)
+                                    return completion(data, nil)
                                 }
                             }
                         }
+                        s.execute(subquery)
                     }
                 }
             } else {
                 // Send an empty data array back
-                completion(data, nil)
+                return completion(data, nil)
+            }
+            
+            if #available(iOS 14.0, *) {
+                if let samples = results as? [HKElectrocardiogram] {
+                    for sample in samples {
+                        
+                        if let metadata = sample.metadata,
+                           let algorithmVersion = metadata[HKMetadataKeyAppleECGAlgorithmVersion] {
+                            let testing = algorithmVersion;
+                        }
+
+                        var elem: [String: Any] = [
+                            "uuid": sample.uuid.uuidString,
+                            "startAt": sample.startDate.timeIntervalSince1970,
+                            "endAt": sample.endDate.timeIntervalSince1970,
+                            "classification": sample.classification,
+                            "averageHeartRate": sample.averageHeartRate?.doubleValue(for: HKUnit.init(from: "count/min")) ?? 0,
+                            "samplingFrequency": sample.samplingFrequency?.doubleValue(for: HKUnit.hertz()) ?? 0,
+                            "algorithmVersion": sample.metadata?[HKMetadataKeyAppleECGAlgorithmVersion] as Any
+                        ];
+               
+     
+                        var voltages: [[Any]] = []
+                        
+                        let subquery = HKElectrocardiogramQuery(electrocardiogram: sample) {
+                            subq, voltageMeasurement, done, error in
+                            if (error == nil && voltageMeasurement !== nil) {
+                                // If no error exists for this data point, add the voltage measurement to the array.
+                                // I'm not sure if this technique of error handling is what we want. It could lead
+                                // to holes in the data. The alternative is to not write any of the voltage data to
+                                // the elem dictionary if an error occurs. I think holes are *probably* better?
+                                let value = voltageMeasurement!.quantity(for: HKElectrocardiogram.Lead.appleWatchSimilarToLeadI)?.doubleValue(for: HKUnit.voltUnit(with: HKMetricPrefix.micro))
+                                
+                                voltages.append([
+                                    voltageMeasurement!.timeSinceSampleStart,
+                                    value ?? 0
+                                ])
+                            
+                            }
+                            if done {
+                                elem["voltages"] = voltages
+                                data.append(elem)
+                                seriesSamplesProcessed += 1
+                                if (seriesSamplesProcessed == samples.count) {
+                                    return completion(data, nil)
+                                }
+                            }
+                        }
+                        s.execute(subquery)
+                    }
+                }
+            } else {
+                // Send an empty data array back
+                return completion(data, nil)
             }
         }
         s.execute(query)

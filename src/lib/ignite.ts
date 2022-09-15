@@ -22,11 +22,16 @@ type Observation = {
     code: string;
     system: string;
   };
-  valueInteger?: {
-    value: number;
-  };
-  valueString?: {
-    value: string;
+  valueInteger?: number;
+  valueString?: string;
+  valueSampledData?: {
+    origin: { value: number; unit: string; code: string; system: string };
+    period: number;
+    factor: number;
+    lowerLimit?: number;
+    upperLimit?: number;
+    dimensions: number;
+    data: string;
   };
   effectivePeriod: {
     start: string; // ISO-8601
@@ -42,13 +47,17 @@ type Result = {
   unit: string;
   // TODO: CLEAN THIS UP FOR CATEGORY TYPES AND SERIES TYPES
   heartbeats?: { elapsed: number; precededByGap: boolean }[];
+  // ECG
+  samplingFrequency?: number;
+  voltages?: number[][];
 };
 
 function ignite(
   // TODO: This can only handle Quanity and Category types right now.
   typeIdentifier:
     | ValueOf<typeof QuantityTypeIdentifier>
-    | ValueOf<typeof CategoryTypeIdentifier>,
+    | ValueOf<typeof CategoryTypeIdentifier>
+    | ValueOf<typeof SeriesSampleIdentifier>,
   result: Result,
   subject: Subject
 ): Observation | undefined {
@@ -107,18 +116,17 @@ function ignite(
       identifier: [{ value: uuid, system: 'com.apple.health' }],
       code: { coding },
       subject,
-      valueInteger: { value },
+      valueInteger: value,
       effectivePeriod: {
         start: new Date(startAt * 1000).toISOString(),
         end: new Date(endAt * 1000).toISOString(),
       },
     };
   }
-  // Heartbeat Series
+  // Heartbeat Series & Electrocardiogram
   else if (
     HK.HKSeries[typeIdentifier as ValueOf<typeof SeriesSampleIdentifier>]
   ) {
-    const { heartbeats } = result;
     const sampleType = typeIdentifier as ValueOf<typeof SeriesSampleIdentifier>;
     const coding: CodeWithSystem[] = [];
 
@@ -128,23 +136,42 @@ function ignite(
       hkcArray.forEach((o) => coding.push({ ...o, system: HKSystemURI }));
     }
 
-    const valueString = (heartbeats || [])
-      .map((beat) => `${beat.elapsed}|${+beat.precededByGap}`)
-      .join(' ');
-
-    return {
+    const obs: Observation = {
       resourceType: 'Observation',
       status: 'final',
       identifier: [{ value: uuid, system: 'com.apple.health' }],
       code: { coding },
       subject,
-      valueString: { value: valueString },
       effectivePeriod: {
         start: new Date(startAt * 1000).toISOString(),
         end: new Date(endAt * 1000).toISOString(),
       },
     };
+
+    if (sampleType === 'HeartbeatSeries') {
+      const { heartbeats } = result;
+      obs.valueString = (heartbeats || [])
+        .map((beat) => `${beat.elapsed}|${+beat.precededByGap}`)
+        .join(' ');
+    } else if (sampleType === 'Electrocardiogram') {
+      const { samplingFrequency = 0, voltages = [] } = result;
+      obs.valueSampledData = {
+        origin: {
+          value: 0,
+          unit: 'mcV',
+          code: UCOM[unitString as keyof typeof UCOM] || '{unknown}',
+          system: UCOMSystemURI,
+        },
+        period: samplingFrequency && 1000 / samplingFrequency,
+        factor: 1,
+        dimensions: 1,
+        data: voltages.map((o: number[]) => o[1]).join(' '),
+      };
+    }
+
+    return obs;
   }
+
   // Unsupported type, return
   return undefined;
 }

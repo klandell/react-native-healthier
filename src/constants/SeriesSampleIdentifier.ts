@@ -1,6 +1,9 @@
 const SeriesSampleIdentifier = {
+  Electrocardiogram: 'Electrocardiogram',
   HeartbeatSeries: 'HeartbeatSeries',
-  WorkoutRoute: 'WorkoutRoute',
 } as const;
+
+// Audiogram
+// WorkoutRoute
 
 export default SeriesSampleIdentifier;
