@@ -188,7 +188,7 @@ import HealthKit
                             "uuid": sample.uuid.uuidString,
                             "startAt": sample.startDate.timeIntervalSince1970,
                             "endAt": sample.endDate.timeIntervalSince1970,
-                            "classification": sample.classification,
+                            "classification": sample.classification.rawValue,
                             "averageHeartRate": sample.averageHeartRate?.doubleValue(for: HKUnit.init(from: "count/min")) ?? 0,
                             "samplingFrequency": sample.samplingFrequency?.doubleValue(for: HKUnit.hertz()) ?? 0,
                             "algorithmVersion": sample.metadata?[HKMetadataKeyAppleECGAlgorithmVersion] as Any
