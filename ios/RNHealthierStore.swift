@@ -68,7 +68,7 @@ import HealthKit
             // need to know if we need to keep waiting for data before calling the
             // completion handler, or if we simply don't have a handler for the incoming
             // results.
-            let resultsHandled = false;
+            var resultsHandled = false;
 
             // Quantity Samples
             if let samples = results as? [HKQuantitySample] {
