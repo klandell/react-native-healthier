@@ -159,7 +159,7 @@ function ignite(
         origin: {
           value: 0,
           unit: 'mcV',
-          code: UCOM[unitString as keyof typeof UCOM] || '{unknown}',
+          code: UCOM.mcV,
           system: UCOMSystemURI,
         },
         period: samplingFrequency && 1000 / samplingFrequency,

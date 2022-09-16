@@ -63,14 +63,16 @@ import HealthKit
             // HeartbeatSeries and Electrocardiogram
             var seriesSamplesProcessed = 0;
             
-            // TODO: This is not going to call the completion handler if the
-            // data type  doesn't match the one's we've hardcoded compatibility for
-            // Fix that.
-            
-            // Also will break with os version checks
+            // Add a flag to specify if the incoming data is/was handled by one of
+            // our data type handlers. Some of the data types have subqueries, so we
+            // need to know if we need to keep waiting for data before calling the
+            // completion handler, or if we simply don't have a handler for the incoming
+            // results.
+            let resultsHandled = false;
 
             // Quantity Samples
             if let samples = results as? [HKQuantitySample] {
+                resultsHandled = true
                 for sample in samples {
                     if let unit = RNHealthierUtils.getDefaultUnit(forIdentifier: sampleTypeEnum) {
                         data.append([
@@ -87,6 +89,7 @@ import HealthKit
             
             // Category Samples
             if let samples = results as? [HKCategorySample] {
+                resultsHandled = true
                 for sample in samples {
                     data.append([
                         "uuid": sample.uuid.uuidString,
@@ -101,6 +104,7 @@ import HealthKit
             // Clinical Records
             if #available(iOS 12.0, *) {
                 if let samples = results as? [HKClinicalRecord] {
+                    resultsHandled = true;
                     for sample in samples {
                         var fhirRelease: String?;
                         var fhirVersion: String?;
@@ -136,13 +140,11 @@ import HealthKit
                     }
                     return completion(data, nil)
                 }
-            } else {
-                // Send an empty data array back
-                return completion(data, nil)
             }
 
             if #available(iOS 13.0, *) {
                 if let samples = results as? [HKHeartbeatSeriesSample] {
+                    resultsHandled = true
                     for sample in samples {
                         var elem: [String: Any] = [
                             "uuid": sample.uuid.uuidString,
@@ -170,13 +172,11 @@ import HealthKit
                         s.execute(subquery)
                     }
                 }
-            } else {
-                // Send an empty data array back
-                return completion(data, nil)
             }
             
             if #available(iOS 14.0, *) {
                 if let samples = results as? [HKElectrocardiogram] {
+                    resultsHandled = true;
                     for sample in samples {
                         
                         if let metadata = sample.metadata,
@@ -224,9 +224,12 @@ import HealthKit
                         s.execute(subquery)
                     }
                 }
-            } else {
-                // Send an empty data array back
-                return completion(data, nil)
+            }
+            
+            // If we haven't yet built the handlers for the data type
+            // just call the completion handler with empty data.
+            if !resultsHandled {
+                return completion([], nil)
             }
         }
         s.execute(query)
@@ -288,15 +291,3 @@ import HealthKit
         s.disableAllBackgroundDelivery(completion: completion)
     }
 }
-
-/*
- 
- guard let actualSamples = samples else {
- // Handle the error here.
- print("*** An error occurred: \(error?.localizedDescription ?? "nil") ***")
- return
- }
- 
- let allergySamples = actualSamples as? [HKClinicalRecord]
- // Do something with the allergy samples here...
- */
