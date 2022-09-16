@@ -3,6 +3,7 @@ import type CategoryTypeIdentifier from '../constants/CategoryTypeIdentifier';
 import type QuantityTypeIdentifier from '../constants/QuantityTypeIdentifier';
 import type CorrelationTypeIdentifier from '../constants/CorrelationTypeIdentifier';
 import type CharacteristicTypeIdentifier from '../constants/CharacteristicTypeIdentifier';
+import type SeriesSampleIdentifier from '../constants/SeriesSampleIdentifier';
 
 export const HKSystemURI = 'com.apple.health';
 
@@ -686,26 +687,22 @@ const HKQuantity: HKQuantityMap = {
   },
 } as const;
 
-/*
-export const SeriesTypeIdentifier = {
-  Audiogram: {
-    code: 'Audiogram',
-    display: 'Audiogram',
-  },
+type HKSeriesMap = {
+  [K in ValueOf<typeof SeriesSampleIdentifier>]?:
+    | Readonly<Code>
+    | ReadonlyArray<Code>;
+};
+
+const HKSeries: HKSeriesMap = {
   Electrocardiogram: {
-    code: 'Electrocardiogram',
+    code: 'HKElectrocardiogramType',
     display: 'Electrocardiogram',
   },
   HeartbeatSeries: {
-    code: 'HeartbeatSeries',
+    code: 'HKDataTypeIdentifierHeartbeatSeries',
     display: 'Heartbeat Series',
   },
-  WorkoutRoute: {
-    code: 'WorkoutRoute',
-    display: 'Workout Route',
-  },
-} as const;
-*/
+};
 
 /*
 export const WorkoutTypeIdentifier = {
@@ -716,4 +713,10 @@ export const WorkoutTypeIdentifier = {
 } as const;
 */
 
-export default { HKCategory, HKCorrelation, HKCharacteristic, HKQuantity };
+export default {
+  HKCategory,
+  HKCorrelation,
+  HKCharacteristic,
+  HKQuantity,
+  HKSeries,
+};

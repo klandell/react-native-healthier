@@ -59,8 +59,20 @@ import HealthKit
             // to get it into a format the react native can deal with.
             var data: [[String: Any]] = []
             
+            // A sample processed counter for data types that require a subquery like
+            // HeartbeatSeries and Electrocardiogram
+            var seriesSamplesProcessed = 0;
+            
+            // Add a flag to specify if the incoming data is/was handled by one of
+            // our data type handlers. Some of the data types have subqueries, so we
+            // need to know if we need to keep waiting for data before calling the
+            // completion handler, or if we simply don't have a handler for the incoming
+            // results.
+            let resultsHandled = false;
+
             // Quantity Samples
             if let samples = results as? [HKQuantitySample] {
+                resultsHandled = true
                 for sample in samples {
                     if let unit = RNHealthierUtils.getDefaultUnit(forIdentifier: sampleTypeEnum) {
                         data.append([
@@ -72,11 +84,12 @@ import HealthKit
                         ])
                     }
                 }
-                //
+                return completion(data, nil)
             }
             
             // Category Samples
             if let samples = results as? [HKCategorySample] {
+                resultsHandled = true
                 for sample in samples {
                     data.append([
                         "uuid": sample.uuid.uuidString,
@@ -85,11 +98,13 @@ import HealthKit
                         "value": sample.value
                     ])
                 }
+                return completion(data, nil)
             }
             
             // Clinical Records
             if #available(iOS 12.0, *) {
                 if let samples = results as? [HKClinicalRecord] {
+                    resultsHandled = true;
                     for sample in samples {
                         var fhirRelease: String?;
                         var fhirVersion: String?;
@@ -123,10 +138,99 @@ import HealthKit
                             "fhirData": fhirData!,
                         ])
                     }
+                    return completion(data, nil)
+                }
+            }
+
+            if #available(iOS 13.0, *) {
+                if let samples = results as? [HKHeartbeatSeriesSample] {
+                    resultsHandled = true
+                    for sample in samples {
+                        var elem: [String: Any] = [
+                            "uuid": sample.uuid.uuidString,
+                            "startAt": sample.startDate.timeIntervalSince1970,
+                            "endAt": sample.endDate.timeIntervalSince1970
+                        ];
+                        var heartbeats: [[String: Any]] = []
+                        
+                        let subquery = HKHeartbeatSeriesQuery(heartbeatSeries: sample) { subquery, timeSinceSeriesStart, precededByGap, done, error in
+                            if error == nil {
+                                heartbeats.append([
+                                    "elapsed": timeSinceSeriesStart,
+                                    "precededByGap": precededByGap
+                                ])
+                            }
+                            if done {
+                                elem["heartbeats"] = heartbeats
+                                data.append(elem)
+                                seriesSamplesProcessed += 1
+                                if (seriesSamplesProcessed == samples.count) {
+                                    return completion(data, nil)
+                                }
+                            }
+                        }
+                        s.execute(subquery)
+                    }
                 }
             }
             
-            completion(data, nil)
+            if #available(iOS 14.0, *) {
+                if let samples = results as? [HKElectrocardiogram] {
+                    resultsHandled = true;
+                    for sample in samples {
+                        
+                        if let metadata = sample.metadata,
+                           let algorithmVersion = metadata[HKMetadataKeyAppleECGAlgorithmVersion] {
+                            let testing = algorithmVersion;
+                        }
+
+                        var elem: [String: Any] = [
+                            "uuid": sample.uuid.uuidString,
+                            "startAt": sample.startDate.timeIntervalSince1970,
+                            "endAt": sample.endDate.timeIntervalSince1970,
+                            "classification": sample.classification,
+                            "averageHeartRate": sample.averageHeartRate?.doubleValue(for: HKUnit.init(from: "count/min")) ?? 0,
+                            "samplingFrequency": sample.samplingFrequency?.doubleValue(for: HKUnit.hertz()) ?? 0,
+                            "algorithmVersion": sample.metadata?[HKMetadataKeyAppleECGAlgorithmVersion] as Any
+                        ];
+               
+     
+                        var voltages: [[Any]] = []
+                        
+                        let subquery = HKElectrocardiogramQuery(electrocardiogram: sample) {
+                            subq, voltageMeasurement, done, error in
+                            if (error == nil && voltageMeasurement !== nil) {
+                                // If no error exists for this data point, add the voltage measurement to the array.
+                                // I'm not sure if this technique of error handling is what we want. It could lead
+                                // to holes in the data. The alternative is to not write any of the voltage data to
+                                // the elem dictionary if an error occurs. I think holes are *probably* better?
+                                let value = voltageMeasurement!.quantity(for: HKElectrocardiogram.Lead.appleWatchSimilarToLeadI)?.doubleValue(for: HKUnit.voltUnit(with: HKMetricPrefix.micro))
+                                
+                                voltages.append([
+                                    voltageMeasurement!.timeSinceSampleStart,
+                                    value ?? 0
+                                ])
+                            
+                            }
+                            if done {
+                                elem["voltages"] = voltages
+                                data.append(elem)
+                                seriesSamplesProcessed += 1
+                                if (seriesSamplesProcessed == samples.count) {
+                                    return completion(data, nil)
+                                }
+                            }
+                        }
+                        s.execute(subquery)
+                    }
+                }
+            }
+            
+            // If we haven't yet built the handlers for the data type
+            // just call the completion handler with empty data.
+            if !resultsHandled {
+                return completion([], nil)
+            }
         }
         s.execute(query)
     }
@@ -187,15 +291,3 @@ import HealthKit
         s.disableAllBackgroundDelivery(completion: completion)
     }
 }
-
-/*
- 
- guard let actualSamples = samples else {
- // Handle the error here.
- print("*** An error occurred: \(error?.localizedDescription ?? "nil") ***")
- return
- }
- 
- let allergySamples = actualSamples as? [HKClinicalRecord]
- // Do something with the allergy samples here...
- */
