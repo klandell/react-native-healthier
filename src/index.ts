@@ -49,6 +49,10 @@ export { default as BloodType } from './constants/BloodType';
 export { default as FitzpatrickSkinType } from './constants/FitzpatrickSkinType';
 export { default as WheelchairUse } from './constants/WheelchairUse';
 
+// Electocardiogram Values
+export { default as ElectrocardiogramAlgorithmVersion } from './constants/ElectrocardiogramAlgorithmVersion';
+export { default as ElectrocardiogramClassification } from './constants/ElectrocardiogramClassification';
+
 // Other HealthKit Constants
 export { default as ComparisonOperator } from './constants/ComparisonOperator';
 export { default as DeviceProperty } from './constants/DeviceProperty';
