@@ -5,12 +5,12 @@ import type CorrelationTypeIdentifier from '../constants/CorrelationTypeIdentifi
 import type CharacteristicTypeIdentifier from '../constants/CharacteristicTypeIdentifier';
 import type SeriesSampleIdentifier from '../constants/SeriesSampleIdentifier';
 
+import type ClinicalTypeIdentifier from '../constants/ClinicalTypeIdentifier';
+
 export const HKSystemURI = 'com.apple.health';
 
 type HKCategoryMap = {
-  [K in ValueOf<typeof CategoryTypeIdentifier>]?:
-    | Readonly<Code>
-    | ReadonlyArray<Code>;
+  [K in ValueOf<typeof CategoryTypeIdentifier>]?: Readonly<Code>;
 };
 
 const HKCategory: HKCategoryMap = {
@@ -257,9 +257,7 @@ const HKCategory: HKCategoryMap = {
 } as const;
 
 type HKCharacteristicMap = {
-  [K in ValueOf<typeof CharacteristicTypeIdentifier>]?:
-    | Readonly<Code>
-    | ReadonlyArray<Code>;
+  [K in ValueOf<typeof CharacteristicTypeIdentifier>]?: Readonly<Code>;
 };
 
 const HKCharacteristic: HKCharacteristicMap = {
@@ -289,10 +287,60 @@ const HKCharacteristic: HKCharacteristicMap = {
   },
 } as const;
 
+type HKClinicalMap = {
+  [K in ValueOf<typeof ClinicalTypeIdentifier>]?: Readonly<Code>;
+};
+
+const HKClinical: HKClinicalMap = {
+  AllergyRecord: {
+    code: 'HKClinicalTypeIdentifierAllergyRecord',
+    display: 'Allergy Record',
+  },
+  ConditionRecord: {
+    code: 'HKClinicalTypeIdentifierConditionRecord',
+    display: 'Condition Record',
+  },
+  CoverageRecord: {
+    code: 'HKClinicalTypeIdentifierCoverageRecord',
+    display: 'Coverage Record',
+  },
+  ImmunizationRecord: {
+    code: 'HKClinicalTypeIdentifierImmunizationRecord',
+    display: 'Immunization Record',
+  },
+  LabResultRecord: {
+    code: 'HKClinicalTypeIdentifierLabResultRecord',
+    display: 'Lab Result Record',
+  },
+  MedicationRecord: {
+    code: 'HKClinicalTypeIdentifierMedicationRecord',
+    display: 'Medication Record',
+  },
+  ProcedureRecord: {
+    code: 'HKClinicalTypeIdentifierProcedureRecord',
+    display: 'Procedure Record',
+  },
+  VitalSignRecord: {
+    code: 'HKClinicalTypeIdentifierVitalSignRecord',
+    display: 'Vital Sign Record',
+  },
+} as const;
+
+/*
+const ClinicalTypeIdentifier = {
+  AllergyRecord: 'AllergyRecord',
+  ConditionRecord: 'ConditionRecord',
+  CoverageRecord: 'CoverageRecord',
+  ImmunizationRecord: 'ImmunizationRecord',
+  LabResultRecord: 'LabResultRecord',
+  MedicationRecord: 'MedicationRecord',
+  ProcedureRecord: 'ProcedureRecord',
+  VitalSignRecord: 'VitalSignRecord',
+} as const;
+*/
+
 type HKCorrelationMap = {
-  [K in ValueOf<typeof CorrelationTypeIdentifier>]?:
-    | Readonly<Code>
-    | ReadonlyArray<Code>;
+  [K in ValueOf<typeof CorrelationTypeIdentifier>]?: Readonly<Code>;
 };
 
 const HKCorrelation: HKCorrelationMap = {
@@ -307,9 +355,7 @@ const HKCorrelation: HKCorrelationMap = {
 } as const;
 
 type HKQuantityMap = {
-  [K in ValueOf<typeof QuantityTypeIdentifier>]?:
-    | Readonly<Code>
-    | ReadonlyArray<Code>;
+  [K in ValueOf<typeof QuantityTypeIdentifier>]?: Readonly<Code>;
 };
 
 const HKQuantity: HKQuantityMap = {
@@ -688,9 +734,7 @@ const HKQuantity: HKQuantityMap = {
 } as const;
 
 type HKSeriesMap = {
-  [K in ValueOf<typeof SeriesSampleIdentifier>]?:
-    | Readonly<Code>
-    | ReadonlyArray<Code>;
+  [K in ValueOf<typeof SeriesSampleIdentifier>]?: Readonly<Code>;
 };
 
 const HKSeries: HKSeriesMap = {
@@ -716,6 +760,7 @@ export const WorkoutTypeIdentifier = {
 export default {
   HKCategory,
   HKCorrelation,
+  HKClinical,
   HKCharacteristic,
   HKQuantity,
   HKSeries,

@@ -24,6 +24,8 @@ export { default as QuantityTypeIdentifier } from './constants/QuantityTypeIdent
 export { default as SeriesSampleIdentifier } from './constants/SeriesSampleIdentifier';
 export { default as WorkoutTypeIdentifer } from './constants/WorkoutTypeIdentifer';
 
+export { default as TypeIdentiferLabels } from './constants/TypeIdentifierLabels';
+
 // Category Values
 export { default as CategoryValue } from './constants/CategoryValue';
 export { default as CategoryValueAppetiteChanges } from './constants/CategoryValueAppetiteChanges';
