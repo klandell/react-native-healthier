@@ -142,6 +142,7 @@ import HealthKit
                 }
             }
 
+            HKStatisticsOptions
             if #available(iOS 13.0, *) {
                 if let samples = results as? [HKHeartbeatSeriesSample] {
                     resultsHandled = true

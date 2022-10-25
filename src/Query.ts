@@ -10,6 +10,7 @@ import type CategoryTypeIdentifier from './constants/CategoryTypeIdentifier';
 import type ClinicalTypeIdentifier from './constants/ClinicalTypeIdentifier';
 import type QuantityTypeIdentifier from './constants/QuantityTypeIdentifier';
 import type SeriesSampleIdentifier from './constants/SeriesSampleIdentifier';
+import StatisticsOptions from './constants/StatisticsOptions';
 // import type WorkoutTypeIdentifer from './constants/WorkoutTypeIdentifer';
 
 // TODO: Implement the rest of the
@@ -29,6 +30,14 @@ type SampleQueryDescriptor = {
   limit: number;
   sortDescriptors: SortDescriptor[];
   resultOptions: ResultOptions;
+};
+
+type StatisticsCollectionQueryDescriptor = {
+  type: 'StatisticsCollectionQuery';
+  sampleType: string;
+  predicate: Predicate | CompoundPredicate;
+  anchorDate: string;
+  options: number;
 };
 
 export type QueryDescriptor = SampleQueryDescriptor;
@@ -105,6 +114,44 @@ export function sampleQuery(
   };
 }
 
+type StatisticsCollectionQueryOptions = {
+  sampleType: SampleType;
+  predicate?: Predicate | CompoundPredicate;
+  anchorDate: Date;
+  options: StatisticsOptions[];
+  intervalComponents: DateInterval;
+};
+
+type DateInterval = {
+  //
+};
+
+export function statisticsCollectionQuery(
+  options: StatisticsCollectionQueryOptions
+): StatisticsCollectionQueryDescriptor {
+  const {
+    sampleType,
+    predicate = { type: 'Nil' },
+    anchorDate,
+    options: opts,
+    intervalComponents: DateInterval,
+  } = options;
+  return {
+    type: 'StatisticsCollectionQuery',
+    sampleType,
+    predicate,
+    anchorDate: anchorDate.toISOString(),
+    options: opts.reduce((acc, val) => acc + val, 0),
+    intervalComponents,
+  };
+}
+
+statisticsCollectionQuery({
+  sampleType: 'AbdominalCramps',
+  anchorDate: new Date(),
+  options: [StatisticsOptions.CumulativeSum],
+  intervalComponents: {},
+});
 type SortDescriptor = {
   type: ValueOf<typeof SortIdentifier>;
   data: { ascending: boolean };
