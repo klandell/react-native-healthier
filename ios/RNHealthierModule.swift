@@ -91,19 +91,17 @@ class RNHealthierModule : NSObject {
     func execute(_ queryDescriptor: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
         guard let queryType = queryDescriptor["type"] as? String else {
             // TODO: error!
-            return;
-        }
-        
-        guard let sampleTypeString = queryDescriptor["sampleType"] as? String else {
-            // TODO: error!
-            return;
+            reject("", "bad query type" , nil)
+            return
         }
         
         if queryType == "SampleQuery" {
-            guard let predicate = queryDescriptor["predicate"] as? [String: Any],
+            guard let sampleTypeString = queryDescriptor["sampleType"] as? String,
+                  let predicate = queryDescriptor["predicate"] as? [String: Any],
                   let limit = queryDescriptor["limit"] as? Int,
                   let sortDescriptors = queryDescriptor["sortDescriptors"] as? [[String: Any]] else {
                 // TODO: error!
+                reject("", "invalid param" , nil)
                 return;
             }
             // Run the sample query.
@@ -119,7 +117,8 @@ class RNHealthierModule : NSObject {
                 resolve(data)
             }
         } else if queryType == "StatisticsCollectionQuery" {
-            guard let predicate = queryDescriptor["predicate"] as? [String: Any],
+            guard let sampleTypeString = queryDescriptor["quantityType"] as? String,
+                let predicate = queryDescriptor["predicate"] as? [String: Any],
                   let intervalComponentsMap = queryDescriptor["intervalComponents"] as? [String: Int],
                   let optionsUInt = queryDescriptor["options"] as? UInt
             else {

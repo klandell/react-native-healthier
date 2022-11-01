@@ -271,10 +271,18 @@ import HealthKit
                 return completion([], nil)
             }
             
+            var ret = []
             statsCollection.enumerateStatistics(from: anchorDate, to: Date(), with: {
                 result, stop in
-                    print("Time: \(result.startDate), \(result.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0)")
+
+                ret.append([
+                    "startAt": result.startDate.timeIntervalSince1970,
+                    "endAt": result.endDate.timeIntervalSince1970,
+                    "sum": result.sumQuantity()?.doubleValue(for: HKUnit.kilocalorie()) ?? 0,
+                    "unit": "kcal"
+                ])
             })
+            return completion(ret, nil)
                 
         }
         
