@@ -152,6 +152,11 @@ export function statisticsCollectionQuery(
   };
 }
 
+type SortDescriptor = {
+  type: ValueOf<typeof SortIdentifier>;
+  data: { ascending: boolean };
+};
+
 /**
  * Creates a sort descriptor for a given sort identifier.
  * @param options.key - The key to a pre-defined sort identifier.
