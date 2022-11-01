@@ -277,9 +277,12 @@ import HealthKit
                 result, stop in
                 if let unit = RNHealthierUtils.getDefaultUnit(forIdentifier: sampleTypeEnum) {
                     data.append([
+                        "uuid": UUID().uuidString,
                         "startAt": result.startDate.timeIntervalSince1970,
                         "endAt": result.endDate.timeIntervalSince1970,
-                        "sum": result.sumQuantity()?.doubleValue(for: HKUnit.init(from: unit)) ?? 0,
+                        // TODO: Use other terms besides value, like sum?
+                        // Using value makes the collection have the same fields as a standard quantity sample
+                        "value": result.sumQuantity()?.doubleValue(for: HKUnit.init(from: unit)) ?? 0,
                         "unit": unit
                     ])
                 }

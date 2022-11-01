@@ -41,7 +41,9 @@ type StatisticsCollectionQueryDescriptor = {
   intervalComponents: DateInterval;
 };
 
-export type QueryDescriptor = SampleQueryDescriptor;
+export type QueryDescriptor =
+  | SampleQueryDescriptor
+  | StatisticsCollectionQueryDescriptor;
 
 type Predicate =
   | { type: 'Nil' }
