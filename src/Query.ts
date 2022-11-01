@@ -34,10 +34,11 @@ type SampleQueryDescriptor = {
 
 type StatisticsCollectionQueryDescriptor = {
   type: 'StatisticsCollectionQuery';
-  sampleType: string;
+  quantityType: string;
   predicate: Predicate | CompoundPredicate;
   anchorDate: string;
   options: number;
+  intervalComponents: DateInterval;
 };
 
 export type QueryDescriptor = SampleQueryDescriptor;
@@ -115,7 +116,7 @@ export function sampleQuery(
 }
 
 type StatisticsCollectionQueryOptions = {
-  sampleType: SampleType;
+  quantityType: ValueOf<typeof QuantityTypeIdentifier>;
   predicate?: Predicate | CompoundPredicate;
   anchorDate: Date;
   options: StatisticsOptions[];
@@ -123,22 +124,28 @@ type StatisticsCollectionQueryOptions = {
 };
 
 type DateInterval = {
-  //
+  minute?: number;
+  hour?: number;
+  day?: number;
+  week?: number;
+  month?: number;
+  year?: number;
 };
 
 export function statisticsCollectionQuery(
   options: StatisticsCollectionQueryOptions
 ): StatisticsCollectionQueryDescriptor {
   const {
-    sampleType,
+    quantityType,
     predicate = { type: 'Nil' },
     anchorDate,
     options: opts,
-    intervalComponents: DateInterval,
+    intervalComponents,
   } = options;
+
   return {
     type: 'StatisticsCollectionQuery',
-    sampleType,
+    quantityType,
     predicate,
     anchorDate: anchorDate.toISOString(),
     options: opts.reduce((acc, val) => acc + val, 0),

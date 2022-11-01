@@ -118,9 +118,61 @@ class RNHealthierModule : NSObject {
                 // Alright, we have data, send it back.
                 resolve(data)
             }
+        } else if queryType == "StatisticsCollectionQuery" {
+            guard let predicate = queryDescriptor["predicate"] as? [String: Any],
+                  let intervalComponentsMap = queryDescriptor["intervalComponents"] as? [String: Int],
+                  let optionsUInt = queryDescriptor["options"] as? UInt
+            else {
+                reject("", "invalid param" , nil)
+                return;
+            }
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.calendar = Calendar(identifier: .iso8601)
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+            
+            let anchorDateString = queryDescriptor["anchorDate"] as? String;
+            let anchorDate = (anchorDateString != nil) ? dateFormatter.date(from: anchorDateString!) : nil;
+            
+            if anchorDate == nil {
+                reject("", "anchorDate is required" , nil)
+                return;
+            }
+            
+            var intervalComponents = DateComponents();
+            if intervalComponentsMap.keys.contains("minute") {
+                intervalComponents.minute = intervalComponentsMap["minute"]
+            }
+            if intervalComponentsMap.keys.contains("hour") {
+                intervalComponents.hour = intervalComponentsMap["hour"]
+            }
+            if intervalComponentsMap.keys.contains("day") {
+                intervalComponents.day = intervalComponentsMap["day"]
+            }
+            if intervalComponentsMap.keys.contains("month") {
+                intervalComponents.month = intervalComponentsMap["month"]
+            }
+            if intervalComponentsMap.keys.contains("year") {
+                intervalComponents.year = intervalComponentsMap["year"]
+            }
+            
+            let options = HKStatisticsOptions.init(rawValue: optionsUInt)
+            
+            RNHealthierStore.shared.statisticsCollectionQuery(sampleTypeString: sampleTypeString, predicate:RNHealthierUtils.buildPredicate(descriptor: predicate), anchorDate: anchorDate!, intervalComponents: intervalComponents, options: options) {
+                data, err in
+                
+                if err != nil {
+                    // TODO: error
+                    reject("", "", nil);
+                    return;
+                }
+                // Alright, we have data, send it back.
+                resolve(data)
+            }
         }
     }
-    
     
     @objc(enableBackgroundDelivery:updateFrequency:resolver:rejecter:)
     func enableBackgroundDelivery(_ dataTypeIdentifier: NSString, updateFrequency: NSNumber, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {

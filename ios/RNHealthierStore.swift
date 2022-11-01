@@ -142,7 +142,6 @@ import HealthKit
                 }
             }
 
-            HKStatisticsOptions
             if #available(iOS 13.0, *) {
                 if let samples = results as? [HKHeartbeatSeriesSample] {
                     resultsHandled = true
@@ -233,6 +232,52 @@ import HealthKit
                 return completion([], nil)
             }
         }
+        s.execute(query)
+    }
+    
+    func statisticsCollectionQuery(sampleTypeString: String, predicate: NSPredicate?, anchorDate: Date, intervalComponents: DateComponents, options: HKStatisticsOptions, completion: @escaping ([Any]?, Error?) -> Void) -> Void {
+        guard let s = store else {
+            completion(nil, RNHealthierError.HealthStoreNotAvailable)
+            return;
+        }
+        
+        guard let sampleTypeEnum = RNHealthierObjectTypeIdentifier.init(rawValue: sampleTypeString),
+              let sampleType = RNHealthierUtils.getObjectType(forIdentifier: sampleTypeEnum) as? HKQuantityType else {
+            completion(nil, RNHealthierError.InvalidSampleType)
+            return;
+        }
+        
+        // TODO: IMPLEMENT ME!!!
+        let query = HKStatisticsCollectionQuery.init(quantityType: sampleType, quantitySamplePredicate: predicate, options: options, anchorDate: anchorDate, intervalComponents: intervalComponents)
+        
+        query.initialResultsHandler = {
+            query, results, error in
+            
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorDatabaseInaccessible:
+                    // Handle differently?
+                    return completion(nil, error)
+                default:
+                    return completion(nil, error)
+                }
+            }
+            
+            
+            guard let statsCollection = results else {
+                // You should only hit this case if you have an unhandled error. Check for bugs
+                // in your code that creates the query, or explicitly handle the error.
+                // TODO: HANDLE THIS BETTER!
+                return completion([], nil)
+            }
+            
+            statsCollection.enumerateStatistics(from: anchorDate, to: Date(), with: {
+                result, stop in
+                    print("Time: \(result.startDate), \(result.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0)")
+            })
+                
+        }
+        
         s.execute(query)
     }
     
