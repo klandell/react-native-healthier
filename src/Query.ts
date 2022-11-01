@@ -127,7 +127,6 @@ type DateInterval = {
   minute?: number;
   hour?: number;
   day?: number;
-  week?: number;
   month?: number;
   year?: number;
 };
@@ -152,17 +151,6 @@ export function statisticsCollectionQuery(
     intervalComponents,
   };
 }
-
-statisticsCollectionQuery({
-  sampleType: 'AbdominalCramps',
-  anchorDate: new Date(),
-  options: [StatisticsOptions.CumulativeSum],
-  intervalComponents: {},
-});
-type SortDescriptor = {
-  type: ValueOf<typeof SortIdentifier>;
-  data: { ascending: boolean };
-};
 
 /**
  * Creates a sort descriptor for a given sort identifier.
