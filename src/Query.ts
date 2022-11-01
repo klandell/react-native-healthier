@@ -34,7 +34,7 @@ type SampleQueryDescriptor = {
 
 type StatisticsCollectionQueryDescriptor = {
   type: 'StatisticsCollectionQuery';
-  sampleType: string;
+  quantityType: string;
   predicate: Predicate | CompoundPredicate;
   anchorDate: string;
   options: number;
@@ -137,7 +137,7 @@ export function statisticsCollectionQuery(
   options: StatisticsCollectionQueryOptions
 ): StatisticsCollectionQueryDescriptor {
   const {
-    quantityType: sampleType,
+    quantityType,
     predicate = { type: 'Nil' },
     anchorDate,
     options: opts,
@@ -146,7 +146,7 @@ export function statisticsCollectionQuery(
 
   return {
     type: 'StatisticsCollectionQuery',
-    sampleType,
+    quantityType,
     predicate,
     anchorDate: anchorDate.toISOString(),
     options: opts.reduce((acc, val) => acc + val, 0),
