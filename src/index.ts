@@ -59,6 +59,7 @@ export { default as ElectrocardiogramClassification } from './constants/Electroc
 export { default as ComparisonOperator } from './constants/ComparisonOperator';
 export { default as DeviceProperty } from './constants/DeviceProperty';
 export { default as MetadataKey } from './constants/MetadataKey';
+export { default as StatisticsOptions } from './constants/StatisticsOptions';
 export { default as SortIdentifier } from './constants/SortIdentifier';
 export { default as UpdateFrequency } from './constants/UpdateFrequency';
 

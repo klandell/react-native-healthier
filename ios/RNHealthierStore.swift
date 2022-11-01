@@ -271,18 +271,20 @@ import HealthKit
                 return completion([], nil)
             }
             
-            var ret = []
+            // TODO: For now we are stupidly assuming that we are just using sumQuantity
+            var data = []
             statsCollection.enumerateStatistics(from: anchorDate, to: Date(), with: {
                 result, stop in
-
-                ret.append([
-                    "startAt": result.startDate.timeIntervalSince1970,
-                    "endAt": result.endDate.timeIntervalSince1970,
-                    "sum": result.sumQuantity()?.doubleValue(for: HKUnit.kilocalorie()) ?? 0,
-                    "unit": "kcal"
-                ])
+                if let unit = RNHealthierUtils.getDefaultUnit(forIdentifier: sampleTypeEnum) {
+                    data.append([
+                        "startAt": result.startDate.timeIntervalSince1970,
+                        "endAt": result.endDate.timeIntervalSince1970,
+                        "sum": result.sumQuantity()?.doubleValue(for: HKUnit.init(from: unit)) ?? 0,
+                        "unit": unit
+                    ])
+                }
             })
-            return completion(ret, nil)
+            return completion(data, nil)
                 
         }
         
