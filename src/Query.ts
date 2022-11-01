@@ -10,7 +10,7 @@ import type CategoryTypeIdentifier from './constants/CategoryTypeIdentifier';
 import type ClinicalTypeIdentifier from './constants/ClinicalTypeIdentifier';
 import type QuantityTypeIdentifier from './constants/QuantityTypeIdentifier';
 import type SeriesSampleIdentifier from './constants/SeriesSampleIdentifier';
-import StatisticsOptions from './constants/StatisticsOptions';
+import type StatisticsOptions from './constants/StatisticsOptions';
 // import type WorkoutTypeIdentifer from './constants/WorkoutTypeIdentifer';
 
 // TODO: Implement the rest of the
