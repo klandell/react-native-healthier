@@ -272,7 +272,7 @@ import HealthKit
             }
             
             // TODO: For now we are stupidly assuming that we are just using sumQuantity
-            var data = []
+            var data: [[String: Any]] = []
             statsCollection.enumerateStatistics(from: anchorDate, to: Date(), with: {
                 result, stop in
                 if let unit = RNHealthierUtils.getDefaultUnit(forIdentifier: sampleTypeEnum) {
