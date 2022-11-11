@@ -110,7 +110,7 @@ class RNHealthierModule : NSObject {
                 
                 if err != nil {
                     // TODO: error
-                    reject("", "", nil);
+                    reject("", "\(String(describing: err))", nil)
                     return;
                 }
                 // Alright, we have data, send it back.
@@ -164,7 +164,7 @@ class RNHealthierModule : NSObject {
                 
                 if err != nil {
                     // TODO: error
-                    reject("", "", nil);
+                    reject("", "\(String(describing: err))", nil)
                     return;
                 }
                 // Alright, we have data, send it back.
