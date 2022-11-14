@@ -55,6 +55,17 @@ import HealthKit
         
         // TODO: RESULT OPTIONS
         let query = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: lim, sortDescriptors: sortDescriptors) { query, results, error in
+            
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorDatabaseInaccessible:
+                    // Absorb database inaccessible errors and return as empty data
+                    return completion([], nil)
+                default:
+                    return completion(nil, error)
+                }
+            }
+            
             // The JS can't handle the data in its raw form, so we are going to do some conversion
             // to get it into a format the react native can deal with.
             var data: [[String: Any]] = []
@@ -178,11 +189,6 @@ import HealthKit
                 if let samples = results as? [HKElectrocardiogram] {
                     resultsHandled = true;
                     for sample in samples {
-                        
-                        if let metadata = sample.metadata,
-                           let algorithmVersion = metadata[HKMetadataKeyAppleECGAlgorithmVersion] {
-                            let testing = algorithmVersion;
-                        }
 
                         var elem: [String: Any] = [
                             "uuid": sample.uuid.uuidString,
@@ -256,8 +262,8 @@ import HealthKit
             if let error = error as? HKError {
                 switch (error.code) {
                 case .errorDatabaseInaccessible:
-                    // Handle differently?
-                    return completion(nil, error)
+                    // Absorb database inaccessible errors and return as empty data
+                    return completion([], nil)
                 default:
                     return completion(nil, error)
                 }
