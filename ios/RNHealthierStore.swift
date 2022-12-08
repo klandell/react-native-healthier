@@ -28,6 +28,7 @@ import HealthKit
         }
     }
     
+    @available(iOS 12.0, *)
     func getRequestStatusForAuthorization(toShare: Set<HKSampleType>?, read: Set<HKObjectType>?, completion: @escaping (HKAuthorizationRequestStatus, Error?) -> Void) -> Void {
         guard let s = store else {
             return completion(HKAuthorizationRequestStatus.unknown, RNHealthierError.HealthStoreNotAvailable);

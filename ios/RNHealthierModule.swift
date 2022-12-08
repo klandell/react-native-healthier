@@ -76,12 +76,16 @@ class RNHealthierModule : NSObject {
             }
         }
         
-        RNHealthierStore.shared.getRequestStatusForAuthorization(toShare: writePermissions, read: readPermissions) { requestStatus, error in
-            if error != nil {
-                reject("", "\(String(describing: error))", nil)
-                return;
+        if #available(iOS 12.0, *) {
+            RNHealthierStore.shared.getRequestStatusForAuthorization(toShare: writePermissions, read: readPermissions) { requestStatus, error in
+                if error != nil {
+                    reject("", "\(String(describing: error))", nil)
+                    return;
+                }
+                resolve(requestStatus.rawValue)
             }
-            resolve(requestStatus.rawValue)
+        } else {
+            resolve(0); // Unknown.
         }
     }
         
