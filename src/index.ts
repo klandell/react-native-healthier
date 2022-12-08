@@ -56,6 +56,7 @@ export { default as ElectrocardiogramAlgorithmVersion } from './constants/Electr
 export { default as ElectrocardiogramClassification } from './constants/ElectrocardiogramClassification';
 
 // Other HealthKit Constants
+export { default as AuthorizationRequestStatus } from './constants/AuthorizationRequestStatus';
 export { default as ComparisonOperator } from './constants/ComparisonOperator';
 export { default as DeviceProperty } from './constants/DeviceProperty';
 export { default as MetadataKey } from './constants/MetadataKey';

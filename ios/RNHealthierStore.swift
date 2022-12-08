@@ -28,6 +28,13 @@ import HealthKit
         }
     }
     
+    func getRequestStatusForAuthorization(toShare: Set<HKSampleType>?, read: Set<HKObjectType>?, completion: @escaping (HKAuthorizationRequestStatus, Error?) -> Void) -> Void {
+        guard let s = store else {
+            return completion(HKAuthorizationRequestStatus.unknown, RNHealthierError.HealthStoreNotAvailable);
+        }
+        s.getRequestStatusForAuthorization(toShare: toShare ?? Set<HKSampleType>(), read: read ?? Set<HKObjectType>(), completion: completion)
+    }
+
     func requestAuthorization(toShare: Set<HKSampleType>?, read: Set<HKObjectType>?, completion: @escaping (Bool, Error?) -> Void) -> Void {
         guard let s = store else {
             return completion(false, RNHealthierError.HealthStoreNotAvailable);

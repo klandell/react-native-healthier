@@ -1,5 +1,6 @@
 import type { QueryDescriptor } from './Query';
 import type UpdateFrequency from './constants/UpdateFrequency';
+import type AuthorizationRequestStatus from './constants/AuthorizationRequestStatus';
 
 export type ValueOf<T> = T[keyof T];
 
@@ -15,6 +16,10 @@ export type CodeWithSystem = Code & { system: string };
 export interface Healthier {
   isAvailable: () => Promise<boolean>;
   supportsHealthRecords: () => Promise<boolean>;
+  getRequestStatusForAuthorization: (permissions: {
+    toShare?: string[]; // TODO: Type
+    read?: string[]; // TODO: Type
+  }) => Promise<AuthorizationRequestStatus>;
   requestAuthorization: (permissions: {
     toShare?: string[]; // TODO: Type
     read?: string[]; // TODO: Type
