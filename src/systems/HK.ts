@@ -126,6 +126,10 @@ const HKCategory: HKCategoryMap = {
     code: 'HKCategoryTypeIdentifierHighHeartRateEvent',
     display: 'High Heart Rate Event',
   },
+  InfrequentMenstrualCycles: {
+    code: 'HKCategoryTypeIdentifierInfrequentMenstrualCycles',
+    display: 'Infrequent Menstrual Cycle',
+  },
   IntermenstrualBleeding: {
     code: 'HKCategoryTypeIdentifierIntermenstrualBleeding',
     display: 'Intermenstrual Bleeding',
@@ -133,6 +137,10 @@ const HKCategory: HKCategoryMap = {
   IrregularHeartRhythmEvent: {
     code: 'HKCategoryTypeIdentifierIrregularHeartRhythmEvent',
     display: 'Irregular Heart Rhythm Event',
+  },
+  IrregularMenstrualCycles: {
+    code: 'HKCategoryTypeIdentifierIrregularMenstrualCycles',
+    display: 'Irregular Menstrual Cycle',
   },
   Lactation: {
     code: 'HKCategoryTypeIdentifierLactation',
@@ -190,6 +198,10 @@ const HKCategory: HKCategoryMap = {
     code: 'HKCategoryTypeIdentifierPelvicPain',
     display: 'Pelvic Pain',
   },
+  PersistentIntermenstrualBleeding: {
+    code: 'HKCategoryTypeIdentifierPersistentIntermenstrualBleeding',
+    display: 'Persistent Intermenstrual Bleeding',
+  },
   Pregnancy: {
     code: 'HKCategoryTypeIdentifierPregnancy',
     display: 'Pregnancy',
@@ -201,6 +213,10 @@ const HKCategory: HKCategoryMap = {
   ProgesteroneTestResult: {
     code: 'HKCategoryTypeIdentifierProgesteroneTestResult',
     display: 'Progesterone Test Result',
+  },
+  ProlongedMenstrualPeriods: {
+    code: 'HKCategoryTypeIdentifierProlongedMenstrualPeriods',
+    display: 'Prolonged Menstrual Cycle',
   },
   RapidPoundingOrFlutteringHeartbeat: {
     code: 'HKCategoryTypeIdentifierRapidPoundingOrFlutteringHeartbeat',

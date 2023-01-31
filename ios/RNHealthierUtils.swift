@@ -213,6 +213,12 @@ class RNHealthierUtils {
             return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.oxygenSaturation)
         case TypeIdentifier.PeripheralPerfusionIndex:
             return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.peripheralPerfusionIndex)
+        case TypeIdentifier.PersistentIntermenstrualBleeding:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getCategoryType(forIdentifier: HKCategoryTypeIdentifier.persistentIntermenstrualBleeding)
+            } else {
+                return nil
+            }
         case TypeIdentifier.BloodGlucose:
             return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.bloodGlucose)
         case TypeIdentifier.NumberOfTimesFallen:
@@ -353,6 +359,12 @@ class RNHealthierUtils {
             } else {
                 return nil
             }
+        case TypeIdentifier.ProlongedMenstrualPeriods:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getCategoryType(forIdentifier: HKCategoryTypeIdentifier.prolongedMenstrualPeriods)
+            } else {
+                return nil
+            }
         case TypeIdentifier.MenstrualFlow:
             return RNHealthierUtils.getCategoryType(forIdentifier: HKCategoryTypeIdentifier.menstrualFlow)
         case TypeIdentifier.IntermenstrualBleeding:
@@ -380,6 +392,12 @@ class RNHealthierUtils {
         case TypeIdentifier.IrregularHeartRhythmEvent:
             if #available(iOS 12.2, *) {
                 return RNHealthierUtils.getCategoryType(forIdentifier: HKCategoryTypeIdentifier.irregularHeartRhythmEvent)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.IrregularMenstrualCycles:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getCategoryType(forIdentifier: HKCategoryTypeIdentifier.irregularMenstrualCycles)
             } else {
                 return nil
             }
@@ -728,6 +746,12 @@ class RNHealthierUtils {
         case TypeIdentifier.ImmunizationRecord:
             if #available(iOS 12, *) {
                 return RNHealthierUtils.getClinicalType(forIdentifier: HKClinicalTypeIdentifier.immunizationRecord)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.InfrequentMenstrualCycles:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getCategoryType(forIdentifier: HKCategoryTypeIdentifier.infrequentMenstrualCycles)
             } else {
                 return nil
             }
