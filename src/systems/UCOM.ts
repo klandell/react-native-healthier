@@ -12,6 +12,7 @@ const UCOM = {
   'g': 'g',
   'IU': '[IU]',
   'kcal': 'kcal',
+  'kcal/(kg.hr)': 'kcal/(kg.hr)',
   'kg': 'kg',
   'km': 'km',
   'km/hr': 'km/h',
@@ -29,6 +30,7 @@ const UCOM = {
   'mL/(kg.min)': 'mL/(kg.min)',
   'mmHg': 'mm[Hg]',
   'ms': 'ms',
+  'W': 'W',
 } as const;
 
 export default UCOM;

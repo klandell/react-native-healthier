@@ -77,6 +77,30 @@ class RNHealthierUtils {
             }
         case TypeIdentifier.BasalEnergyBurned:
             return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.basalEnergyBurned)
+        case TypeIdentifier.CyclingCadence:
+            if #available(iOS 17.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.cyclingCadence)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.CyclingFunctionalThresholdPower:
+            if #available(iOS 17.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.cyclingFunctionalThresholdPower)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.CyclingPower:
+            if #available(iOS 17.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.cyclingPower)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.CyclingSpeed:
+            if #available(iOS 17.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.cyclingSpeed)
+            } else {
+                return nil
+            }
         case TypeIdentifier.ActiveEnergyBurned:
             return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.activeEnergyBurned)
         case TypeIdentifier.FlightsClimbed:
@@ -89,9 +113,45 @@ class RNHealthierUtils {
             } else {
                 return nil
             }
+        case TypeIdentifier.PhysicalEffort:
+            if #available(iOS 17.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.physicalEffort)
+            } else {
+                return nil
+            }
         case TypeIdentifier.PushCount:
             if #available(iOS 10.0, *) {
                 return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.pushCount)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.RunningGroundContactTime:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.runningGroundContactTime)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.RunningPower:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.runningPower)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.RunningSpeed:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.runningSpeed)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.RunningStrideLength:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.runningStrideLength)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.RunningVerticalOscillation:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.runningVerticalOscillation)
             } else {
                 return nil
             }
@@ -107,6 +167,12 @@ class RNHealthierUtils {
             } else {
                 return nil
             }
+        case TypeIdentifier.UnderwaterDepth:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.underwaterDepth)
+            } else {
+                return nil
+            }
         case TypeIdentifier.Vo2Max:
             if #available(iOS 11.0, *) {
                 return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.vo2Max)
@@ -116,6 +182,12 @@ class RNHealthierUtils {
         case TypeIdentifier.DistanceDownhillSnowSports:
             if #available(iOS 11.2, *) {
                 return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.distanceDownhillSnowSports)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.AppleSleepingWristTemperature:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.appleSleepingWristTemperature)
             } else {
                 return nil
             }
@@ -179,8 +251,20 @@ class RNHealthierUtils {
             } else {
                 return nil
             }
+        case TypeIdentifier.AtrialFibrillationBurden:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.atrialFibrillationBurden)
+            } else {
+                return nil
+            }
         case TypeIdentifier.HeartRate:
             return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)
+        case TypeIdentifier.HeartRateRecoveryOneMinute:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.heartRateRecoveryOneMinute)
+            } else {
+                return nil
+            }       
         case TypeIdentifier.BodyTemperature:
             return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.bodyTemperature)
         case TypeIdentifier.BasalBodyTemperature:
@@ -244,6 +328,12 @@ class RNHealthierUtils {
         case TypeIdentifier.EnvironmentalAudioExposure:
             if #available(iOS 13.0, *) {
                 return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.environmentalAudioExposure)
+            } else {
+                return nil
+            }
+        case TypeIdentifier.EnvironmentalSoundReduction:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.environmentalSoundReduction)
             } else {
                 return nil
             }
@@ -339,6 +429,12 @@ class RNHealthierUtils {
             return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryWater)
         case TypeIdentifier.UvExposure:
             return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.uvExposure)
+        case TypeIdentifier.WaterTemperature:
+            if #available(iOS 16.0, *) {
+                return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.waterTemperature)
+            } else {
+                return nil
+            }        
         case TypeIdentifier.SleepAnalysis:
             return RNHealthierUtils.getCategoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis)
         case TypeIdentifier.AppleStandHour:
@@ -795,6 +891,7 @@ class RNHealthierUtils {
         
         switch forIdentifier {
         case TypeIdentifier.AppleWalkingSteadiness,
+            TypeIdentifier.AtrialFibrillationBurden,
             TypeIdentifier.BloodAlcoholContent,
             TypeIdentifier.BodyFatPercentage,
             TypeIdentifier.OxygenSaturation,
@@ -867,9 +964,12 @@ class RNHealthierUtils {
             TypeIdentifier.DistanceDownhillSnowSports:
             return "km"
         case TypeIdentifier.DistanceSwimming,
-            TypeIdentifier.SixMinuteWalkTestDistance:
+            TypeIdentifier.RunningStrideLength,
+            TypeIdentifier.SixMinuteWalkTestDistance,
+            TypeIdentifier.UnderwaterDepth:
             return "m"
         case TypeIdentifier.Height,
+            TypeIdentifier.RunningVerticalOscillation,
             TypeIdentifier.WalkingStepLength,
             TypeIdentifier.WaistCircumference:
             return "cm"
@@ -877,11 +977,14 @@ class RNHealthierUtils {
             TypeIdentifier.BasalEnergyBurned,
             TypeIdentifier.DietaryEnergyConsumed:
             return "kcal"
+        case TypeIdentifier.PhysicalEffort:
+            return "kcal/(kg.hr)"
         case TypeIdentifier.AppleExerciseTime,
             TypeIdentifier.AppleStandTime,
             TypeIdentifier.AppleMoveTime:
             return "min"
-        case TypeIdentifier.HeartRateVariabilitySDNN:
+        case TypeIdentifier.HeartRateVariabilitySDNN,
+            TypeIdentifier.RunningGroundContactTime:
             return "ms"
         case TypeIdentifier.ElectrodermalActivity:
             return "mcS"
@@ -891,27 +994,38 @@ class RNHealthierUtils {
             return "mg/dL"
         case TypeIdentifier.WalkingSpeed:
             return "km/hr"
-        case TypeIdentifier.StairAscentSpeed,
+        case TypeIdentifier.CyclingSpeed,
+            TypeIdentifier.RunningSpeed,
+            TypeIdentifier.StairAscentSpeed,
             TypeIdentifier.StairDescentSpeed:
             return "m/s"
-        case TypeIdentifier.HeartRate,
+        case TypeIdentifier.CyclingCadence,
+            TypeIdentifier.HeartRate,
+            TypeIdentifier.HeartRateRecoveryOneMinute,
             TypeIdentifier.RestingHeartRate,
             TypeIdentifier.WalkingHeartRateAverage,
             TypeIdentifier.RespiratoryRate:
             return "count/min"
         case TypeIdentifier.PeakExpiratoryFlowRate:
             return "L/min"
-        case TypeIdentifier.BodyTemperature,
+        case TypeIdentifier.AppleSleepingWristTemperature,
+            TypeIdentifier.BodyTemperature,
+            TypeIdentifier.WaterTemperature,
             TypeIdentifier.BasalBodyTemperature:
             return "degC"
         case TypeIdentifier.BloodPressureSystolic,
             TypeIdentifier.BloodPressureDiastolic:
             return "mmHg"
         case TypeIdentifier.EnvironmentalAudioExposure,
-            TypeIdentifier.HeadphoneAudioExposure:
+            TypeIdentifier.HeadphoneAudioExposure,
+            TypeIdentifier.EnvironmentalSoundReduction:
             return "dBASPL"
         case TypeIdentifier.InsulinDelivery:
             return "IU"
+        case TypeIdentifier.CyclingFunctionalThresholdPower,
+            TypeIdentifier.CyclingPower,
+            TypeIdentifier.RunningPower:
+            return "W"
         default:
             return nil;
         }

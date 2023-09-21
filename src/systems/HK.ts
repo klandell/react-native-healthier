@@ -387,6 +387,10 @@ const HKQuantity: HKQuantityMap = {
     code: 'HKQuantityTypeIdentifierAppleMoveTime',
     display: 'Apple Move Time',
   },
+  AppleSleepingWristTemperature: {
+    code: 'HKQuantityTypeIdentifierAppleSleepingWristTemperature',
+    display: 'Apple Sleeping Wrist Temperature',
+  },
   AppleStandTime: {
     code: 'HKQuantityTypeIdentifierAppleStandTime',
     display: 'Apple Stand Time',
@@ -394,6 +398,10 @@ const HKQuantity: HKQuantityMap = {
   AppleWalkingSteadiness: {
     code: 'HKQuantityTypeIdentifierAppleWalkingSteadiness',
     display: 'Apple Walking Steadiness',
+  },
+  AtrialFibrillationBurden: {
+    code: 'HKQuantityTypeIdentifierAtrialFibrillationBurden',
+    display: 'Atrial Fibrillation Burden',
   },
   BasalBodyTemperature: {
     code: 'HKQuantityTypeIdentifierBasalBodyTemperature',
@@ -434,6 +442,22 @@ const HKQuantity: HKQuantityMap = {
   BodyTemperature: {
     code: 'HKQuantityTypeIdentifierBodyTemperature',
     display: 'Body Temperature',
+  },
+  CyclingCadence: {
+    code: 'HKQuantityTypeIdentifierCyclingCadence',
+    display: 'Cycling Cadence',
+  },
+  CyclingFunctionalThresholdPower: {
+    code: 'HKQuantityTypeIdentifierCyclingFunctionalThresholdPower',
+    display: 'Cycling Functional Threshold Power',
+  },
+  CyclingPower: {
+    code: 'HKQuantityTypeIdentifierCyclingPower',
+    display: 'Cycling Power',
+  },
+  CyclingSpeed: {
+    code: 'HKQuantityTypeIdentifierCyclingSpeed',
+    display: 'Cycling Speed',
   },
   DietaryBiotin: {
     code: 'HKQuantityTypeIdentifierDietaryBiotin',
@@ -619,6 +643,10 @@ const HKQuantity: HKQuantityMap = {
     code: 'HKQuantityTypeIdentifierEnvironmentalAudioExposure',
     display: 'Environmental Audio Exposure',
   },
+  EnvironmentalSoundReduction: {
+    code: 'HKQuantityTypeIdentifierEnvironmentalSoundReduction',
+    display: 'Environmental Sound Reduction',
+  },
   FlightsClimbed: {
     code: 'HKQuantityTypeIdentifierFlightsClimbed',
     display: 'Flights Climbed',
@@ -638,6 +666,10 @@ const HKQuantity: HKQuantityMap = {
   HeartRate: {
     code: 'HKQuantityTypeIdentifierHeartRate',
     display: 'Heart Rate',
+  },
+  HeartRateRecoveryOneMinute: {
+    code: 'HKQuantityTypeIdentifierHeartRateRecoveryOneMinute',
+    display: 'Heart Rate Recovery One Minute',
   },
   HeartRateVariabilitySDNN: {
     code: 'HKQuantityTypeIdentifierHeartRateVariabilitySDNN',
@@ -683,6 +715,10 @@ const HKQuantity: HKQuantityMap = {
     code: 'HKQuantityTypeIdentifierPeripheralPerfusionIndex',
     display: 'Peripheral Perfusion Index',
   },
+  PhysicalEffort: {
+    code: 'HKQuantityTypeIdentifierPhysicalEffort',
+    display: 'Physical Effort',
+  },
   PushCount: {
     code: 'HKQuantityTypeIdentifierPushCount',
     display: 'Push Count',
@@ -694,6 +730,26 @@ const HKQuantity: HKQuantityMap = {
   RestingHeartRate: {
     code: 'HKQuantityTypeIdentifierRestingHeartRate',
     display: 'Resting Heart Rate',
+  },
+  RunningGroundContactTime: {
+    code: 'HKQuantityTypeIdentifierRunningGroundContactTime',
+    display: 'Running Ground Contact Time',
+  },
+  RunningPower: {
+    code: 'HKQuantityTypeIdentifierRunningPower',
+    display: 'Running Power',
+  },
+  RunningSpeed: {
+    code: 'HKQuantityTypeIdentifierRunningSpeed',
+    display: 'Running Speed',
+  },
+  RunningStrideLength: {
+    code: 'HKQuantityTypeIdentifierRunningStrideLength',
+    display: 'Running Stride Length',
+  },
+  RunningVerticalOscillation: {
+    code: 'HKQuantityTypeIdentifierRunningVerticalOscillation',
+    display: 'Running Vertical Oscillation',
   },
   SixMinuteWalkTestDistance: {
     code: 'HKQuantityTypeIdentifierSixMinuteWalkTestDistance',
@@ -714,6 +770,10 @@ const HKQuantity: HKQuantityMap = {
   SwimmingStrokeCount: {
     code: 'HKQuantityTypeIdentifierSwimmingStrokeCount',
     display: 'Swimming Stroke Count',
+  },
+  UnderwaterDepth: {
+    code: 'HKQuantityTypeIdentifierUnderwaterDepth',
+    display: 'Underwater Depth',
   },
   UvExposure: {
     code: 'HKQuantityTypeIdentifierUvExposure',
@@ -745,7 +805,11 @@ const HKQuantity: HKQuantityMap = {
   },
   WalkingStepLength: {
     code: 'HKQuantityTypeIdentifierWalkingStepLength',
-    display: 'WalkingStepLength',
+    display: 'Walking Step Length',
+  },
+  WaterTemperature: {
+    code: 'HKQuantityTypeIdentifierWaterTemperature',
+    display: 'Water Temperature',
   },
 } as const;
 
