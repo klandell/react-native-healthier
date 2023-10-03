@@ -332,7 +332,7 @@ class RNHealthierUtils {
                 return nil
             }
         case TypeIdentifier.EnvironmentalSoundReduction:
-            if #available(iOS 16.0, *) {
+            if #available(iOS 17.0, *) {
                 return RNHealthierUtils.getQuantityType(forIdentifier: HKQuantityTypeIdentifier.environmentalSoundReduction)
             } else {
                 return nil
