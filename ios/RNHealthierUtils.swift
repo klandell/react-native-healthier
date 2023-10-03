@@ -3,7 +3,7 @@ import HealthKit
 
 class RNHealthierUtils {
     static func getQuantityType(forIdentifier: HKQuantityTypeIdentifier) -> HKQuantityType? {
-        if #available(iOS 15.0, *) {
+        if #available(iOS 17.0, *) {
             return HKQuantityType.init(forIdentifier)
         } else {
             return HKObjectType.quantityType(forIdentifier: forIdentifier)
@@ -11,7 +11,7 @@ class RNHealthierUtils {
     }
     
     static func getCategoryType(forIdentifier: HKCategoryTypeIdentifier) -> HKCategoryType? {
-        if #available(iOS 15.0, *) {
+        if #available(iOS 17.0, *) {
             return HKCategoryType.init(forIdentifier)
         } else {
             return HKObjectType.categoryType(forIdentifier: forIdentifier)
@@ -19,7 +19,7 @@ class RNHealthierUtils {
     }
     
     static func getCharacteristicType(forIdentifier: HKCharacteristicTypeIdentifier) -> HKCharacteristicType? {
-        if #available(iOS 15.0, *) {
+        if #available(iOS 17.0, *) {
             return HKCharacteristicType.init(forIdentifier)
         } else {
             return HKObjectType.characteristicType(forIdentifier: forIdentifier)
@@ -28,7 +28,7 @@ class RNHealthierUtils {
     
     @available(iOS 12.0, *)
     static func getClinicalType(forIdentifier: HKClinicalTypeIdentifier) -> HKClinicalType? {
-        if #available(iOS 15.0, *) {
+        if #available(iOS 17.0, *) {
             return HKClinicalType.init(forIdentifier)
         } else {
             return HKObjectType.clinicalType(forIdentifier: forIdentifier)
@@ -36,7 +36,7 @@ class RNHealthierUtils {
     }
     
     static func getCorrelationType(forIdentifier: HKCorrelationTypeIdentifier) -> HKCorrelationType? {
-        if #available(iOS 15.0, *) {
+        if #available(iOS 17.0, *) {
             return HKCorrelationType.init(forIdentifier)
         } else {
             return HKObjectType.correlationType(forIdentifier: forIdentifier)
