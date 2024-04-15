@@ -35,6 +35,7 @@
 		8C57D5D0286F4BD100EB5DDE /* RNHealthierObservationEmitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNHealthierObservationEmitter.m; sourceTree = "<group>"; };
 		8C57D5D3286F846100EB5DDE /* RNHealthierBackgroundObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNHealthierBackgroundObserver.h; sourceTree = "<group>"; };
 		8C57D5D4286F853E00EB5DDE /* RNHealthierBackgroundObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNHealthierBackgroundObserver.m; sourceTree = "<group>"; };
+		8C79D1DF2BCD770300793457 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		8CB62DEA2877270A006E1E98 /* RNHealthierObservationQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNHealthierObservationQueue.m; sourceTree = "<group>"; };
 		8CB62DEC28772720006E1E98 /* RNHealthierObservationQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNHealthierObservationQueue.h; sourceTree = "<group>"; };
 		8CF7C30C285CBD80008E0801 /* RNHealthierError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNHealthierError.swift; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				8C79D1DF2BCD770300793457 /* PrivacyInfo.xcprivacy */,
 				8CB62DEC28772720006E1E98 /* RNHealthierObservationQueue.h */,
 				8CB62DEA2877270A006E1E98 /* RNHealthierObservationQueue.m */,
 				8C57D5D4286F853E00EB5DDE /* RNHealthierBackgroundObserver.m */,
